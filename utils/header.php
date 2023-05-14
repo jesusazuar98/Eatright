@@ -5,9 +5,9 @@
         </div>
         <nav>
             <ul>
-                <li><a href="alimentos.php">Alimentos</a></li>
+                <li><a href="muestra_alimentos.php">Alimentos</a></li>
                 <?php
-                include('./user.php');
+                require_once('./user.php');
 
                 if (isset($_SESSION['usuario'])) {
 

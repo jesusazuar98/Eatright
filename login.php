@@ -2,7 +2,7 @@
 
 #Incluimos el fichero user.php
 
-include "./user.php";
+require_once "./user.php";
 
 #Comprobamos si el usuario le ha dado al boton de login
 if (isset($_POST['log'])) {

@@ -1,7 +1,7 @@
 <?php
 #Se incluye la conexion con la base de datos
 
-include "./connect.php";
+require_once "./connect.php";
 
 
 #Creamos la clase User

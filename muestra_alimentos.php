@@ -1,114 +1,81 @@
-<?php
+<!DOCTYPE html>
+<html lang="en">
 
-include 'connect.php';
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles/index.css">
+    <title>Alimentos de Eatright</title>
 
-class Alimentos
-{
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 16px;
+            line-height: 1.5;
+        }
 
-    function numeroAlimentos($i_sql)
-    {
+        th,
+        td {
+            padding: 8px;
+            text-align: left;
+            vertical-align: middle;
+            border: 1px solid #ccc;
+        }
 
-        $connect = conectarDB();
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+    </style>
 
-        $sql = $i_sql;
-
-        $result = $connect->query($i_sql);
-
-        $row = $result->fetch_assoc();
-
-        mysqli_close($connect);
-
-        return $row["total"];
-
-    }
-
-    function muestraAlimentos($marca = '')
-    {
+</head>
 
 
+<body>
 
-        if (isset($_GET["pagina"])) {
-            if ($_GET["pagina"] == 1) {
+    <?php
+    include_once "./utils/header.php";
+    include_once "./alimentos.php";
 
-                header("Location:alimentos.php");
-            } else {
+    $alimentos = new Alimentos();
+    ?>
 
-                $pagina = $_GET["pagina"];
-            }
+    <form action="muestra_alimentos.php" method="GET">
+        <p>Ordenar por marca:</p>
+        <p><input type="checkbox" name="marca[]" value="Hacendado"> Hacendado</p>
+        <p><input type="checkbox" name="marca[]" value="Aldi"> Aldi</p>
+        <p><input type="checkbox" name="marca[]" value="Alcampo"> Alcampo</p>
+        <p><input type="checkbox" name="marca[]" value="DIA"> DIA</p>
+        <p><input type="checkbox" name="marca[]" value="Carrefour"> Carrefour</p>
+        <p><input type="submit" name="envio_orden" value="Buscar"> <input type="reset" value="Limpiar filtros"></p>
+
+
+    </form>
+
+    <?php
+
+    if (isset($_GET['marca'])) {
+
+        if (is_array($_GET['marca'])) {
+            $alimentos->muestraAlimentos("'" . implode("','", $_GET['marca']) . "'");
 
         } else {
 
-            $pagina = 1;
+            $alimentos->muestraAlimentos($_GET['marca']);
         }
 
 
-
-        $sql = "SELECT * FROM alimentos WHERE 1=1";
-        $cuentasql = "SELECT COUNT(*) AS total FROM alimentos WHERE 1=1";
-
-        if ($marca != '') {
-
-            $sql .= " AND marca IN ($marca)";
-            $cuentasql .= " AND marca IN ($marca)";
-        }
+    } else {
 
 
-
-        $tamano_pag = 10;
-        $empieza_desde = ($pagina - 1) * $tamano_pag;
-
-        $n_registros = $this->numeroAlimentos($cuentasql);
-        $total_paginas = ceil($n_registros / $tamano_pag);
-
-        $sql .= " LIMIT $empieza_desde,$tamano_pag";
-
-
-        $connect = conectarDB();
-        $result = $connect->query($sql);
-        mysqli_close($connect);
-
-        $code = "<table>\n<tr>\n<td>Nombre</td>\n<td>Marca</td>\n<td>Porcion</td>\n<td>Kcal</td>\n<td>Grasa</td>\n<td>Grasas saturadas</td>\n<td>Carbohidratos</td>\n<td>Azúcar</td>\n<td>Proteina</td>\n<td>Sal</td>\n</tr>";
-        while ($data = mysqli_fetch_array($result)) {
-
-            $code .= "<tr><td>" . $data[1] . "</td><td>" . $data[2] . "</td><td>" . $data[3] . "</td><td>" . $data[4] . "</td><td>" . $data[5] . "</td><td>" . $data[6] . "</td><td>" . $data[7] . "</td><td>" . $data[8] . "</td><td>" . $data[9] . "</td><td>" . $data[10] . "</td></tr>";
-
-        }
-        $codigo_paginacion = $this->paginacion_alimentos($pagina, $total_paginas, $marca);
-
-        echo $code . $codigo_paginacion . "</table>";
-
+        $alimentos->muestraAlimentos();
     }
+    ?>
+    <?php include "./utils/footer.php" ?>
+</body>
 
-
-    function paginacion_alimentos($pagina, $total_paginas, $marca = "")
-    {
-
-        $marca_parametro = ($marca != "") ? "&marca=" . $marca : "";
-
-        $code_paginacion = "";
-
-        if ($pagina > 1) {
-            $code_paginacion .= '<tr><td><a href="alimentos.php?pagina=' . ($pagina - 1) . $marca_parametro . '">Anterior</a> ... </td>';
-        }
-
-        for ($i = max(1, $pagina - 5); $i <= min($total_paginas, $pagina + 5); $i++) {
-
-            if ($i <= $total_paginas) {
-                $code_paginacion .= '<td><a href="alimentos.php?pagina=' . $i . $marca_parametro . '">' . $i . '</a></td>';
-            }
-        }
-        if ($pagina < $total_paginas) {
-            $code_paginacion .= '<td> ...<a href="alimentos.php?pagina=' . ($pagina + 1) . $marca_parametro . '"> Siguiente</a></td></tr>';
-        }
-
-        return $code_paginacion;
-
-
-    }
-
-}
-
-
-
-
-?>
+</html>
