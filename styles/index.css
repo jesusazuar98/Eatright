@@ -31,6 +31,10 @@ header {
   text-align: center;
   margin: 15px 0 0;
 }
+.logo h1 a {
+  text-decoration: none;
+  color: inherit;
+}
 header nav {
   float: right;
 }
