@@ -17,46 +17,8 @@ session_start();
 </head>
 
 <body>
-    <div class="wrapper">
-        <header>
-            <div class="logo">
-                <h1><a href="#">EatRight</a></h1>
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="alimentos.php">Alimentos</a></li>
-                    <?php
-                    include('./user.php');
-
-                    if (isset($_SESSION['usuario'])) {
-
-                        $user = unserialize($_SESSION['usuario']);
-
-                        $data = $user->getUser();
-
-                        ?>
-                        <li><a href="add_comida.php">Añadir comida</a></li>
-
-                        <li><a href="logout.php">Cerrar sesión</a></li>
-
-                        <?php
-                    } else {
-
-
-                        ?>
-                        <li><a href="login.php">Iniciar sesión</a></li>
-
-                        <?php
-                    }
-                    ?>
-            </nav>
-        </header>
-    </div>
-    <footer class="footer">
-        <p>Eatright&#169</p>
-        <p>Todos los derechos reservados a Jesus y Domingo</p>
-        <a href="#">Sobre Nosotros</a>
-    </footer>
+    <?php include './utils/header.php'; ?>
+    <?php include "./utils/footer.php"; ?>
 </body>
 
 </html>

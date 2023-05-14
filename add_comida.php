@@ -23,6 +23,7 @@ if (!isset($_SESSION['usuario'])) {
 
 <body>
     <?php include "./utils/header.php"; ?>
+
 </body>
 
 </html>
