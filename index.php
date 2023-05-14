@@ -20,7 +20,7 @@ session_start();
 <div class="wrapper">
     <header>
         <div class="logo">
-            <h1>EatRight</h1>
+            <h1><a href="#">EatRight</a></h1>
         </div>
         <nav>
           <ul>
