@@ -17,45 +17,45 @@ session_start();
 </head>
 
 <body>
-<div class="wrapper">
-    <header>
-        <div class="logo">
-            <h1>EatRight</h1>
-        </div>
-        <nav>
-          <ul>
-            <li><a href="alimentos.php">Alimentos</a></li>
-            <?php
-            include('./user.php');
+    <div class="wrapper">
+        <header>
+            <div class="logo">
+                <h1>EatRight</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="alimentos.php">Alimentos</a></li>
+                    <?php
+                    include('./user.php');
 
-            if (isset($_SESSION['usuario'])) {
+                    if (isset($_SESSION['usuario'])) {
 
-                $user = unserialize($_SESSION['usuario']);
+                        $user = unserialize($_SESSION['usuario']);
 
-                $data = $user->getUser();
-                echo "<p>" . $data['id'] . " " . $data['username'] . "</p>";
+                        $data = $user->getUser();
 
-                ?>
-                <li><a href="logout.php">Cerrar sesión</a></li>
+                        ?>
 
-                <?php
-            } else {
+                        <li><a href="logout.php">Cerrar sesión</a></li>
+
+                        <?php
+                    } else {
 
 
-                ?>
-                <a href="login.php">Iniciar sesión</a>
+                        ?>
+                        <li><a href="login.php">Iniciar sesión</a></li>
 
-                <?php
-            }
-            ?>
+                        <?php
+                    }
+                    ?>
             </nav>
-    </header>
-</div>
-<footer class="footer">
-    <p>Eatright&#169</p>
-    <p>Todos los derechos reservados a Jesus y Domingo</p>
-    <a href="#">Sobre Nosotros</a>
-</footer>
+        </header>
+    </div>
+    <footer class="footer">
+        <p>Eatright&#169</p>
+        <p>Todos los derechos reservados a Jesus y Domingo</p>
+        <a href="#">Sobre Nosotros</a>
+    </footer>
 </body>
 
 </html>
