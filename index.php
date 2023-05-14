@@ -43,7 +43,7 @@ session_start();
 
 
                 ?>
-                <a href="login.php">Iniciar sesión</a>
+                <li><a href="login.php">Iniciar sesión</a><li>
 
                 <?php
             }
