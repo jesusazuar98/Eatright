@@ -1,7 +1,7 @@
 <div class="wrapper">
     <header>
         <div class="logo">
-            <h1><a href="../index.php">EatRight</a></h1>
+            <h1><a href="./index.php">EatRight</a></h1>
         </div>
         <nav>
             <ul>
