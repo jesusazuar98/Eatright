@@ -45,6 +45,7 @@ if (isset($_POST['log'])) {
 
         #Enviamos al usuario a la pagina del index
         header("Location: ./index.php");
+        exit();
     }
 
 

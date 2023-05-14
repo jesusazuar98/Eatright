@@ -35,6 +35,7 @@ session_start();
                         $data = $user->getUser();
 
                         ?>
+                        <li><a href="add_comida.php">Añadir comida</a></li>
 
                         <li><a href="logout.php">Cerrar sesión</a></li>
 
