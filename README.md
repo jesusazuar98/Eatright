@@ -1,2 +1,2 @@
 # Eatright
-Pagina creada con php
+Aplicacion web creada con php
