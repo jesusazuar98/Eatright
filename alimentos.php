@@ -5,6 +5,16 @@ require_once 'connect.php';
 class Alimentos
 {
 
+    function chooseFood($n_ali)
+    {
+        $connect = conectarDB();
+        $sql = "SELECT * FROM alimentos WHERE nombre_alimen LIKE %" . $n_ali . "% LIMIT 10;";
+
+
+
+    }
+
+
     function numeroAlimentos($i_sql)
     {
 

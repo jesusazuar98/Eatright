@@ -41,6 +41,7 @@ class User
     }
 
 
+
     #Metodo que hace un check del login
     function checkLogin()
     {
@@ -85,7 +86,7 @@ class User
 
         #Si la contraseña introducida por el usuario no es igual llamara a una funcion que restara intentos
         #Devuelve el numero de intentos que le quedan
-        if ($this->password != $pass) {
+        if (!password_verify($this->password, $pass)) {
             $this->setAttempts($id_user, $intentos, false);
             return ["intentos" => $intentos - 1];
         }
@@ -120,12 +121,60 @@ class User
 
         $comprobacion = mysqli_stmt_execute($resultado);
 
+
         mysqli_close($conn);
 
 
     }
 
 
+
+
+
+    #*********Metodos para el registro y comprobaciones********
+
+    function registro($email, $pass_repetida, $sexo, $f_nacimiento, $peso, $altura, $n_completo)
+    {
+
+        $comprobacion = $this->comprobacion_contraseña($pass_repetida);
+        if ($comprobacion != 1) {
+
+            return $comprobacion;
+        }
+
+        $cifrado_pass = password_hash($this->password, PASSWORD_DEFAULT, array("cost" => 12));
+
+
+        $conn = conectarDB();
+        $sql = "INSERT INTO clientes(n_user,email,pass,sexo,f_cumple,peso,altura,nombre_completo,estado,intentos) VALUES(?,?,?,?,?,?,?,?,'activo',3)";
+
+        $result = mysqli_prepare($conn, $sql);
+
+        $comprobacion = mysqli_stmt_bind_param($result, "sssssdds", $this->username, $email, $cifrado_pass, $sexo, $f_nacimiento, $peso, $altura, $n_completo);
+        $comprobacion = mysqli_stmt_execute($result);
+
+        mysqli_close($conn);
+
+        return 1;
+
+    }
+    private function comprobacion_contraseña($pass_repetida)
+    {
+
+        $exp = "/^(?=.*[A-Z])(?=.*\d).{8,}$/";
+
+        if ($this->password != $pass_repetida) {
+
+            return "La contraseña repetida no es la misma";
+        }
+
+        if (!preg_match($exp, $this->password)) {
+            return "La contraseña debe contener una mayúscula, un número y tener 8 dígitos";
+        }
+
+        return 1;
+
+    }
 }
 
 

@@ -26,6 +26,8 @@
 
                     ?>
                     <li><a href="login.php">Iniciar sesión</a></li>
+                    <li><a href="sign-in.php">Registrarse</a></li>
+
 
                     <?php
                 }

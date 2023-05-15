@@ -1,0 +1,31 @@
+body {
+  margin: 0;
+}
+
+#container {
+  display: flex;
+  justify-content: center;
+  align-items:center;
+  height: 100vh;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+#peso::-webkit-inner-spin-button,
+#peso::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+
+#altura::-webkit-inner-spin-button,
+#altura::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+
