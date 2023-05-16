@@ -144,6 +144,21 @@ class User
 
         $cifrado_pass = password_hash($this->password, PASSWORD_DEFAULT, array("cost" => 12));
 
+        $c_usuario = $this->n_registros("SELECT * FROM clientes WHERE n_user='" . $this->username . "'");
+
+        if ($c_usuario >= 1) {
+
+            return "Elija otro nombre de usuario, el insertado ya existe.";
+        }
+
+
+        $c_email = $this->n_registros("SELECT * FROM clientes WHERE email='" . $email . "'");
+
+        if ($c_email >= 1) {
+
+            return "El email ya existe, porfavor introduzca otro";
+        }
+
 
         $conn = conectarDB();
         $sql = "INSERT INTO clientes(n_user,email,pass,sexo,f_cumple,peso,altura,nombre_completo,estado,intentos) VALUES(?,?,?,?,?,?,?,?,'activo',3)";
@@ -173,6 +188,21 @@ class User
         }
 
         return 1;
+
+    }
+
+    private function n_registros($sql)
+    {
+
+        $conn = conectarDB();
+
+        $result = mysqli_query($conn, $sql);
+
+        $rows = mysqli_num_rows($result);
+        mysqli_close($conn);
+
+        return $rows;
+
 
     }
 }
