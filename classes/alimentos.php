@@ -167,6 +167,7 @@ class Alimentos
 
         }
 
+        $conn->close();
 
         return 1;
 

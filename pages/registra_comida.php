@@ -37,7 +37,7 @@ if ($comp != 1) {
 }
 
 echo "<script>alert('Se ha registrado la comida correctamente.')</script>";
-echo "<script>window.location.href = './add_comida.php'</script>";
+echo "<script>window.location.href = '../index.php'</script>";
 exit;
 
 

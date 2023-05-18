@@ -19,8 +19,14 @@ session_start();
 </head>
 
 <body>
-    <?php include './includes/header.php'; ?>
-    <?php include "./includes/footer.php"; ?>
+    <?php
+    include './includes/header.php';
+    include './pages/index_user.php';
+    include "./includes/footer.php";
+
+
+    ?>
+
 </body>
 
 </html>
