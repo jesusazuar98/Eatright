@@ -19,6 +19,7 @@ if (!isset($_SESSION['usuario'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Abel&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="../styles/header.css">
     <link rel="stylesheet" href="../styles/footer.css">
     <link rel="stylesheet" href="../styles/add_comida.css">
@@ -34,6 +35,14 @@ if (!isset($_SESSION['usuario'])) {
             <h3>Busqueda de los alimentos por nombre:</h3>
             <form action="add_comida.php" method="post">
                 <input type="text" name="n_alimento" />
+                <select name="a_marca">
+                    <option value="hacendado" selected>Hacendado</option>
+                    <option value="aldi">Aldi</option>
+                    <option value="alcampo">Alcampo</option>
+                    <option value="dia">DIA</option>
+                    <option value="carrefour">Carrefour</option>
+
+                </select>
                 <input type="submit" name="b_alimento" value="Buscar" />
         </div>
         </form>
@@ -49,11 +58,11 @@ if (!isset($_SESSION['usuario'])) {
 
                     $alimentos = new Alimentos();
 
-                    $result = $alimentos->buscar_alimentos($_POST['n_alimento']);
+                    $result = $alimentos->buscar_alimentos($_POST['n_alimento'], $_POST['a_marca']);
 
                     if ($result == 0) {
 
-                        $code = "No se ha encontrado ningun registro";
+                        $code = "No se ha encontrado ningun alimento";
                     } else {
                         $code = "<ul>";
                         for ($i = 0; $i < sizeof($result); $i++) {

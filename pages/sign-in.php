@@ -43,6 +43,7 @@ if (isset($_POST['envio'])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrate</title>
+    <link href="https://fonts.googleapis.com/css?family=Abel&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="../styles/header.css">
     <link rel="stylesheet" href="../styles/footer.css">
     <link rel="stylesheet" href="../styles/sign-in.css">

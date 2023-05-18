@@ -7,6 +7,7 @@ const calculaKcal = (p_user, porcion, kcal) => {
 };
 
 const muestraAlimentos = (vals) => {
+  fecha = new Date().toISOString().split("T")[0];
   porcion = vals["porcion"];
   kcal = vals["kcal"];
   code =
@@ -21,6 +22,10 @@ const muestraAlimentos = (vals) => {
 
   code +=
     "<p>Comida: <select name='comidas'><option value='desayuno' selected>Desayuno</option><option value='almuerzo'>Almuerzo</option><option value='comida'>Comida</option><option value='merienda'>Merienda</option><option value='cena'>Cena</option></select></p>";
+
+  code += "<p>Fecha: <input type='date' value=" + fecha + " name='fecha'/></p>";
+
+  code += "<input type='hidden' name='id_alimen' value='" + vals["id"] + "'/>";
 
   code += "<input type='submit' name='send_food' value='Insertar comida'/>";
   document.getElementById("c2").innerHTML = code;

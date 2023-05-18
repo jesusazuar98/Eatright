@@ -5,16 +5,6 @@ require_once "../config/connect.php";
 class Alimentos
 {
 
-    function chooseFood($n_ali)
-    {
-        $connect = conectarDB();
-        $sql = "SELECT * FROM alimentos WHERE nombre_alimen LIKE %" . $n_ali . "% LIMIT 10;";
-
-
-
-    }
-
-
     function numeroAlimentos($i_sql)
     {
 
@@ -117,14 +107,14 @@ class Alimentos
 
     }
 
-    #Metodo que busca los alimentos de una base de datos por su nombre
+    #Metodo que busca los alimentos de una base de datos por su nombre y marca
     #Guarda todas las coincidencias en un array y muestra su nombre, marca, porcion y kcal
-    function buscar_alimentos($name)
+    function buscar_alimentos($name, $marca)
     {
 
         $conn = conectarDB();
 
-        $sql = "SELECT * FROM alimentos WHERE nombre_alimen LIKE '%" . $name . "%'";
+        $sql = "SELECT * FROM alimentos WHERE nombre_alimen LIKE '%" . $name . "%' AND marca='" . $marca . "'";
 
         $result = $conn->query($sql);
 
@@ -139,6 +129,7 @@ class Alimentos
         while ($row = $result->fetch_assoc()) {
 
             $alimento = array(
+                "id" => $row["id_alimento"],
                 "nombre" => $row['nombre_alimen'],
                 "marca" => $row['marca'],
                 "porcion" => $row['porcion'],
@@ -156,6 +147,33 @@ class Alimentos
     }
 
 
+
+    function registrar_comida($u_id, $id_alimento, $fecha, $u_porcion, $comida)
+    {
+        $comprobacion = $this->numeroAlimentos("SELECT COUNT(*) AS total FROM alimentos WHERE id_alimento=" . $id_alimento . "");
+
+        if ($comprobacion != 1) {
+            return "El alimento no existe y no se ha podido registrar.";
+        }
+
+        $datos = $u_id . "," . $id_alimento . ",'" . $fecha . "'," . $u_porcion . ",'" . $comida . "'";
+        $conn = conectarDB();
+
+        $sql = "INSERT INTO comen (cli_id,alimen_id,fecha, cantidad, moment_comida) VALUES(" . $datos . ")";
+
+        if (!$conn->query($sql)) {
+
+            return "Ha ocurrido un error al insertar los datos:" . $conn->error;
+
+        }
+
+
+        return 1;
+
+
+
+
+    }
 }
 
 ?>
