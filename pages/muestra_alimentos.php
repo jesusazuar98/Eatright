@@ -10,7 +10,9 @@ session_start();
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./styles/index.css">
+    <link rel="stylesheet" href="../styles/header.css">
+    <link rel="stylesheet" href="../styles/footer.css">
+
     <title>Alimentos de Eatright</title>
 
     <style>
@@ -43,8 +45,8 @@ session_start();
 <body>
 
     <?php
-    include_once "./utils/header.php";
-    include_once "./alimentos.php";
+    include_once("../includes/header.php");
+    include_once "../classes/alimentos.php";
 
     $alimentos = new Alimentos();
     ?>
@@ -80,7 +82,7 @@ session_start();
         $alimentos->muestraAlimentos();
     }
     ?>
-    <?php include "./utils/footer.php" ?>
+    <?php include_once "../includes/footer.php" ?>
 </body>
 
 </html>

@@ -1,6 +1,6 @@
 <?php
 
-require_once 'connect.php';
+require_once "../config/connect.php";
 
 class Alimentos
 {
@@ -117,9 +117,45 @@ class Alimentos
 
     }
 
+    #Metodo que busca los alimentos de una base de datos por su nombre
+    #Guarda todas las coincidencias en un array y muestra su nombre, marca, porcion y kcal
+    function buscar_alimentos($name)
+    {
+
+        $conn = conectarDB();
+
+        $sql = "SELECT * FROM alimentos WHERE nombre_alimen LIKE '%" . $name . "%'";
+
+        $result = $conn->query($sql);
+
+        if ($result->num_rows <= 0) {
+
+            return 0;
+
+        }
+
+        $alimentos = array();
+
+        while ($row = $result->fetch_assoc()) {
+
+            $alimento = array(
+                "nombre" => $row['nombre_alimen'],
+                "marca" => $row['marca'],
+                "porcion" => $row['porcion'],
+                "kcal" => $row['kcal']
+            );
+
+            $alimentos[] = $alimento;
+        }
+
+
+        $conn->close();
+
+        return $alimentos;
+
+    }
+
+
 }
-
-
-
 
 ?>

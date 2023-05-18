@@ -2,7 +2,7 @@
 
 #Incluimos el fichero user.php
 
-require_once "./user.php";
+require_once "../classes/user.php";
 
 #Comprobamos si el usuario le ha dado al boton de login
 if (isset($_POST['log'])) {
@@ -44,7 +44,7 @@ if (isset($_POST['log'])) {
         $_SESSION['usuario'] = serialize($user);
 
         #Enviamos al usuario a la pagina del index
-        header("Location: ./index.php");
+        header("Location: ../index.php");
         exit();
     }
 
@@ -58,7 +58,7 @@ if (isset($_POST['log'])) {
 
 <head>
     <link href="https://fonts.googleapis.com/css?family=Abel&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" type="text/css" href=".\styles\login.css" />
+    <link rel="stylesheet" type="text/css" href="..\styles\login.css" />
     <title>Login Eatright</title>
 </head>
 

@@ -1,11 +1,18 @@
 <?php
+#Iniciamos sesion y incluimos la clase user
 session_start();
-include_once "./user.php";
+include_once "../classes/user.php";
+
+#Si la session usuario existe nos devolvera al index
 if (isset($_SESSION['usuario'])) {
 
-    header("Location:./index.php");
+    header("Location:../index.php");
 }
 
+#Si existe el envio introducira los parametros del usuario y la contraseña
+#Llamara al metodo registro que se le pasaran los parametros faltantes
+#Al final comprueba la variable registrar que si no es igual a 1 nos mostrara el mensaje de error
+#En caso de que sea 1 nos mandara al login y nos dira que el registro se ha completado
 if (isset($_POST['envio'])) {
 
     $user = new User($_POST['n_user'], $_POST['password']);
@@ -36,10 +43,18 @@ if (isset($_POST['envio'])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrate</title>
-    <link rel="stylesheet" href="./styles/sign-in.css">
+    <link rel="stylesheet" href="../styles/header.css">
+    <link rel="stylesheet" href="../styles/footer.css">
+    <link rel="stylesheet" href="../styles/sign-in.css">
 </head>
 
 <body>
+
+    <?php
+
+    include_once("../includes/header.php");
+    ?>
+
     <div id="container">
         <form action="sign-in.php" method="POST">
             <div>
@@ -84,7 +99,9 @@ if (isset($_POST['envio'])) {
 
         </form>
     </div>
-
+    <?php
+    include_once("../includes/footer.php");
+    ?>
 </body>
 
 </html>

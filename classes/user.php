@@ -1,7 +1,7 @@
 <?php
 #Se incluye la conexion con la base de datos
 
-require_once "./connect.php";
+require_once(__DIR__ . "/../config/connect.php");
 
 
 #Creamos la clase User
@@ -133,17 +133,23 @@ class User
 
     #*********Metodos para el registro y comprobaciones********
 
+    #Metodo de registro que se le envia por parametros la informacion del usuario
+
     function registro($email, $pass_repetida, $sexo, $f_nacimiento, $peso, $altura, $n_completo)
     {
 
+        #Comprueba si la contraseña cumple con los requisitos necesarios y sino es asi retorna un mensaje
         $comprobacion = $this->comprobacion_contraseña($pass_repetida);
         if ($comprobacion != 1) {
 
             return $comprobacion;
         }
 
+
+        #Aqui se cifra la contraseña con un coste de 12S
         $cifrado_pass = password_hash($this->password, PASSWORD_DEFAULT, array("cost" => 12));
 
+        #Aqui se comprueba si existe otro usuario con el mismo nombre y en caso de que sea asi envia un mensaje de error
         $c_usuario = $this->n_registros("SELECT * FROM clientes WHERE n_user='" . $this->username . "'");
 
         if ($c_usuario >= 1) {
@@ -151,7 +157,7 @@ class User
             return "Elija otro nombre de usuario, el insertado ya existe.";
         }
 
-
+        #Aqui se comprueba si existe un usuario con un email igual y en caso de que sea asi envia un mensaje de error
         $c_email = $this->n_registros("SELECT * FROM clientes WHERE email='" . $email . "'");
 
         if ($c_email >= 1) {
@@ -160,19 +166,27 @@ class User
         }
 
 
+        #Si todo sale correctamente se crea la conexion con la base de datos y se prepara la consulta sql
         $conn = conectarDB();
         $sql = "INSERT INTO clientes(n_user,email,pass,sexo,f_cumple,peso,altura,nombre_completo,estado,intentos) VALUES(?,?,?,?,?,?,?,?,'activo',3)";
 
         $result = mysqli_prepare($conn, $sql);
 
+        #Aqui se comprueba que los parametros introducidos por el usuario tienen el tipo de dato correcto y se ejecuta la consulta
         $comprobacion = mysqli_stmt_bind_param($result, "sssssdds", $this->username, $email, $cifrado_pass, $sexo, $f_nacimiento, $peso, $altura, $n_completo);
         $comprobacion = mysqli_stmt_execute($result);
 
+        #Se cierra la conexion y si todo ha salido bien devuelve 1
         mysqli_close($conn);
 
         return 1;
 
     }
+
+
+    #Metodo que comprueba si una contraseña cumple con las medidas de seguridad necesarias
+    #Se le introduce como parametro la pass repetida para comprobar si la actual contraseña es igual a la que se ha repetido
+    #Luego comprueba si la contraseña cumple con los requisitos necesarios
     private function comprobacion_contraseña($pass_repetida)
     {
 
@@ -191,6 +205,7 @@ class User
 
     }
 
+    #Metodo que comprueba el numero de registros de una consulta
     private function n_registros($sql)
     {
 

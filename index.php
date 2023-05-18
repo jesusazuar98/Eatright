@@ -12,13 +12,15 @@ session_start();
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css?family=Abel&display=swap" rel="stylesheet" />
-    <link href="styles/index.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../styles/header.css">
+    <link rel="stylesheet" href="../styles/footer.css">
+
     <title>Eatright</title>
 </head>
 
 <body>
-    <?php include './utils/header.php'; ?>
-    <?php include "./utils/footer.php"; ?>
+    <?php include './includes/header.php'; ?>
+    <?php include "./includes/footer.php"; ?>
 </body>
 
 </html>
