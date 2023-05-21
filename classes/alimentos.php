@@ -177,13 +177,13 @@ class Alimentos
 
     }
 
-    function get_comidas($u_id)
+    function get_comidas($u_id, $fecha)
     {
         $connect = conectarDB();
 
-        $sql = $connect->prepare("SELECT * FROM `comen` INNER JOIN alimentos ON alimen_id=alimentos.id_alimento WHERE cli_id=?");
+        $sql = $connect->prepare("SELECT id_comen,cli_id,alimen_id,nombre_alimen,fecha,cantidad,moment_comida,(cantidad*kcal)/porcion AS calc_kcal,(cantidad*grasas)/porcion AS calc_grasas,(cantidad*g_saturadas)/porcion AS calc_saturadas,(cantidad*carbohidratos)/porcion AS calc_carbos,(cantidad*azucar)/porcion AS calc_azucar,(cantidad*proteina)/porcion AS calc_proteina,(cantidad*sal)/porcion AS calc_sal FROM comen INNER JOIN alimentos ON alimen_id=alimentos.id_alimento WHERE cli_id=? AND fecha=?");
 
-        $sql->bind_param("i", $u_id);
+        $sql->bind_param("is", $u_id, $fecha);
 
         $sql->execute();
 
@@ -206,6 +206,7 @@ class Alimentos
 
             $momento_comidas = $fila['moment_comida'];
 
+
             $valores[$momento_comidas][] = $fila;
 
         }
@@ -221,12 +222,33 @@ class Alimentos
     {
         $code = "";
 
+        $total_kcal = 0;
+        $total_carbos = 0;
+        $total_grasas = 0;
+        $total_saturadas = 0;
+        $total_azucar = 0;
+        $total_proteina = 0;
+        $total_sal = 0;
+
         foreach ($comida as $alimento) {
 
-            $code .= "<div class='content-comida'><p>" . $alimento['nombre_alimen'] . "</p></div>";
+            $total_kcal += round($alimento['calc_kcal'], 2);
+
+            $code .= "<div class='content-comida'><p class='alimen'>" . $alimento['nombre_alimen'] . " (" . $alimento['cantidad'] . " gr o ml)</p>";
+            $code .= "<div class='valores-comida'>
+            <p>" . round($alimento['calc_kcal'], 2) . "</p>
+            <p>" . round($alimento['calc_carbos'], 2) . "</p>
+            <p>" . round($alimento['calc_grasas'], 2) . "</p>
+            <p>" . round($alimento['calc_saturadas'], 2) . "</p>
+            <p>" . round($alimento['calc_azucar'], 2) . "</p>
+            <p>" . round($alimento['calc_proteina'], 2) . "</p>
+            <p>" . round($alimento['calc_sal'], 2) . "</p>
+
+
+        </div></div>";
         }
 
-        echo $code;
+        return [$code, $total_kcal];
     }
 }
 

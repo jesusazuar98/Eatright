@@ -15,7 +15,7 @@
                 $data = $user->getUser();
 
                 ?>
-                <li><a href="../pages/add_comida.php">Añadir comida</a></li>
+                <li><a href="../pages/add_comida.php">Añadir alimento</a></li>
 
                 <li><a href="../pages/logout.php">Cerrar sesión</a></li>
 

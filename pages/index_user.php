@@ -9,7 +9,7 @@ if (isset($_SESSION['usuario'])) {
 
     $alimentos = new Alimentos();
 
-    $comidas = $alimentos->get_comidas($datos['id']);
+    $comidas = $alimentos->get_comidas($datos['id'], (isset($_GET['fecha'])) ? $_GET['fecha'] : date("Y-m-d"));
 
 
     ?>
@@ -46,65 +46,18 @@ if (isset($_SESSION['usuario'])) {
                 <?php
                 if (isset($comidas['desayuno'])) {
 
-                    $alimentos->get_comida($comidas['desayuno']);
-
+                    $r = $alimentos->get_comida($comidas['desayuno']);
+                    echo $r[0];
                 }
 
                 ?>
-                <a href="#" class="add_alimen">Añadir alimento</a>
+                <a href="./pages/add_comida.php" class="add_alimen">Añadir alimento</a>
                 <hr>
                 </hr>
             </div>
 
 
-            <div class="comida">
 
-                <div class="header-comida">
-
-                    <h2>Almuerzo</h2>
-
-                </div>
-                <a href="#" class="add_alimen">Añadir alimento</a>
-                <hr>
-                </hr>
-            </div>
-
-            <div class="comida">
-
-                <div class="header-comida">
-
-                    <h2>Comida</h2>
-
-                </div>
-                <a href="#" class="add_alimen">Añadir alimento</a>
-                <hr>
-                </hr>
-            </div>
-
-            <div class="comida">
-
-                <div class="header-comida">
-
-                    <h2>Merienda</h2>
-
-                </div>
-                <a href="#" class="add_alimen">Añadir alimento</a>
-                <hr>
-                </hr>
-            </div>
-
-            <div class="comida">
-
-                <div class="header-comida">
-
-                    <h2>Cena</h2>
-
-                </div>
-                <a href="#" class="add_alimen">Añadir alimento</a>
-
-                <hr>
-                </hr>
-            </div>
 
 
 
