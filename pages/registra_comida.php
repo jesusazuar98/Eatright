@@ -31,7 +31,7 @@ $comp = $alimento->registrar_comida($data['id'], $_POST['id_alimen'], $_POST['fe
 if ($comp != 1) {
 
     echo "<script>alert('" . $comp . "')</script>";
-    echo "<script>window.location.href = './add_comida.php'</script>";
+    echo "<script>window.location.href = '../index.php'</script>";
     exit;
 
 }

@@ -1,6 +1,7 @@
 <?php
 
-require_once "../config/connect.php";
+include_once(__DIR__ . "/../config/connect.php");
+
 
 class Alimentos
 {
@@ -174,6 +175,58 @@ class Alimentos
 
 
 
+    }
+
+    function get_comidas($u_id)
+    {
+        $connect = conectarDB();
+
+        $sql = $connect->prepare("SELECT * FROM `comen` INNER JOIN alimentos ON alimen_id=alimentos.id_alimento WHERE cli_id=?");
+
+        $sql->bind_param("i", $u_id);
+
+        $sql->execute();
+
+        $resultado = $sql->get_result();
+
+        $valores = [
+            "desayuno" => null,
+            "almuerzo" => null,
+            "comida" => null,
+            "merienda" => null,
+            "cena" => null
+        ];
+
+        if ($resultado->num_rows <= 0) {
+
+            return 0;
+        }
+
+        while ($fila = $resultado->fetch_assoc()) {
+
+            $momento_comidas = $fila['moment_comida'];
+
+            $valores[$momento_comidas][] = $fila;
+
+        }
+
+        $sql->close();
+        $connect->close();
+        return $valores;
+
+
+    }
+
+    function get_comida($comida)
+    {
+        $code = "";
+
+        foreach ($comida as $alimento) {
+
+            $code .= "<div class='content-comida'><p>" . $alimento['nombre_alimen'] . "</p></div>";
+        }
+
+        echo $code;
     }
 }
 

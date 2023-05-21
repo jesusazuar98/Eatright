@@ -73,7 +73,7 @@ if (isset($_POST['log'])) {
             <input class="inicia_sesion_button" type="submit" id="log" name="log" value="Iniciar sesion">
         </form>
     </div>
-    <button class="back" onclick="location.href='index.php'" type="button">Pagina Principal</button>
+    <button class="back" onclick="location.href='../index.php'" type="button">Pagina Principal</button>
 </body>
 
 </html>

@@ -1,0 +1,43 @@
+.content{
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.header-comida{
+
+    display: flex;
+    gap: 1em;
+    align-items: center;
+    
+}
+
+.valores{
+    display: flex;
+    gap: 0.2em;
+}
+.valores p{
+    background-color:#11E94E99;
+    padding: 0.5em;
+    font-weight: bold;
+
+}
+
+.add_alimen{
+
+    text-decoration: none;
+    font-weight: bold;
+
+}
+.add_alimen:visited{
+
+    color: #828583;
+}
+
+
+.container2{
+    display:none;
+}
+
+

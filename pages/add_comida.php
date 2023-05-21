@@ -32,7 +32,7 @@ if (!isset($_SESSION['usuario'])) {
         <h1>Añadir alimento</h1>
 
         <div id="contain1">
-            <h3>Busqueda de los alimentos por nombre:</h3>
+            <h3>Busqueda de los alimentos:</h3>
             <form action="add_comida.php" method="post">
                 <input type="text" name="n_alimento" />
                 <select name="a_marca">
