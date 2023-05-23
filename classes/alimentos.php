@@ -232,7 +232,14 @@ class Alimentos
 
         foreach ($comida as $alimento) {
 
-            $total_kcal += round($alimento['calc_kcal'], 2);
+            $total_kcal += $alimento['calc_kcal'];
+            $total_carbos += $alimento['calc_carbos'];
+            $total_grasas += $alimento['calc_grasas'];
+            $total_saturadas += $alimento['calc_saturadas'];
+            $total_azucar += $alimento['calc_azucar'];
+            $total_proteina += $alimento['calc_proteina'];
+            $total_sal += $alimento['calc_sal'];
+
 
             $code .= "<div class='content-comida'><p class='alimen'>" . $alimento['nombre_alimen'] . " (" . $alimento['cantidad'] . " gr o ml)</p>";
             $code .= "<div class='valores-comida'>
@@ -248,7 +255,56 @@ class Alimentos
         </div></div>";
         }
 
-        return [$code, $total_kcal];
+        $code .= "<div class='content-comida'><p><a href='./pages/add_comida.php' class='add_alimen'>Añadir alimento</a> | Total:</p>";
+        $code .= "<div class='valores-comida'>
+            <p>" . round($total_kcal, 2) . "</p>
+            <p>" . round($total_carbos, 2) . "</p>
+            <p>" . round($total_grasas, 2) . "</p>
+            <p>" . round($total_saturadas, 2) . "</p>
+            <p>" . round($total_azucar, 2) . "</p>
+            <p>" . round($total_proteina, 2) . "</p>
+            <p>" . round($total_sal, 2) . "</p>
+
+
+        </div></div>";
+
+        return $code;
+    }
+
+
+    function total_diario($u_id, $fecha, $data)
+    {
+
+        if ($data == 0) {
+            return 0;
+        }
+
+        $connect = conectarDB();
+
+        $sql = $connect->prepare("SELECT ROUND(SUM((cantidad*kcal)/porcion), 2) AS calc_kcal,
+        ROUND(SUM((cantidad*grasas)/porcion), 2) AS calc_grasas,
+        ROUND(SUM((cantidad*g_saturadas)/porcion), 2) AS calc_saturadas,
+        ROUND(SUM((cantidad*carbohidratos)/porcion), 2) AS calc_carbos,
+        ROUND(SUM((cantidad*azucar)/porcion), 2) AS calc_azucar,
+        ROUND(SUM((cantidad*proteina)/porcion), 2) AS calc_proteina,
+        ROUND(SUM((cantidad*sal)/porcion), 2) AS calc_sal
+        FROM comen
+        INNER JOIN alimentos ON alimen_id = alimentos.id_alimento
+        WHERE cli_id = ? AND fecha =?;
+        ");
+
+        $sql->bind_param("is", $u_id, $fecha);
+
+        $sql->execute();
+
+        $resultado = $sql->get_result();
+        $resumen = $resultado->fetch_all(MYSQLI_ASSOC);
+
+
+        $sql->close();
+        $connect->close();
+        return $resumen;
+
     }
 }
 

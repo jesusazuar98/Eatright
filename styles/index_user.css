@@ -4,8 +4,20 @@
   align-items: center;
 }
 
+.fecha {
+  display: flex;
+  width: 10%;
+  align-items: center;
+}
+
+.fecha input {
+  flex: 1;
+  padding:10px;
+}
+
 .r-comidas {
   width: 80%;
+  margin: 1em 0;
 }
 .r-comidas a a:visited {
   color: #828583;
@@ -27,6 +39,8 @@
   padding: 0.5em;
   font-weight: bold;
   flex: 1;
+  text-align: center;
+  border-radius: 10px;
 }
 
 .add_alimen {
@@ -40,7 +54,7 @@
 .content-comida {
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid ;
+  border-bottom: 1px solid;
 }
 
 .valores-comida {
@@ -56,6 +70,17 @@
   text-align: center;
   flex: 1;
 }
+
+.resumen-diario {
+
+  margin-top: 2em;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid;
+}
+
+
+
 
 .container2 {
   display: none;

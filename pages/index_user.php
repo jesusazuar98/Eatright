@@ -9,18 +9,36 @@ if (isset($_SESSION['usuario'])) {
 
     $alimentos = new Alimentos();
 
-    $comidas = $alimentos->get_comidas($datos['id'], (isset($_GET['fecha'])) ? $_GET['fecha'] : date("Y-m-d"));
+    $fecha_actual = date("Y-m-d");
+
+    $comidas = $alimentos->get_comidas($datos['id'], (isset($_GET['fecha'])) ? $_GET['fecha'] : $fecha_actual);
+
+    $r_diario = $alimentos->total_diario($datos['id'], (isset($_GET['fecha'])) ? $_GET['fecha'] : $fecha_actual, $comidas);
+
+
 
 
     ?>
 
     <div class="content">
 
-        <!-- <div class="fecha">
-            <h3>Registro de comida de la fecha: <p></p>
-            </h3>
+        <div class="fecha">
+            <a
+                href="../index.php?fecha=<?php echo isset($_GET['fecha']) ? $fecha = date("Y-m-d", strtotime($_GET['fecha'] . " -1 day")) : $fecha = date("Y-m-d", strtotime($fecha_actual . " -1 day")); ?>">
+                <img alt="left" src="./images/flecha-izquierda.png" />
+            </a>
 
-        </div> -->
+
+
+            <input type="date" id="calendar" name="calendar" onchange="cambiaFecha(event)"
+                value="<?php echo isset($_GET['fecha']) ? $_GET['fecha'] : $fecha_actual ?>">
+
+            <a
+                href="../index.php?fecha=<?php echo isset($_GET['fecha']) ? $fecha = date("Y-m-d", strtotime($_GET['fecha'] . " +1 day")) : $fecha = date("Y-m-d", strtotime($fecha_actual . " +1 day")); ?>">
+                <img alt="left" src="./images/flecha-derecha.png" />
+            </a>
+        </div>
+        <script src="./js/changeDate.js"></script>
 
         <div class="r-comidas">
 
@@ -47,14 +65,125 @@ if (isset($_SESSION['usuario'])) {
                 if (isset($comidas['desayuno'])) {
 
                     $r = $alimentos->get_comida($comidas['desayuno']);
-                    echo $r[0];
+                    echo $r;
+                } else {
+
+                    echo "<a href='./pages/add_comida.php' class='add_alimen'>Añadir alimento</a>";
+                    echo "<hr></hr>";
                 }
 
                 ?>
-                <a href="./pages/add_comida.php" class="add_alimen">Añadir alimento</a>
-                <hr>
-                </hr>
+
             </div>
+
+            <div class="comida">
+
+                <div class="header-comida">
+
+                    <h2>Almuerzo</h2>
+
+                </div>
+                <?php
+                if (isset($comidas['almuerzo'])) {
+
+                    $r = $alimentos->get_comida($comidas['almuerzo']);
+                    echo $r;
+                } else {
+
+                    echo "<a href='./pages/add_comida.php' class='add_alimen'>Añadir alimento</a>";
+                    echo "<hr></hr>";
+                }
+                ?>
+
+
+            </div>
+
+            <div class="comida">
+
+                <div class="header-comida">
+
+                    <h2>Comida</h2>
+
+                </div>
+                <?php
+                if (isset($comidas['comida'])) {
+
+                    $r = $alimentos->get_comida($comidas['comida']);
+                    echo $r;
+                } else {
+
+                    echo "<a href='./pages/add_comida.php' class='add_alimen'>Añadir alimento</a>";
+                    echo "<hr></hr>";
+                }
+
+                ?>
+
+            </div>
+
+            <div class="comida">
+
+                <div class="header-comida">
+
+                    <h2>Merienda</h2>
+
+                </div>
+                <?php
+                if (isset($comidas['merienda'])) {
+
+                    $r = $alimentos->get_comida($comidas['merienda']);
+                    echo $r;
+                } else {
+
+                    echo "<a href='./pages/add_comida.php' class='add_alimen'>Añadir alimento</a>";
+                    echo "<hr></hr>";
+                }
+
+                ?>
+
+            </div>
+
+            <div class="comida">
+
+                <div class="header-comida">
+
+                    <h2>Cena</h2>
+
+                </div>
+                <?php
+                if (isset($comidas['cena'])) {
+
+                    $r = $alimentos->get_comida($comidas['cena']);
+                    echo $r;
+                } else {
+
+                    echo "<a href='./pages/add_comida.php' class='add_alimen'>Añadir alimento</a>";
+                    echo "<hr></hr>";
+                }
+
+                ?>
+
+                <div class="resumen-diario">
+                    <h2>Resumen Diario</h2>
+                    <div class="valores-comida">
+                        <?php
+                        if ($r_diario != 0) {
+                            echo "
+                        <p>" . $r_diario[0]['calc_kcal'] . "</p>
+                        <p>" . $r_diario[0]['calc_carbos'] . "</p>
+                        <p>" . $r_diario[0]['calc_grasas'] . "</p>
+                        <p>" . $r_diario[0]['calc_saturadas'] . "</p>
+                        <p>" . $r_diario[0]['calc_azucar'] . "</p>
+                        <p>" . $r_diario[0]['calc_proteina'] . "</p>
+                        <p>" . $r_diario[0]['calc_sal'] . "</p>
+                        ";
+                        }
+                        ?>
+                    </div>
+                </div>
+
+            </div>
+
+
 
 
 
