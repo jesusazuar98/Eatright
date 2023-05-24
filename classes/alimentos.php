@@ -242,6 +242,12 @@ class Alimentos
 
 
             $code .= "<div class='content-comida'><p class='alimen'>" . $alimento['nombre_alimen'] . " (" . $alimento['cantidad'] . " gr o ml)</p>";
+            $code .= "<div class='options'>";
+            $code .= "<div class='option'><form action='./pages/options_comen.php' method='POST'><input type='hidden' value=" . $alimento['id_comen'] . "><input type='image' src='./images/eliminar.png' name='borrar'/></form></div>";
+            $code .= "<div class='option'><form action='./pages/options_comen.php' method='POST'><input type='hidden' value=" . $alimento['id_comen'] . "><input type='image' src='./images/eliminar.png' name='editar'/></form></div>";
+
+            $code .= "</div>";
+
             $code .= "<div class='valores-comida'>
             <p>" . round($alimento['calc_kcal'], 2) . "</p>
             <p>" . round($alimento['calc_carbos'], 2) . "</p>
@@ -255,7 +261,7 @@ class Alimentos
         </div></div>";
         }
 
-        $code .= "<div class='content-comida'><p><a href='./pages/add_comida.php' class='add_alimen'>Añadir alimento</a> | Total:</p>";
+        $code .= "<div class='content-comida'><p><a href='#container2' onclick='addComida()' class='add_alimen'>Añadir alimento</a> | Total:</p>";
         $code .= "<div class='valores-comida'>
             <p>" . round($total_kcal, 2) . "</p>
             <p>" . round($total_carbos, 2) . "</p>

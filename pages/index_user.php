@@ -68,7 +68,7 @@ if (isset($_SESSION['usuario'])) {
                     echo $r;
                 } else {
 
-                    echo "<a href='./pages/add_comida.php' class='add_alimen'>Añadir alimento</a>";
+                    echo "<a href='#container2' onclick='addComida()' class='add_alimen'>Añadir alimento</a>";
                     echo "<hr></hr>";
                 }
 
@@ -90,7 +90,7 @@ if (isset($_SESSION['usuario'])) {
                     echo $r;
                 } else {
 
-                    echo "<a href='./pages/add_comida.php' class='add_alimen'>Añadir alimento</a>";
+                    echo "<a href='#container2' onclick='addComida()' class='add_alimen'>Añadir alimento</a>";
                     echo "<hr></hr>";
                 }
                 ?>
@@ -112,7 +112,7 @@ if (isset($_SESSION['usuario'])) {
                     echo $r;
                 } else {
 
-                    echo "<a href='./pages/add_comida.php' class='add_alimen'>Añadir alimento</a>";
+                    echo "<a href='#container2' onclick='addComida()' class='add_alimen'>Añadir alimento</a>";
                     echo "<hr></hr>";
                 }
 
@@ -134,7 +134,7 @@ if (isset($_SESSION['usuario'])) {
                     echo $r;
                 } else {
 
-                    echo "<a href='./pages/add_comida.php' class='add_alimen'>Añadir alimento</a>";
+                    echo "<a href='#container2' onclick='addComida()' class='add_alimen'>Añadir alimento</a>";
                     echo "<hr></hr>";
                 }
 
@@ -156,7 +156,7 @@ if (isset($_SESSION['usuario'])) {
                     echo $r;
                 } else {
 
-                    echo "<a href='./pages/add_comida.php' class='add_alimen'>Añadir alimento</a>";
+                    echo "<a href='#container2' onclick='addComida()' class='add_alimen'>Añadir alimento</a>";
                     echo "<hr></hr>";
                 }
 
@@ -194,10 +194,11 @@ if (isset($_SESSION['usuario'])) {
 
         </div>
 
-        <div class="container2">
+        <div class="container2" id="container2">
 
 
         </div>
+        <script src="./js/formComida.js"></script>
     </div>
     <?php
 }
