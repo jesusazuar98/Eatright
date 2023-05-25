@@ -51,6 +51,7 @@
   color: #0000ee;
 }
 
+
 .content-comida {
   display: flex;
   justify-content: space-between;
@@ -80,13 +81,14 @@
 
 .options {
   display: flex;
-  gap: 0.2em;
 }
 
 .option {
   display: flex;
   align-items: center;
+  margin-left: 0.5em;
 }
+
 
 
 

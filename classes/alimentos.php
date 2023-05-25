@@ -243,8 +243,8 @@ class Alimentos
 
             $code .= "<div class='content-comida'><p class='alimen'>" . $alimento['nombre_alimen'] . " (" . $alimento['cantidad'] . " gr o ml)</p>";
             $code .= "<div class='options'>";
-            $code .= "<div class='option'><form action='./pages/options_comen.php' method='POST'><input type='hidden' value=" . $alimento['id_comen'] . "><input type='image' src='./images/eliminar.png' name='borrar'/></form></div>";
-            $code .= "<div class='option'><form action='./pages/options_comen.php' method='POST'><input type='hidden' value=" . $alimento['id_comen'] . "><input type='image' src='./images/eliminar.png' name='editar'/></form></div>";
+            $code .= "<div class='option'><form action='./pages/options_comen.php' method='POST'><input type='hidden' name='id_comida' value=" . $alimento['id_comen'] . "><input type='image' src='./images/eliminar.png' name='borrar'/></form></div>";
+            $code .= "<div class='option'><form action='./pages/options_comen.php' method='POST'><input type='hidden' name='id_comida' value=" . $alimento['id_comen'] . "><input type='image' src='./images/editar.png' name='editar'/></form></div>";
 
             $code .= "</div>";
 
@@ -312,6 +312,55 @@ class Alimentos
         return $resumen;
 
     }
+    private function deleteComida($id_comida)
+    {
+        $conn = conectarDB();
+        $sql = "DELETE FROM comen WHERE id_comen=?";
+
+        $data = $conn->prepare($sql);
+        $data->bind_param('i', $id_comida);
+        $data = $data->execute();
+
+        if ($data == false) {
+
+            return "<script>alert('Ha ocurrido un error en el momento de eliminar'); window.location.href='../index.php'</script>";
+
+        }
+        $conn->close();
+        return "<script>alert('El alimento se ha eliminado correctamente de tu comida.'); window.location.href='../index.php'</script>";
+
+    }
+    function checkComida($u_id, $id_comida)
+    {
+        $conn = conectarDB();
+
+        $sql = "SELECT id_comen,cli_id FROM comen WHERE id_comen=?";
+
+        $data = $conn->prepare($sql);
+
+        $data->bind_param('i', $id_comida);
+
+        $data->execute();
+
+        $result = $data->get_result();
+
+        $result = $result->fetch_array();
+
+        if ($result[1] != $u_id) {
+
+            $data->close();
+            $conn->close();
+
+            return "<script>alert('El usuario y la comida no coinciden'); window.location.href='../index.php'</script>";
+        }
+        $data->close();
+        $conn->close();
+
+        $r = $this->deleteComida($id_comida);
+        return $r;
+    }
+
+
 }
 
 ?>

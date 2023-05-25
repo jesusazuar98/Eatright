@@ -1,10 +1,16 @@
 <?php
 include_once "../classes/alimentos.php";
+session_start();
 
+if (!isset($_SESSION['usuario'])) {
+    return false;
+}
 
 $alimentos = new Alimentos();
 
 $result = $alimentos->buscar_alimentos($_POST['n_alimento'], $_POST['a_marca']);
+
+
 
 if ($result == 0) {
 

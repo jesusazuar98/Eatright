@@ -16,7 +16,8 @@ session_start();
     if (isset($_SESSION['usuario'])) {
 
         ?>
-        <link rel="stylesheet" href="../styles/index_user.css">
+        <link rel="stylesheet" href="./styles/index_user.css">
+        <link rel="stylesheet" href="./styles/add_comida.css">
         <?php
     }
     ?>
