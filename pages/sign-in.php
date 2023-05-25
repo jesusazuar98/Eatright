@@ -59,40 +59,40 @@ if (isset($_POST['envio'])) {
     <div id="container">
         <form action="sign-in.php" method="POST">
             <div>
-                <label for="n_user">Nombre de usuario: </label>
+                <label for="n_user">Nombre de usuario: </label><br>
                 <input type="text" name="n_user" placeholder="Nuevo nombre de usuario" required />
             </div>
             <div>
-                <label for="mail">Email: </label>
+                <label for="mail">Email: </label><br>
                 <input type="email" name="mail" placeholder="Introduce tu email" required />
             </div>
             <div>
-                <label for="password">Contraseña: </label>
+                <label for="password">Contraseña: </label><br>
                 <input type="password" name="password" placeholder="Contraseña" minlength="8" />
             </div>
             <div>
-                <label for="r_password">Repita la contraseña: </label>
+                <label for="r_password">Repita la contraseña: </label><br>
                 <input type="password" name="r_password" placeholder="Repita la contraseña" minlength="8" />
             </div>
             <div>
-                <label for="sexo">Selecciona un sexo: </label>
+                <label for="sexo">Selecciona un sexo: </label><br>
                 <input type="radio" id="M" name="sexo" value="M" checked /><label for="M">Masculino</label>
                 <input type="radio" id="F" name="sexo" value="F" /><label for="F">Femenino</label>
             </div>
             <div>
-                <label for="nacimiento">Fecha de nacimiento:</label>
+                <label for="nacimiento">Fecha de nacimiento:</label><br>
                 <input type="date" id="nacimiento" name="nacimiento" required />
             </div>
             <div>
-                <label for="peso">Peso</label>
+                <label for="peso">Peso: </label><br>
                 <input type="number" id="peso" name="peso" step="0.01" value="0" required />
             </div>
             <div>
-                <label for="altura">Altura</label>
+                <label for="altura">Altura: </label><br>
                 <input type="number" id="altura" name="altura" step="0.01" value="0" required />
             </div>
             <div>
-                <label for="n_completo">Nombre completo</label>
+                <label for="n_completo">Nombre completo: </label><br>
                 <input type="text" id="n_completo" name="n_completo" placeholder="Introduce tu nombre" required />
             </div>
             <input type="submit" name="envio" id="envio" value="Enviar" />
