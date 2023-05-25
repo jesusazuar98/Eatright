@@ -11,7 +11,7 @@ const muestraAlimentos = (vals) => {
   porcion = vals["porcion"];
   kcal = vals["kcal"];
   code =
-    "<form action='registra_comida.php' method='POST'><p>" +
+    "<form action='./pages/registra_comida.php' method='POST'><p>" +
     vals["nombre"] +
     " (" +
     vals["marca"] +
@@ -29,4 +29,43 @@ const muestraAlimentos = (vals) => {
 
   code += "<input type='submit' name='send_food' value='Insertar comida'/>";
   document.getElementById("c2").innerHTML = code;
+};
+
+const listAlimentos = () => {
+  let nAlimento = document.getElementById("n_alimento").value;
+  let marca = document.getElementById("a_marca").value;
+  let content = document.getElementById("contain2");
+  let url = "../pages/add_comida.php";
+  let formData = new FormData();
+
+  formData.append("n_alimento", nAlimento);
+  formData.append("a_marca", marca);
+
+  fetch(url, { method: "POST", body: formData })
+    .then((response) => response.json())
+    .then((data) => {
+      content.innerHTML = data;
+    })
+    .catch((err) => console.log(err));
+};
+
+const addComida = () => {
+  code =
+    "<h1>Añadir alimento</h1>" +
+    '<div id="contain1">' +
+    "<h3>Busqueda de los alimentos:</h3>" +
+    '<form action="">' +
+    '<input type="text" name="n_alimento" id="n_alimento" onchange="listAlimentos()"/>' +
+    '<select name="a_marca" id="a_marca" onchange="listAlimentos()">' +
+    '<option value="hacendado" selected>Hacendado</option>' +
+    '<option value="aldi">Aldi</option>' +
+    '<option value="alcampo">Alcampo</option>' +
+    '<option value="dia">DIA</option>' +
+    '<option value="carrefour">Carrefour</option>' +
+    "</select>" +
+    "</form></div><div id='contain2'></div>";
+
+  document.getElementById("container2").style.display = "flex";
+
+  document.getElementById("container2").innerHTML = code;
 };

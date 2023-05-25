@@ -177,13 +177,13 @@ class Alimentos
 
     }
 
-    function get_comidas($u_id)
+    function get_comidas($u_id, $fecha)
     {
         $connect = conectarDB();
 
-        $sql = $connect->prepare("SELECT * FROM `comen` INNER JOIN alimentos ON alimen_id=alimentos.id_alimento WHERE cli_id=?");
+        $sql = $connect->prepare("SELECT id_comen,cli_id,alimen_id,nombre_alimen,fecha,cantidad,moment_comida,(cantidad*kcal)/porcion AS calc_kcal,(cantidad*grasas)/porcion AS calc_grasas,(cantidad*g_saturadas)/porcion AS calc_saturadas,(cantidad*carbohidratos)/porcion AS calc_carbos,(cantidad*azucar)/porcion AS calc_azucar,(cantidad*proteina)/porcion AS calc_proteina,(cantidad*sal)/porcion AS calc_sal FROM comen INNER JOIN alimentos ON alimen_id=alimentos.id_alimento WHERE cli_id=? AND fecha=?");
 
-        $sql->bind_param("i", $u_id);
+        $sql->bind_param("is", $u_id, $fecha);
 
         $sql->execute();
 
@@ -206,6 +206,7 @@ class Alimentos
 
             $momento_comidas = $fila['moment_comida'];
 
+
             $valores[$momento_comidas][] = $fila;
 
         }
@@ -221,13 +222,145 @@ class Alimentos
     {
         $code = "";
 
+        $total_kcal = 0;
+        $total_carbos = 0;
+        $total_grasas = 0;
+        $total_saturadas = 0;
+        $total_azucar = 0;
+        $total_proteina = 0;
+        $total_sal = 0;
+
         foreach ($comida as $alimento) {
 
-            $code .= "<div class='content-comida'><p>" . $alimento['nombre_alimen'] . "</p></div>";
+            $total_kcal += $alimento['calc_kcal'];
+            $total_carbos += $alimento['calc_carbos'];
+            $total_grasas += $alimento['calc_grasas'];
+            $total_saturadas += $alimento['calc_saturadas'];
+            $total_azucar += $alimento['calc_azucar'];
+            $total_proteina += $alimento['calc_proteina'];
+            $total_sal += $alimento['calc_sal'];
+
+
+            $code .= "<div class='content-comida'><p class='alimen'>" . $alimento['nombre_alimen'] . " (" . $alimento['cantidad'] . " gr o ml)</p>";
+            $code .= "<div class='options'>";
+            $code .= "<div class='option'><form action='./pages/options_comen.php' method='POST'><input type='hidden' name='id_comida' value=" . $alimento['id_comen'] . "><input type='image' src='./images/eliminar.png' name='borrar'/></form></div>";
+            $code .= "<div class='option'><form action='./pages/options_comen.php' method='POST'><input type='hidden' name='id_comida' value=" . $alimento['id_comen'] . "><input type='image' src='./images/editar.png' name='editar'/></form></div>";
+
+            $code .= "</div>";
+
+            $code .= "<div class='valores-comida'>
+            <p>" . round($alimento['calc_kcal'], 2) . "</p>
+            <p>" . round($alimento['calc_carbos'], 2) . "</p>
+            <p>" . round($alimento['calc_grasas'], 2) . "</p>
+            <p>" . round($alimento['calc_saturadas'], 2) . "</p>
+            <p>" . round($alimento['calc_azucar'], 2) . "</p>
+            <p>" . round($alimento['calc_proteina'], 2) . "</p>
+            <p>" . round($alimento['calc_sal'], 2) . "</p>
+
+
+        </div></div>";
         }
 
-        echo $code;
+        $code .= "<div class='content-comida'><p><a href='#container2' onclick='addComida()' class='add_alimen'>Añadir alimento</a> | Total:</p>";
+        $code .= "<div class='valores-comida'>
+            <p>" . round($total_kcal, 2) . "</p>
+            <p>" . round($total_carbos, 2) . "</p>
+            <p>" . round($total_grasas, 2) . "</p>
+            <p>" . round($total_saturadas, 2) . "</p>
+            <p>" . round($total_azucar, 2) . "</p>
+            <p>" . round($total_proteina, 2) . "</p>
+            <p>" . round($total_sal, 2) . "</p>
+
+
+        </div></div>";
+
+        return $code;
     }
+
+
+    function total_diario($u_id, $fecha, $data)
+    {
+
+        if ($data == 0) {
+            return 0;
+        }
+
+        $connect = conectarDB();
+
+        $sql = $connect->prepare("SELECT ROUND(SUM((cantidad*kcal)/porcion), 2) AS calc_kcal,
+        ROUND(SUM((cantidad*grasas)/porcion), 2) AS calc_grasas,
+        ROUND(SUM((cantidad*g_saturadas)/porcion), 2) AS calc_saturadas,
+        ROUND(SUM((cantidad*carbohidratos)/porcion), 2) AS calc_carbos,
+        ROUND(SUM((cantidad*azucar)/porcion), 2) AS calc_azucar,
+        ROUND(SUM((cantidad*proteina)/porcion), 2) AS calc_proteina,
+        ROUND(SUM((cantidad*sal)/porcion), 2) AS calc_sal
+        FROM comen
+        INNER JOIN alimentos ON alimen_id = alimentos.id_alimento
+        WHERE cli_id = ? AND fecha =?;
+        ");
+
+        $sql->bind_param("is", $u_id, $fecha);
+
+        $sql->execute();
+
+        $resultado = $sql->get_result();
+        $resumen = $resultado->fetch_all(MYSQLI_ASSOC);
+
+
+        $sql->close();
+        $connect->close();
+        return $resumen;
+
+    }
+    private function deleteComida($id_comida)
+    {
+        $conn = conectarDB();
+        $sql = "DELETE FROM comen WHERE id_comen=?";
+
+        $data = $conn->prepare($sql);
+        $data->bind_param('i', $id_comida);
+        $data = $data->execute();
+
+        if ($data == false) {
+
+            return "<script>alert('Ha ocurrido un error en el momento de eliminar'); window.location.href='../index.php'</script>";
+
+        }
+        $conn->close();
+        return "<script>alert('El alimento se ha eliminado correctamente de tu comida.'); window.location.href='../index.php'</script>";
+
+    }
+    function checkComida($u_id, $id_comida)
+    {
+        $conn = conectarDB();
+
+        $sql = "SELECT id_comen,cli_id FROM comen WHERE id_comen=?";
+
+        $data = $conn->prepare($sql);
+
+        $data->bind_param('i', $id_comida);
+
+        $data->execute();
+
+        $result = $data->get_result();
+
+        $result = $result->fetch_array();
+
+        if ($result[1] != $u_id) {
+
+            $data->close();
+            $conn->close();
+
+            return "<script>alert('El usuario y la comida no coinciden'); window.location.href='../index.php'</script>";
+        }
+        $data->close();
+        $conn->close();
+
+        $r = $this->deleteComida($id_comida);
+        return $r;
+    }
+
+
 }
 
 ?>

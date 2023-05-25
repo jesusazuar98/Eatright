@@ -1,43 +1,95 @@
-.content{
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.header-comida{
-
-    display: flex;
-    gap: 1em;
-    align-items: center;
-    
+.fecha {
+  display: flex;
+  width: 10%;
+  align-items: center;
 }
 
-.valores{
-    display: flex;
-    gap: 0.2em;
-}
-.valores p{
-    background-color:#11E94E99;
-    padding: 0.5em;
-    font-weight: bold;
-
+.fecha input {
+  flex: 1;
+  padding: 10px;
 }
 
-.add_alimen{
-
-    text-decoration: none;
-    font-weight: bold;
-
+.r-comidas {
+  width: 80%;
+  margin: 1em 0;
 }
-.add_alimen:visited{
-
-    color: #828583;
+.r-comidas a a:visited {
+  color: #0000ee;
 }
 
-
-.container2{
-    display:none;
+.header-comida {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
+
+.valores {
+  display: flex;
+  gap: 0.2em;
+  width: 70%;
+}
+.valores p {
+  background-color: #11e94e99;
+  padding: 0.5em;
+  font-weight: bold;
+  flex: 1;
+  text-align: center;
+  border-radius: 10px;
+}
+
+.add_alimen {
+  text-decoration: none;
+  font-weight: bold;
+}
+.add_alimen:visited {
+  color: #0000ee;
+}
+
+
+.content-comida {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid;
+}
+
+.valores-comida {
+  display: flex;
+  gap: 0.2em;
+  align-content: center;
+  width: 70%;
+}
+
+.valores-comida p {
+  padding: 0 0.5em;
+  font-weight: bold;
+  text-align: center;
+  flex: 1;
+}
+
+.resumen-diario {
+  margin-top: 2em;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid;
+}
+
+.options {
+  display: flex;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  margin-left: 0.5em;
+}
+
+
+
 
 
