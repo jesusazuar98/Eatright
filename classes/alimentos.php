@@ -6,7 +6,7 @@ include_once(__DIR__ . "/../config/connect.php");
 class Alimentos
 {
 
-    function numeroAlimentos($i_sql)
+    private function numeroAlimentos($i_sql)
     {
 
         $connect = conectarDB();
@@ -152,9 +152,17 @@ class Alimentos
     function registrar_comida($u_id, $id_alimento, $fecha, $u_porcion, $comida)
     {
         $comprobacion = $this->numeroAlimentos("SELECT COUNT(*) AS total FROM alimentos WHERE id_alimento=" . $id_alimento . "");
+        $comprobacion_comida = $this->numeroAlimentos("SELECT COUNT(*) AS total FROM comen WHERE alimen_id = '" . $id_alimento . "' AND fecha = '" . $fecha . "' AND moment_comida = '" . $comida . "' AND cli_id = " . $u_id);
+
+
 
         if ($comprobacion != 1) {
             return "El alimento no existe y no se ha podido registrar.";
+        }
+
+        if ($comprobacion_comida > 0) {
+
+            return "Ya has introducido este alimento en esta comida, ve a " . $comida . " para editarlo.";
         }
 
         $datos = $u_id . "," . $id_alimento . ",'" . $fecha . "'," . $u_porcion . ",'" . $comida . "'";
@@ -230,6 +238,7 @@ class Alimentos
         $total_proteina = 0;
         $total_sal = 0;
 
+
         foreach ($comida as $alimento) {
 
             $total_kcal += $alimento['calc_kcal'];
@@ -244,7 +253,7 @@ class Alimentos
             $code .= "<div class='content-comida'><p class='alimen'>" . $alimento['nombre_alimen'] . " (" . $alimento['cantidad'] . " gr o ml)</p>";
             $code .= "<div class='options'>";
             $code .= "<div class='option'><form action='./pages/options_comen.php' method='POST'><input type='hidden' name='id_comida' value=" . $alimento['id_comen'] . "><input type='image' src='./images/eliminar.png' name='borrar'/></form></div>";
-            $code .= "<div class='option'><form action='' method='POST'><a href='#container2' onclick='changeAlimento(" . $alimento['alimen_id'] . ",event)'><img  src='./images/editar.png'/></a></form></div>";
+            $code .= "<div class='option'><form action='' method='POST'><a href='#container2' onclick='changeAlimento(" . $alimento['alimen_id'] . ",event," . $alimento['id_comen'] . ")'><img  src='./images/editar.png'/></a></form></div>";
 
             $code .= "</div>";
 
@@ -381,6 +390,26 @@ class Alimentos
         $result = $result->fetch_row();
 
         return $result;
+
+    }
+
+    function change_comida($id_comida, $porcion)
+    {
+
+        $conn = conectarDB();
+        $sql = "UPDATE comen SET cantidad=? WHERE id_comen=?";
+
+        $data = $conn->prepare($sql);
+        $data->bind_param('ii', $porcion, $id_comida);
+
+        if ($data->execute() == false) {
+
+            return "<script>alert('Ha ocurrido un error al intentar actualizar la comida'); window.location.href='../index.php'</script>";
+        } else {
+            $data->close();
+            $conn->close();
+            return "<script>alert('La comida se ha actualizado correctamente'); window.location.href='../index.php'</script>";
+        }
 
     }
 

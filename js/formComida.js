@@ -49,7 +49,7 @@ const listAlimentos = () => {
     .catch((err) => console.log(err));
 };
 
-const changeAlimento = (id, e) => {
+const changeAlimento = (id, e, idComida) => {
   e.preventDefault();
   let content = document.getElementById("container2");
 
@@ -58,6 +58,7 @@ const changeAlimento = (id, e) => {
 
   let formData = new FormData();
   formData.append("id_alimento", id);
+  formData.append("id_comida", idComida);
 
   fetch(url, { method: "POST", body: formData })
     .then((response) => response.json())
@@ -93,8 +94,18 @@ const calculaValores = (vals) => {
   let p_u = document.getElementById("p_u").value;
   let p_a = vals[0];
 
-  let calc = (p_u * 10) / 100;
+  let valores = vals.slice(1);
 
-  console.log(vals);
-  // document.getElementById(element).value = calc;
+  let newVals = valores.map((val) => {
+    return (p_u * val) / p_a;
+  });
+
+  console.log(newVals);
+  document.getElementById("v_kcal").value = newVals[0];
+  document.getElementById("v_grasas").value = newVals[1];
+  document.getElementById("v_gsatu").value = newVals[2];
+  document.getElementById("v_carbos").value = newVals[3];
+  document.getElementById("v_azucar").value = newVals[4];
+  document.getElementById("v_prote").value = newVals[5];
+  document.getElementById("v_sal").value = newVals[6];
 };
