@@ -244,7 +244,7 @@ class Alimentos
             $code .= "<div class='content-comida'><p class='alimen'>" . $alimento['nombre_alimen'] . " (" . $alimento['cantidad'] . " gr o ml)</p>";
             $code .= "<div class='options'>";
             $code .= "<div class='option'><form action='./pages/options_comen.php' method='POST'><input type='hidden' name='id_comida' value=" . $alimento['id_comen'] . "><input type='image' src='./images/eliminar.png' name='borrar'/></form></div>";
-            $code .= "<div class='option'><form action='./pages/options_comen.php' method='POST'><input type='hidden' name='id_comida' value=" . $alimento['id_comen'] . "><input type='image' src='./images/editar.png' name='editar'/></form></div>";
+            $code .= "<div class='option'><form action='' method='POST'><a href='#container2' onclick='changeAlimento(" . $alimento['alimen_id'] . ",event)'><img  src='./images/editar.png'/></a></form></div>";
 
             $code .= "</div>";
 
@@ -360,6 +360,29 @@ class Alimentos
         return $r;
     }
 
+    function data_Alimento($id_alimento)
+    {
+
+        $conn = conectarDB();
+        $sql = "SELECT * FROM alimentos WHERE id_alimento=?";
+
+        $data = $conn->prepare($sql);
+        $data->bind_param('i', $id_alimento);
+
+
+        if ($data->execute() == false) {
+            return false;
+        }
+
+
+
+        $result = $data->get_result();
+
+        $result = $result->fetch_row();
+
+        return $result;
+
+    }
 
 }
 

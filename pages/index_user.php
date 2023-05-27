@@ -47,7 +47,6 @@ if (isset($_SESSION['usuario'])) {
                 <div class="header-comida">
 
                     <h2>Desayuno</h2>
-
                     <div class="valores">
                         <p>Calorias (kcal)</p>
                         <p>Carbohidratos</p>
@@ -59,7 +58,6 @@ if (isset($_SESSION['usuario'])) {
 
 
                     </div>
-
                 </div>
                 <?php
                 if (isset($comidas['desayuno'])) {

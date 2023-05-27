@@ -1,4 +1,4 @@
-const calculaKcal = (p_user, porcion, kcal) => {
+const calculaKcal = (p_user, porcion) => {
   p_user = p_user.target.value;
 
   calc = (p_user * kcal) / porcion;
@@ -35,7 +35,7 @@ const listAlimentos = () => {
   let nAlimento = document.getElementById("n_alimento").value;
   let marca = document.getElementById("a_marca").value;
   let content = document.getElementById("contain2");
-  let url = "../pages/add_comida.php";
+  let url = "../utils/add_comida.php";
   let formData = new FormData();
 
   formData.append("n_alimento", nAlimento);
@@ -45,6 +45,25 @@ const listAlimentos = () => {
     .then((response) => response.json())
     .then((data) => {
       content.innerHTML = data;
+    })
+    .catch((err) => console.log(err));
+};
+
+const changeAlimento = (id, e) => {
+  e.preventDefault();
+  let content = document.getElementById("container2");
+
+  let url = "../utils/editar_comida.php";
+  content.style.display = "flex";
+
+  let formData = new FormData();
+  formData.append("id_alimento", id);
+
+  fetch(url, { method: "POST", body: formData })
+    .then((response) => response.json())
+    .then((data) => {
+      content.innerHTML = "<div id='c2'>" + data + "</div>";
+      window.location.href = "#c2";
     })
     .catch((err) => console.log(err));
 };
@@ -68,4 +87,14 @@ const addComida = () => {
   document.getElementById("container2").style.display = "flex";
 
   document.getElementById("container2").innerHTML = code;
+};
+
+const calculaValores = (vals) => {
+  let p_u = document.getElementById("p_u").value;
+  let p_a = vals[0];
+
+  let calc = (p_u * 10) / 100;
+
+  console.log(vals);
+  // document.getElementById(element).value = calc;
 };

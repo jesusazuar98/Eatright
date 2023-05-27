@@ -5,6 +5,7 @@
 }
 
 .fecha {
+
   display: flex;
   width: 10%;
   align-items: center;
@@ -30,11 +31,13 @@
 }
 
 .valores {
+
   display: flex;
   gap: 0.2em;
   width: 70%;
 }
 .valores p {
+
   background-color: #11e94e99;
   padding: 0.5em;
   font-weight: bold;

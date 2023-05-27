@@ -13,6 +13,11 @@ if (isset($_POST['borrar_x']) && isset($_POST['borrar_y']) && isset($_SESSION['u
     $data_user = $user->getUser();
 
     echo $alimentos->checkComida($data_user['id'], $_POST['id_comida']);
+}else{
+
+    header("Location:../index.php");
+    exit;
+
 }
 
 ?>
