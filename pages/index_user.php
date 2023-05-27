@@ -200,4 +200,7 @@ if (isset($_SESSION['usuario'])) {
     </div>
     <?php
 }
+else{
+    include_once(__DIR__ . "/index_otros.html");
+}
 ?>

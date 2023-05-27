@@ -22,6 +22,7 @@ session_start();
     }
     ?>
     <link rel="stylesheet" href="../styles/header.css">
+    <link rel="stylesheet" href="../styles/body.css">
     <link rel="stylesheet" href="../styles/footer.css">
 
     <title>Eatright</title>
