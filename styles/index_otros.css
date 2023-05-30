@@ -1,0 +1,22 @@
+table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  td {
+    vertical-align: top;
+  }
+  
+  h3 {
+    margin-top: 0;
+  }
+  
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  .button {
+    text-align: center;
+    margin-top: 20px;
+  }

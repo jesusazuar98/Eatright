@@ -37,7 +37,7 @@
   width: 70%;
 }
 .valores p {
-
+  
   background-color: #11e94e99;
   padding: 0.5em;
   font-weight: bold;
@@ -92,6 +92,12 @@
   margin-left: 0.5em;
 }
 
+#back-top{
+
+  position: fixed;
+  bottom: 100px;
+  right: 20px;
+}
 
 
 

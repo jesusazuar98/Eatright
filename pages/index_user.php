@@ -197,10 +197,10 @@ if (isset($_SESSION['usuario'])) {
 
         </div>
         <script src="./js/formComida.js"></script>
+        <a id="back-top" href="#"><img src="./images/flecha-hacia-arriba-sobre-un-fondo-de-circulo-negro.png"></a>
     </div>
     <?php
-}
-else{
+} else {
     include_once(__DIR__ . "/index_otros.html");
 }
 ?>

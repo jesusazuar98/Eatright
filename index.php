@@ -19,6 +19,11 @@ session_start();
         <link rel="stylesheet" href="./styles/index_user.css">
         <link rel="stylesheet" href="./styles/add_comida.css">
         <?php
+    } else {
+
+        ?>
+        <link rel="stylesheet" href="./styles/index_otros.css">
+        <?php
     }
     ?>
     <link rel="stylesheet" href="../styles/header.css">
