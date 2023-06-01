@@ -31,16 +31,14 @@ const muestraAlimentos = (vals) => {
   document.getElementById("c2").innerHTML = code;
 };
 
-const listAlimentos = () => {
+const listAlimentos = (container) => {
   let nAlimento = document.getElementById("n_alimento").value;
   let marca = document.getElementById("a_marca").value;
-  let content = document.getElementById("contain2");
+  let content = document.getElementById(container);
   let url = "../utils/add_comida.php";
   let formData = new FormData();
-
   formData.append("n_alimento", nAlimento);
   formData.append("a_marca", marca);
-
   fetch(url, { method: "POST", body: formData })
     .then((response) => response.json())
     .then((data) => {
@@ -75,8 +73,8 @@ const addComida = () => {
     '<div id="contain1">' +
     "<h3>Busqueda de los alimentos:</h3>" +
     '<form action="">' +
-    '<input type="text" name="n_alimento" id="n_alimento" onchange="listAlimentos()"/>' +
-    '<select name="a_marca" id="a_marca" onchange="listAlimentos()">' +
+    '<input type="text" name="n_alimento" id="n_alimento" onchange="listAlimentos(\'contain2\')"/>' +
+    '<select name="a_marca" id="a_marca" onchange="listAlimentos(\'contain2\')">' +
     '<option value="hacendado" selected>Hacendado</option>' +
     '<option value="aldi">Aldi</option>' +
     '<option value="alcampo">Alcampo</option>' +
@@ -108,4 +106,34 @@ const calculaValores = (vals) => {
   document.getElementById("v_azucar").value = newVals[4];
   document.getElementById("v_prote").value = newVals[5];
   document.getElementById("v_sal").value = newVals[6];
+};
+
+const listFavorites = (container) => {
+  let nAlimento = document.getElementById("n_alimento").value;
+  let marca = document.getElementById("a_marca").value;
+  let content = document.getElementById(container);
+  let url = "../utils/add_favoritos.php";
+  let formData = new FormData();
+  formData.append("n_alimento", nAlimento);
+  formData.append("a_marca", marca);
+  fetch(url, { method: "POST", body: formData })
+    .then((response) => response.json())
+    .then((data) => {
+      content.innerHTML = data;
+    })
+    .catch((err) => console.log(err));
+};
+
+const addFavorites = (id) => {
+  let content = document.getElementById("contenido2");
+  let url = "../utils/registra_favoritos.php";
+  let formData = new FormData();
+  formData.append("id_alimento", id.id);
+  fetch(url, { method: "POST", body: formData })
+    .then((response) => response.json())
+    .then((data) => {
+      content.innerHTML = data;
+      listFavorites("con1");
+    })
+    .catch((err) => console.log(err));
 };

@@ -115,20 +115,19 @@ class Alimentos
 
         $conn = conectarDB();
 
-        $sql = "SELECT * FROM alimentos WHERE nombre_alimen LIKE '%" . $name . "%' AND marca='" . $marca . "'";
-
-        $result = $conn->query($sql);
+        $sql = "SELECT * FROM alimentos WHERE nombre_alimen LIKE CONCAT('%', ?, '%') AND marca=?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ss", $name, $marca);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
         if ($result->num_rows <= 0) {
-
             return 0;
-
         }
 
         $alimentos = array();
 
         while ($row = $result->fetch_assoc()) {
-
             $alimento = array(
                 "id" => $row["id_alimento"],
                 "nombre" => $row['nombre_alimen'],
@@ -136,14 +135,14 @@ class Alimentos
                 "porcion" => $row['porcion'],
                 "kcal" => $row['kcal']
             );
-
             $alimentos[] = $alimento;
         }
 
-
+        $stmt->close();
         $conn->close();
 
         return $alimentos;
+
 
     }
 
@@ -412,6 +411,128 @@ class Alimentos
         }
 
     }
+
+
+
+    function list_notfavorites($name, $marca, $idcli)
+    {
+
+        $conn = conectarDB();
+        $sql = "SELECT * FROM alimentos WHERE nombre_alimen LIKE CONCAT('%', ?, '%') AND marca=? AND id_alimento NOT IN (SELECT id_alimefav FROM favoritos WHERE id_clifav=?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('ssi', $name, $marca, $idcli);
+
+        if (!$stmt->execute()) {
+            return 0;
+        }
+
+        $result = $stmt->get_result();
+
+        if ($result->num_rows <= 0) {
+
+            return 0;
+
+        }
+
+        $alimentos = array();
+
+        while ($row = $result->fetch_assoc()) {
+            $alimento = array(
+                "id" => $row["id_alimento"],
+                "nombre" => $row['nombre_alimen'],
+                "marca" => $row['marca'],
+                "porcion" => $row['porcion'],
+                "kcal" => $row['kcal']
+            );
+            $alimentos[] = $alimento;
+        }
+
+        $stmt->close();
+        $conn->close();
+
+        return $alimentos;
+
+    }
+
+    function list_favorites($id_u)
+    {
+
+        $conn = conectarDB();
+        $sql = "SELECT id_alimefav FROM favoritos WHERE id_clifav=?";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $id_u);
+
+        if (!$stmt->execute()) {
+
+            return 0;
+
+        }
+
+        $result = $stmt->get_result();
+
+        if ($result->num_rows <= 0) {
+
+            return 0;
+        }
+
+        $stmt->close();
+        $conn->close();
+
+        $code = "";
+
+        while ($row = $result->fetch_array()) {
+
+            $data_alimento = $this->data_Alimento($row[0]);
+
+            $code .= "<p>" . $data_alimento[1] . "</p>";
+        }
+
+        return $code;
+    }
+
+    function add_favorite($id_u, $id_alimento)
+    {
+
+        $conn = conectarDB();
+
+        $sql = "SELECT * FROM favoritos WHERE id_clifav=? AND id_alimefav=?";
+
+        $stmt = $conn->prepare($sql);
+
+        $stmt->bind_param('ii', $id_u, $id_alimento);
+
+
+        if (!$stmt->execute()) {
+
+            return "Error en la ejecucion de la consulta: " . $stmt->error;
+        }
+
+        $resultado = $stmt->get_result();
+
+        if ($resultado->num_rows > 0) {
+
+            return "<script>alert('El alimento ya estaba marcado como favorito.')</script>";
+        }
+
+        $stmt->close();
+        $conn->close();
+
+
+        $conn = conectarDB();
+        $sql = "INSERT INTO favoritos VALUES(?,?)";
+        $stmt = $conn->prepare($sql);
+
+        $stmt->bind_param("ii", $id_u, $id_alimento);
+
+        if (!$stmt->execute()) {
+            return "Error al agregar a favoritos: " . $stmt->error;
+        }
+
+        return 1;
+
+    }
+
 
 }
 

@@ -1,0 +1,29 @@
+.container {
+  display: flex;
+  min-height: 90vh;
+}
+
+.contenido1 {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  margin: 1em 0 1em 1em;
+}
+
+.con1 {
+  display: flex;
+}
+
+.favorite-content {
+  display: flex;
+  justify-content: space-between;
+}
+
+
+
+.contenido2 {
+  flex: 3;
+  background-color: aqua;
+  margin: 1em 1em 1em 0;
+  overflow: auto;
+}
