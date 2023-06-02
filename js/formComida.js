@@ -125,7 +125,7 @@ const listFavorites = (container) => {
 };
 
 const addFavorites = (id) => {
-  let content = document.getElementById("contenido2");
+  let content = document.getElementById("f-content");
   let url = "../utils/registra_favoritos.php";
   let formData = new FormData();
   formData.append("id_alimento", id.id);
@@ -136,4 +136,66 @@ const addFavorites = (id) => {
       listFavorites("con1");
     })
     .catch((err) => console.log(err));
+};
+
+const deleteFavorites = (id_alimento) => {
+  let content = document.getElementById("f-content");
+  let url = "../utils/eliminar_favorito.php";
+  let formData = new FormData();
+  formData.append("id_alimento", id_alimento);
+
+  fetch(url, { method: "POST", body: formData })
+    .then((response) => response.json())
+    .then((data) => {
+      content.innerHTML = data;
+    })
+    .catch((err) => console.log(err));
+};
+
+const buscarFavoritos = () => {
+  let content = document.getElementById("f-content");
+  let url = "../utils/buscar_favoritos.php";
+  let nAlimento = document.getElementById("f_alimento").value;
+  let marca = document.getElementById("f_marca").value;
+  let formData = new FormData();
+  formData.append("name_ali", nAlimento);
+  formData.append("marca", marca);
+
+  fetch(url, { method: "POST", body: formData })
+    .then((response) => response.json())
+    .then((data) => {
+      content.innerHTML = data;
+    })
+    .catch((err) => console.log(err));
+};
+
+const graficaPie = (alimentos, datos, canva) => {
+  let can = document.getElementById(canva);
+
+  const colores = [
+    "#FF6384",
+    "#36A2EB",
+    "#FFCE56",
+    "#4BC0C0",
+    "#9966FF",
+    "#FF9F40",
+    "#FFD700",
+    "#00CED1",
+    "#FF00FF",
+    "#008000",
+  ];
+
+  let myChart = new Chart(can, {
+    type: "pie",
+    data: {
+      labels: alimentos,
+      datasets: [
+        {
+          label: "Favoritos",
+          data: datos,
+          backgroundColor: colores.slice(0, datos.length),
+        },
+      ],
+    },
+  });
 };

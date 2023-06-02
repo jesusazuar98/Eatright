@@ -418,7 +418,7 @@ class Alimentos
     {
 
         $conn = conectarDB();
-        $sql = "SELECT * FROM alimentos WHERE nombre_alimen LIKE CONCAT('%', ?, '%') AND marca=? AND id_alimento NOT IN (SELECT id_alimefav FROM favoritos WHERE id_clifav=?)";
+        $sql = "SELECT * FROM alimentos WHERE nombre_alimen LIKE CONCAT('%', ?, '%') AND marca=? AND id_alimento NOT IN (SELECT id_alimefav FROM favoritos WHERE id_clifav=?) LIMIT 10";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param('ssi', $name, $marca, $idcli);
 
@@ -473,7 +473,7 @@ class Alimentos
 
         if ($result->num_rows <= 0) {
 
-            return 0;
+            return "No tiene ningun alimento en favoritos.";
         }
 
         $stmt->close();
@@ -485,7 +485,7 @@ class Alimentos
 
             $data_alimento = $this->data_Alimento($row[0]);
 
-            $code .= "<p>" . $data_alimento[1] . "</p>";
+            $code .= "<li><span>" . $data_alimento[1] . " (" . $data_alimento[2] . ")</span> <a href='#' onclick='deleteFavorites(" . $row[0] . ")'><img src='../images/estrella_luz.png'/></a></li>";
         }
 
         return $code;
@@ -529,8 +529,91 @@ class Alimentos
             return "Error al agregar a favoritos: " . $stmt->error;
         }
 
+        $stmt->close();
+        $conn->close();
+
         return 1;
 
+    }
+
+    function borrar_favorito($id_u, $id_alimen)
+    {
+        $conn = conectarDB();
+        $sql = "DELETE FROM favoritos WHERE id_clifav=? AND id_alimefav=?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ii", $id_u, $id_alimen);
+
+        if (!$stmt->execute()) {
+
+
+            return "Ha ocurrido un error al quitar el alimento de favoritos, recarga la pagina";
+        }
+
+
+        return 1;
+    }
+
+
+    function buscar_favoritos($name, $marca, $id_u)
+    {
+
+        $conn = conectarDB();
+
+        $sql = "SELECT * FROM alimentos WHERE nombre_alimen LIKE CONCAT('%', ?, '%') AND marca=? AND id_alimento IN (SELECT id_alimefav FROM favoritos WHERE id_clifav=?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ssi", $name, $marca, $id_u);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows <= 0) {
+            return 0;
+        }
+
+        $code = "";
+        while ($row = $result->fetch_array()) {
+
+            $code .= "<li><span>" . $row[1] . " (" . $row[2] . ")</span> <a href='#' onclick='deleteFavorites(" . $row[0] . ")'><img src='../images/estrella_luz.png'/></a></li>";
+        }
+
+        $stmt->close();
+        $conn->close();
+
+        return $code;
+
+
+    }
+
+    function top_ten_favorites()
+    {
+
+        $conn = conectarDB();
+
+        $result = $conn->query("SELECT id_alimefav, COUNT(id_clifav) AS number FROM favoritos GROUP BY id_alimefav ORDER BY number DESC LIMIT 10");
+
+        $nombre_alimentos = [];
+        $times_added = [];
+
+        $code = "";
+        $num = 1;
+        while ($row = $result->fetch_assoc()) {
+            $alimento = $this->data_Alimento($row['id_alimefav']);
+
+            $nombre_alimentos[] = $alimento[1];
+            $times_added[] = $row['number'];
+
+            $code .= "<tr>";
+            $code .= "<td>" . $num . "</td>";
+            $code .= "<td>" . $alimento[1] . " (" . $alimento[2] . ")</td>";
+            $code .= "<td>" . $row['number'] . "</td>";
+
+            $code .= "</tr>";
+            $num += 1;
+        }
+
+
+
+
+        return [$code, $nombre_alimentos, $times_added];
     }
 
 

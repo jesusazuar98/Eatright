@@ -20,6 +20,9 @@ session_start();
 </head>
 
 <body>
+    <script src="../js/formComida.js"></script>
+
+
     <?php
 
     include "../includes/header.php";
@@ -27,7 +30,6 @@ session_start();
     include "../includes/footer.php";
 
     ?>
-    <script src="../js/formComida.js"></script>
 </body>
 
 </html>
