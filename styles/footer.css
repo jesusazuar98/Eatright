@@ -4,13 +4,11 @@ footer {
     padding: 20px;
     text-align: center;
   }
-  
-  p {
+footer p {
     margin: 10px;
-  }
-  a{
+}
+footer a{
     margin: 10px;
     color: white;
     text-decoration: none;
-  }
-  
+}
