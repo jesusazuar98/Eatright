@@ -12,9 +12,7 @@ $alimentos = new Alimentos();
 ?>
 
 <div class="container">
-
     <div class="contenido1">
-
         <h3>Añadir alimento a favoritos</h3>
         <p>Buscar alimento: <input type="text" name="n_alimento" id="n_alimento" onchange="listFavorites('con1')" />
             <select name="a_marca" id="a_marca" onchange="listFavorites('con1')">
@@ -23,19 +21,13 @@ $alimentos = new Alimentos();
                 <option value="alcampo">Alcampo</option>
                 <option value="dia">DIA</option>
                 <option value="carrefour">Carrefour</option>
-
             </select>
         </p>
         <div class="con1" id="con1">
         </div>
-
-
     </div>
 
-
     <div class="contenido2" id="contenido2">
-
-
         <div class="my-favorites" id="my-favorites">
             <h3>Mis favoritos:</h3>
             <p>Buscar favorito: <input type="text" name="f_alimento" id="f_alimento" onchange="buscarFavoritos()" /></p>
@@ -46,13 +38,11 @@ $alimentos = new Alimentos();
                     <option value="alcampo">Alcampo</option>
                     <option value="dia">DIA</option>
                     <option value="carrefour">Carrefour</option>
-
                 </select>
             </p>
             <div class="f-content" id="f-content">
                 <ul>
                     <?php
-
                     $code = $alimentos->list_favorites($user->getUser()['id']);
                     echo $code;
                     ?>
@@ -62,10 +52,8 @@ $alimentos = new Alimentos();
         <div class="favorites">
             <div class="topten_favorites">
                 <h3>Top 10 Favoritos</h3>
-
                 <table>
                     <thead>
-
                         <tr>
                             <th>Nº</th>
                             <th>Nombre alimento</th>
@@ -78,19 +66,14 @@ $alimentos = new Alimentos();
                     ?>
                 </table>
             </div>
-
             <canvas id="topten-pie">
-
             </canvas>
-
 
             <?php
             echo '<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.0.2/chart.min.js" integrity="sha512-dnUg2JxjlVoXHVdSMWDYm2Y5xcIrJg1N+juOuRi0yLVkku/g26rwHwysJDAMwahaDfRpr1AxFz43ktuMPr/l1A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>';
 
             echo "<script>graficaPie(" . json_encode($code[1]) . "," . json_encode($code[2]) . ",'topten-pie')</script>";
             ?>
-
-
         </div>
     </div>
 </div>
