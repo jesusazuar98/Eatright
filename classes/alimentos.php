@@ -104,11 +104,11 @@ class Alimentos
         $marca_parametro = ($marca != "") ? "&marca=" . $marca : "";
 
         #Codigo de la paginacion
-        $code_paginacion = "";
+        $code_paginacion = '<tr class="paginacion">';
 
         #Si es mayor que 1 mostrara la opcion de anterior
         if ($pagina > 1) {
-            $code_paginacion .= '<tr class="paginacion"><td><a href="muestra_alimentos.php?pagina=' . ($pagina - 1) . $marca_parametro . '">Anterior</a> ... </td>';
+            $code_paginacion .= '<td><a href="muestra_alimentos.php?pagina=' . ($pagina - 1) . $marca_parametro . '">Anterior</a> ... </td>';
         }
 
         # Genera enlaces numerados de páginas en un rango específico alrededor de la página actual
@@ -121,9 +121,10 @@ class Alimentos
 
         if ($pagina < $total_paginas) {
             #Agrega un enlace "Siguiente" a la variable $code_paginacion si hay más páginas disponibles
-            $code_paginacion .= '<td> ...<a href="muestra_alimentos.php?pagina=' . ($pagina + 1) . $marca_parametro . '"> Siguiente</a></td></tr>';
+            $code_paginacion .= '<td> ...<a href="muestra_alimentos.php?pagina=' . ($pagina + 1) . $marca_parametro . '"> Siguiente</a></td>';
         }
 
+        $code_paginacion .= "</tr>";
         #Devuelve el contenido de $code_paginacion, que contiene todos los enlaces generados
         return $code_paginacion;
 
