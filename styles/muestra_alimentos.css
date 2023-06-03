@@ -1,0 +1,56 @@
+body {
+    background-color: aquamarine;
+}
+#alimentos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 10vh;
+}
+
+fieldset {
+    text-align: center;
+    padding: 20px;
+    border: none;
+}
+label {
+    margin-bottom: 10px;
+}
+input[type="submit"],
+input[type="reset"] {
+  padding: 8px 16px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+input[type="submit"]:hover,
+input[type="reset"]:hover {
+  background-color: #45a049;
+}
+table {
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    font-size: 16px;
+    line-height: 1.5;
+    background-color: #ffffff;
+    opacity: 0.75;
+    border-radius: 10px;
+}
+
+th,
+td {
+    padding: 12px;
+    text-align: center;
+    vertical-align: middle;
+    border-bottom: 1px solid black;
+}
+
+th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}

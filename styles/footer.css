@@ -2,19 +2,13 @@ footer {
     background-color: black;
     color: white;
     padding: 20px;
-  }
-  .footer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-
+    text-align: center;
   }
   
-  .footer p {
+  p {
     margin: 10px;
   }
-  .footer a{
+  a{
     margin: 10px;
     color: white;
     text-decoration: none;

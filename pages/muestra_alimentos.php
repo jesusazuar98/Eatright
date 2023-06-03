@@ -13,33 +13,9 @@ session_start();
     <link href="https://fonts.googleapis.com/css?family=Abel&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="../styles/header.css">
     <link rel="stylesheet" href="../styles/footer.css">
+    <link rel="stylesheet" href="../styles/muestra_alimentos.css">
 
     <title>Alimentos de Eatright</title>
-
-    <style>
-        table {
-            border-collapse: collapse;
-            width: 100%;
-            max-width: 800px;
-            margin: 0 auto;
-            font-size: 16px;
-            line-height: 1.5;
-        }
-
-        th,
-        td {
-            padding: 8px;
-            text-align: left;
-            vertical-align: middle;
-            border: 1px solid #ccc;
-        }
-
-        th {
-            background-color: #f2f2f2;
-            font-weight: bold;
-        }
-    </style>
-
 </head>
 
 
@@ -52,16 +28,22 @@ session_start();
     $alimentos = new Alimentos();
     ?>
 
-    <form action="muestra_alimentos.php" method="GET">
-        <p>Ordenar por marca:</p>
-        <p><input type="checkbox" name="marca[]" value="Hacendado"> Hacendado</p>
-        <p><input type="checkbox" name="marca[]" value="Aldi"> Aldi</p>
-        <p><input type="checkbox" name="marca[]" value="Alcampo"> Alcampo</p>
-        <p><input type="checkbox" name="marca[]" value="DIA"> DIA</p>
-        <p><input type="checkbox" name="marca[]" value="Carrefour"> Carrefour</p>
-        <p><input type="submit" name="envio_orden" value="Buscar"> <input type="reset" value="Limpiar filtros"></p>
-
-
+    <form action="muestra_alimentos.php" id="alimentos" method="GET">
+        <fieldset>
+            <legend>Ordenar por marca</legend>
+            <label for="Hacendado"></label>
+            <input type="checkbox" id="Hacendado" name="marca[]" value="Hacendado"> Hacendado
+            <label for="Aldi"></label>
+            <input type="checkbox" id="Aldi" name="marca[]" value="Aldi"> Aldi
+            <label for="Alcampo"></label>
+            <input type="checkbox" id="Alcampo" name="marca[]" value="Alcampo"> Alcampo
+            <label for="DIA"></label>
+            <input type="checkbox" id="DIA" name="marca[]" value="DIA"> DIA
+            <label for="Carrefour"></label>
+            <input type="checkbox" id="Carrefour" name="marca[]" value="Carrefour"> Carrefour
+            <input type="submit" name="envio_orden" value="Buscar"> 
+            <input type="reset" value="Limpiar filtros">
+        </fieldset>
     </form>
 
     <?php
