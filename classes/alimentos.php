@@ -1,11 +1,13 @@
 <?php
 
+#Ruta del archivo de la conexion
 include_once(__DIR__ . "/../config/connect.php");
 
-
+#Clase Alimentos
 class Alimentos
 {
 
+    #Metodo privado que regresa el total de registros de una consulta
     private function numeroAlimentos($i_sql)
     {
 
@@ -23,11 +25,13 @@ class Alimentos
 
     }
 
+    #Metodo que muestra todos los alimentos segun la marca
     function muestraAlimentos($marca = '')
     {
 
 
-
+        #Comprueba si existe una pagina y en caso de que sea la primera lleva a la pagina
+        #En caso de que no introduce por el metodo get la pagina elegida por el usuario
         if (isset($_GET["pagina"])) {
             if ($_GET["pagina"] == 1) {
 
@@ -37,17 +41,18 @@ class Alimentos
 
                 $pagina = $_GET["pagina"];
             }
-
+            #Si no existe ninguna pagina devuelve a la primera pagina
         } else {
 
             $pagina = 1;
         }
 
 
-
+        #Crea la consulta sql y cuentasql tambien para saber el numero de registros
         $sql = "SELECT * FROM alimentos WHERE 1=1";
         $cuentasql = "SELECT COUNT(*) AS total FROM alimentos WHERE 1=1";
 
+        #Si el parametro marca no esta vacio añade la marca a las dos consultas anteriores
         if ($marca != '') {
 
             $sql .= " AND marca IN ($marca)";
@@ -55,55 +60,73 @@ class Alimentos
         }
 
 
-
+        #El tamaño que va a mostrar cada vez va a ser de 10 en 10 alimentos y para saber desde donde empieza le resta 1 a la pagina y lo multiplica por el numero de alimentos que queramos mostrar
         $tamano_pag = 10;
         $empieza_desde = ($pagina - 1) * $tamano_pag;
 
+        #Comprueba el numero total de registros y con el ceil hace la division para sacar el numero total de paginas
         $n_registros = $this->numeroAlimentos($cuentasql);
         $total_paginas = ceil($n_registros / $tamano_pag);
 
+        #En el limit se pone desde donde empieza y el numero de registros que queremos
         $sql .= " LIMIT $empieza_desde,$tamano_pag";
 
-
+        #Se crea la conexion con la base de datos, se obtiene los resultados y se cierra la conexion
         $connect = conectarDB();
         $result = $connect->query($sql);
         mysqli_close($connect);
 
+        #Se mete los indices de la tabla con los datos de los alimentos
         $code = "<table>\n<tr>\n<td>Nombre</td>\n<td>Marca</td>\n<td>Porcion</td>\n<td>Kcal</td>\n<td>Grasa</td>\n<td>Grasas saturadas</td>\n<td>Carbohidratos</td>\n<td>Azúcar</td>\n<td>Proteina</td>\n<td>Sal</td>\n</tr>";
+
+        #Se recorre cada resultado y se extraen los datos del alimento y se añaden al codigo en forma de tabla segun la posicion de su indice
         while ($data = mysqli_fetch_array($result)) {
 
             $code .= "<tr><td>" . $data[1] . "</td><td>" . $data[2] . "</td><td>" . $data[3] . "</td><td>" . $data[4] . "</td><td>" . $data[5] . "</td><td>" . $data[6] . "</td><td>" . $data[7] . "</td><td>" . $data[8] . "</td><td>" . $data[9] . "</td><td>" . $data[10] . "</td></tr>";
 
         }
+
+        #Se llama al metodo privado paginacion alimentos y se le pasa por parametro la pagina actual, el numero total de paginas y la marca si existe
         $codigo_paginacion = $this->paginacion_alimentos($pagina, $total_paginas, $marca);
 
+
+        #Al final del todo se junta el codigo con el de la paginacion y se muestra la tabla
         echo $code . $codigo_paginacion . "</table>";
 
     }
 
 
-    function paginacion_alimentos($pagina, $total_paginas, $marca = "")
+    #Metodo que sirve para paginar los alimentos, se introducen tres parametros
+    #La pagina actual, el total de paginas y la marca si existe
+    private function paginacion_alimentos($pagina, $total_paginas, $marca = "")
     {
-
+        #Si la marca no esta vacia entonces añade &marca a la url
         $marca_parametro = ($marca != "") ? "&marca=" . $marca : "";
 
+        #Codigo de la paginacion
         $code_paginacion = "";
 
+        #Si es mayor que 1 mostrara la opcion de anterior
         if ($pagina > 1) {
-            $code_paginacion .= '<tr><td><a href="muestra_alimentos.php?pagina=' . ($pagina - 1) . $marca_parametro . '">Anterior</a> ... </td>';
+            $code_paginacion .= '<tr class="paginacion"><td><a href="muestra_alimentos.php?pagina=' . ($pagina - 1) . $marca_parametro . '">Anterior</a> ... </td>';
         }
 
+        # Genera enlaces numerados de páginas en un rango específico alrededor de la página actual
         for ($i = max(1, $pagina - 5); $i <= min($total_paginas, $pagina + 5); $i++) {
-
             if ($i <= $total_paginas) {
+                #Agrega un enlace de página a la variable $code_paginacion
                 $code_paginacion .= '<td><a href="muestra_alimentos.php?pagina=' . $i . $marca_parametro . '">' . $i . '</a></td>';
             }
         }
+
         if ($pagina < $total_paginas) {
+            #Agrega un enlace "Siguiente" a la variable $code_paginacion si hay más páginas disponibles
             $code_paginacion .= '<td> ...<a href="muestra_alimentos.php?pagina=' . ($pagina + 1) . $marca_parametro . '"> Siguiente</a></td></tr>';
         }
 
+        #Devuelve el contenido de $code_paginacion, que contiene todos los enlaces generados
         return $code_paginacion;
+
 
 
     }
@@ -147,28 +170,33 @@ class Alimentos
     }
 
 
-
+    #Metodo que registra la comida del usuario, recibiendo como parametros los datos de la comida del usuario y los datos del propio usuario
     function registrar_comida($u_id, $id_alimento, $fecha, $u_porcion, $comida)
     {
-        $comprobacion = $this->numeroAlimentos("SELECT COUNT(*) AS total FROM alimentos WHERE id_alimento=" . $id_alimento . "");
+        #Comprueba que existe el alimento y comprueba que existe la comida
+        $comprobacion_alimento = $this->numeroAlimentos("SELECT COUNT(*) AS total FROM alimentos WHERE id_alimento=" . $id_alimento . "");
         $comprobacion_comida = $this->numeroAlimentos("SELECT COUNT(*) AS total FROM comen WHERE alimen_id = '" . $id_alimento . "' AND fecha = '" . $fecha . "' AND moment_comida = '" . $comida . "' AND cli_id = " . $u_id);
 
 
-
-        if ($comprobacion != 1) {
+        #Si la comprobacion del alimento no es 1 entonces el alimento no existe
+        if ($comprobacion_alimento != 1) {
             return "El alimento no existe y no se ha podido registrar.";
         }
 
+
+        #Si la comprobacion de la comida es mayor a 0 significa que tiene que editarlo
         if ($comprobacion_comida > 0) {
 
             return "Ya has introducido este alimento en esta comida, ve a " . $comida . " para editarlo.";
         }
 
+        #Se introducen los datos de los parametros y se crea la conexion y la consulta sql
         $datos = $u_id . "," . $id_alimento . ",'" . $fecha . "'," . $u_porcion . ",'" . $comida . "'";
         $conn = conectarDB();
 
         $sql = "INSERT INTO comen (cli_id,alimen_id,fecha, cantidad, moment_comida) VALUES(" . $datos . ")";
 
+        #Si ha ocurrido algun error devolvera el error sino retornara 1
         if (!$conn->query($sql)) {
 
             return "Ha ocurrido un error al insertar los datos:" . $conn->error;
@@ -184,18 +212,25 @@ class Alimentos
 
     }
 
+
+    #Funcion para obtener las comidas del usuario segun la fecha
     function get_comidas($u_id, $fecha)
     {
+        #Se crea la conexion y la consulta a la base de datos
         $connect = conectarDB();
 
         $sql = $connect->prepare("SELECT id_comen,cli_id,alimen_id,nombre_alimen,fecha,cantidad,moment_comida,(cantidad*kcal)/porcion AS calc_kcal,(cantidad*grasas)/porcion AS calc_grasas,(cantidad*g_saturadas)/porcion AS calc_saturadas,(cantidad*carbohidratos)/porcion AS calc_carbos,(cantidad*azucar)/porcion AS calc_azucar,(cantidad*proteina)/porcion AS calc_proteina,(cantidad*sal)/porcion AS calc_sal FROM comen INNER JOIN alimentos ON alimen_id=alimentos.id_alimento WHERE cli_id=? AND fecha=?");
 
+        #Se comprueba el tipo de datos
         $sql->bind_param("is", $u_id, $fecha);
 
+        #Se ejecuta la consulta
         $sql->execute();
 
+        #Se obtienen los resultados
         $resultado = $sql->get_result();
 
+        #Se crea un array para cada comida
         $valores = [
             "desayuno" => null,
             "almuerzo" => null,
@@ -204,11 +239,14 @@ class Alimentos
             "cena" => null
         ];
 
+        #Si el numero de resultados es 0 o menos, devolvera un 0
         if ($resultado->num_rows <= 0) {
 
             return 0;
         }
 
+
+        #Recorre cada registro y lo añade segun la comida que sea al array valores
         while ($fila = $resultado->fetch_assoc()) {
 
             $momento_comidas = $fila['moment_comida'];
@@ -218,6 +256,7 @@ class Alimentos
 
         }
 
+        #Se cierran las conexiones y devuelve el array
         $sql->close();
         $connect->close();
         return $valores;
@@ -225,10 +264,15 @@ class Alimentos
 
     }
 
+
+    #Metodo que obtiene los datos de la comida
     function get_comida($comida)
     {
+
+
         $code = "";
 
+        #Se pone el total de cada una de las comidas para calcularlo
         $total_kcal = 0;
         $total_carbos = 0;
         $total_grasas = 0;
