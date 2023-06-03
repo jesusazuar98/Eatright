@@ -554,7 +554,7 @@ class Alimentos
     }
 
 
-    function buscar_favoritos($name, $marca, $id_u)
+    function buscar_favoritos($name, $marca, $id_u, $add = false)
     {
 
         $conn = conectarDB();
@@ -572,7 +572,22 @@ class Alimentos
         $code = "";
         while ($row = $result->fetch_array()) {
 
-            $code .= "<li><span>" . $row[1] . " (" . $row[2] . ")</span> <a href='#' onclick='deleteFavorites(" . $row[0] . ")'><img src='../images/estrella_luz.png'/></a></li>";
+
+            if (!$add) {
+                $code .= "<li><span>" . $row[1] . " (" . $row[2] . ")</span> <a href='#' onclick='deleteFavorites(" . $row[0] . ")'><img src='../images/estrella_luz.png'/></a></li>";
+            } else {
+                $alimento = array(
+                    "id" => $row[0],
+                    "nombre" => $row[1],
+                    "marca" => $row[2],
+                    "porcion" => $row[3],
+                    "kcal" => $row[4]
+                );
+                $r = json_encode($alimento);
+                $text = $row[2] . ", " . $row[3] . " (gr o ml), " . $row[4] . "kcal";
+                $code .= "<li onclick='muestraAlimentos($r)'><a href='#c1'>" . $row[1] . "</a><p>" . $text . "</p></li>";
+
+            }
         }
 
         $stmt->close();

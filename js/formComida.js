@@ -34,11 +34,16 @@ const muestraAlimentos = (vals) => {
 const listAlimentos = (container) => {
   let nAlimento = document.getElementById("n_alimento").value;
   let marca = document.getElementById("a_marca").value;
+  let checkFavoritos = document.getElementById("check-fav");
+  let checkFavs = checkFavoritos.checked;
   let content = document.getElementById(container);
   let url = "../utils/add_comida.php";
   let formData = new FormData();
+  let checkFav = checkFavs ? "v" : "f";
   formData.append("n_alimento", nAlimento);
   formData.append("a_marca", marca);
+  formData.append("check_fav", checkFav);
+
   fetch(url, { method: "POST", body: formData })
     .then((response) => response.json())
     .then((data) => {
@@ -73,6 +78,7 @@ const addComida = () => {
     '<div id="contain1">' +
     "<h3>Busqueda de los alimentos:</h3>" +
     '<form action="">' +
+    '<p>Favoritos: <input type="checkbox" id="check-fav" onclick="listAlimentos(\'contain2\')" value="okfav"></p>' +
     '<input type="text" name="n_alimento" id="n_alimento" onchange="listAlimentos(\'contain2\')"/>' +
     '<select name="a_marca" id="a_marca" onchange="listAlimentos(\'contain2\')">' +
     '<option value="hacendado" selected>Hacendado</option>' +
