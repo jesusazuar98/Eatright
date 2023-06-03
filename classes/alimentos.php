@@ -91,7 +91,7 @@ class Alimentos
 
 
         #Al final del todo se junta el codigo con el de la paginacion y se muestra la tabla
-        echo $code . $codigo_paginacion . "</table>";
+        echo $code . "</table>" . $codigo_paginacion;
 
     }
 
@@ -104,27 +104,27 @@ class Alimentos
         $marca_parametro = ($marca != "") ? "&marca=" . $marca : "";
 
         #Codigo de la paginacion
-        $code_paginacion = '<tr class="paginacion">';
+        $code_paginacion = '<div class="paginacion">';
 
         #Si es mayor que 1 mostrara la opcion de anterior
         if ($pagina > 1) {
-            $code_paginacion .= '<td><a href="muestra_alimentos.php?pagina=' . ($pagina - 1) . $marca_parametro . '">Anterior</a> ... </td>';
+            $code_paginacion .= '<p><a href="muestra_alimentos.php?pagina=' . ($pagina - 1) . $marca_parametro . '">Anterior</a> ... </p>';
         }
 
         # Genera enlaces numerados de páginas en un rango específico alrededor de la página actual
-        for ($i = max(1, $pagina - 5); $i <= min($total_paginas, $pagina + 5); $i++) {
+        for ($i = max(1, $pagina - 3); $i <= min($total_paginas, $pagina + 3); $i++) {
             if ($i <= $total_paginas) {
                 #Agrega un enlace de página a la variable $code_paginacion
-                $code_paginacion .= '<td><a href="muestra_alimentos.php?pagina=' . $i . $marca_parametro . '">' . $i . '</a></td>';
+                $code_paginacion .= '<p><a href="muestra_alimentos.php?pagina=' . $i . $marca_parametro . '">' . $i . '</a></p>';
             }
         }
 
         if ($pagina < $total_paginas) {
             #Agrega un enlace "Siguiente" a la variable $code_paginacion si hay más páginas disponibles
-            $code_paginacion .= '<td> ...<a href="muestra_alimentos.php?pagina=' . ($pagina + 1) . $marca_parametro . '"> Siguiente</a></td>';
+            $code_paginacion .= '<p> ...<a href="muestra_alimentos.php?pagina=' . ($pagina + 1) . $marca_parametro . '"> Siguiente</a></p>';
         }
 
-        $code_paginacion .= "</tr>";
+        $code_paginacion .= "</div>";
         #Devuelve el contenido de $code_paginacion, que contiene todos los enlaces generados
         return $code_paginacion;
 
