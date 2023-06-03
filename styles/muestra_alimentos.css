@@ -38,7 +38,7 @@ table {
     font-size: 16px;
     line-height: 1.5;
     background-color: #ffffff;
-    border-radius: 10px;
+    border-radius: 10px 10px 0 0;
 }
 
 th,
@@ -52,4 +52,28 @@ td {
 th {
     background-color: #f2f2f2;
     font-weight: bold;
+}
+.paginacion {
+    background-color: white;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    border-radius: 0 0 10px 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.paginacion p {
+    margin: 0 auto;
+    display: inline-block;
+    flex: 1;
+    text-align: center;
+}
+.paginacion a {
+    text-decoration: none;
+}
+.paginacion a:visited {
+    color: blue
 }
