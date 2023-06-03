@@ -1,3 +1,4 @@
+//Funcion que calcula el total de kcal segun la porcion del usuario y la porcion del alimento
 const calculaKcal = (p_user, porcion) => {
   p_user = p_user.target.value;
 
@@ -6,6 +7,7 @@ const calculaKcal = (p_user, porcion) => {
   document.getElementById("t_kcal").value = calc;
 };
 
+//Funcion que muestra los datos de el alimento para que pueda registrarse a la comida
 const muestraAlimentos = (vals) => {
   fecha = new Date().toISOString().split("T")[0];
   porcion = vals["porcion"];
@@ -31,6 +33,7 @@ const muestraAlimentos = (vals) => {
   document.getElementById("c2").innerHTML = code;
 };
 
+//Funcion que hace una peticion para obtener la lista de los alimentos segun la busqueda que queramos hacer
 const listAlimentos = (container) => {
   let nAlimento = document.getElementById("n_alimento").value;
   let marca = document.getElementById("a_marca").value;
@@ -52,6 +55,7 @@ const listAlimentos = (container) => {
     .catch((err) => console.log(err));
 };
 
+//Recibe un formulario para cambiar el tamaño de la porcion del alimento que va a comer, a traves de una peticion
 const changeAlimento = (id, e, idComida) => {
   e.preventDefault();
   let content = document.getElementById("container2");
@@ -72,6 +76,7 @@ const changeAlimento = (id, e, idComida) => {
     .catch((err) => console.log(err));
 };
 
+//Formulario para buscar los alimentos que el usuario quiera ingerir
 const addComida = () => {
   code =
     "<h1>Añadir alimento</h1>" +
@@ -94,6 +99,7 @@ const addComida = () => {
   document.getElementById("container2").innerHTML = code;
 };
 
+//Funcion que calcula los valores segun la porcion introducida por el usuario
 const calculaValores = (vals) => {
   let p_u = document.getElementById("p_u").value;
   let p_a = vals[0];
@@ -114,6 +120,7 @@ const calculaValores = (vals) => {
   document.getElementById("v_sal").value = newVals[6];
 };
 
+//Muestra la lista de alimentos que puedo añadir a favoritos
 const listFavorites = (container) => {
   let nAlimento = document.getElementById("n_alimento").value;
   let marca = document.getElementById("a_marca").value;
@@ -130,6 +137,7 @@ const listFavorites = (container) => {
     .catch((err) => console.log(err));
 };
 
+//Registra un alimento a favoritos y lo muestra
 const addFavorites = (id) => {
   let content = document.getElementById("f-content");
   let url = "../utils/registra_favoritos.php";
@@ -144,6 +152,7 @@ const addFavorites = (id) => {
     .catch((err) => console.log(err));
 };
 
+//Elimina un alimento de mis favoritos
 const deleteFavorites = (id_alimento) => {
   let content = document.getElementById("f-content");
   let url = "../utils/eliminar_favorito.php";
@@ -158,6 +167,7 @@ const deleteFavorites = (id_alimento) => {
     .catch((err) => console.log(err));
 };
 
+//Muestra los alimentos que estan en mis favoritos con un parametro de busqueda por nombre o marca
 const buscarFavoritos = () => {
   let content = document.getElementById("f-content");
   let url = "../utils/buscar_favoritos.php";

@@ -1,18 +1,26 @@
 <?php
+
+#Url de la clase alimentos
 include_once(__DIR__ . "/../classes/alimentos.php");
 
+
+#Comprueba si existe la session usuario
 if (isset($_SESSION['usuario'])) {
 
+    #Trae los datos del usuario y crea un objeto llamado alimentos
     $user = unserialize($_SESSION['usuario']);
 
     $datos = $user->getUser();
 
     $alimentos = new Alimentos();
 
+    #Fecha actual
     $fecha_actual = date("Y-m-d");
 
+    #Llamada al metodo get_comidas que se le pasa por parametro el id del usuario con un condicional ternario si existe la fecha usa esa fecha sino usa la fecha actual
     $comidas = $alimentos->get_comidas($datos['id'], (isset($_GET['fecha'])) ? $_GET['fecha'] : $fecha_actual);
 
+    #Llamada al metodo total_diario que se le pasa por parametro el id del usuario con un condicional ternario si existe la fecha usa esa fecha sino usa la fecha actual
     $r_diario = $alimentos->total_diario($datos['id'], (isset($_GET['fecha'])) ? $_GET['fecha'] : $fecha_actual, $comidas);
 
 
@@ -23,6 +31,9 @@ if (isset($_SESSION['usuario'])) {
     <div class="content">
 
         <div class="fecha">
+            <!--
+                Crea dos flechas, una para restar un dia y otra para añadir un dia, y en el calendario introduce la fecha que haya elegido el usuario o la actual    
+            !-->
             <a
                 href="../index.php?fecha=<?php echo isset($_GET['fecha']) ? $fecha = date("Y-m-d", strtotime($_GET['fecha'] . " -1 day")) : $fecha = date("Y-m-d", strtotime($fecha_actual . " -1 day")); ?>">
                 <img alt="left" src="./images/flecha-izquierda.png" />
@@ -60,6 +71,7 @@ if (isset($_SESSION['usuario'])) {
                     </div>
                 </div>
                 <?php
+                #Si hay desayuno muestra los datos y sino solo muestra añadir alimento
                 if (isset($comidas['desayuno'])) {
 
                     $r = $alimentos->get_comida($comidas['desayuno']);
@@ -82,6 +94,8 @@ if (isset($_SESSION['usuario'])) {
 
                 </div>
                 <?php
+                #Si hay almuerzo muestra los datos y sino solo muestra añadir alimento
+            
                 if (isset($comidas['almuerzo'])) {
 
                     $r = $alimentos->get_comida($comidas['almuerzo']);
@@ -104,6 +118,8 @@ if (isset($_SESSION['usuario'])) {
 
                 </div>
                 <?php
+                #Si hay comida muestra los datos y sino solo muestra añadir alimento
+            
                 if (isset($comidas['comida'])) {
 
                     $r = $alimentos->get_comida($comidas['comida']);
@@ -126,6 +142,8 @@ if (isset($_SESSION['usuario'])) {
 
                 </div>
                 <?php
+                #Si hay merienda muestra los datos y sino solo muestra añadir alimento
+            
                 if (isset($comidas['merienda'])) {
 
                     $r = $alimentos->get_comida($comidas['merienda']);
@@ -148,6 +166,8 @@ if (isset($_SESSION['usuario'])) {
 
                 </div>
                 <?php
+                #Si hay cena muestra los datos y sino solo muestra añadir alimento
+            
                 if (isset($comidas['cena'])) {
 
                     $r = $alimentos->get_comida($comidas['cena']);
@@ -164,6 +184,7 @@ if (isset($_SESSION['usuario'])) {
                     <h2>Resumen Diario</h2>
                     <div class="valores-comida">
                         <?php
+                        #Si el resumen diario no devuelve 0 mostrara los datos con el resumen diario
                         if ($r_diario != 0) {
                             echo "
                         <p>" . $r_diario[0]['calc_kcal'] . "</p>
@@ -201,6 +222,7 @@ if (isset($_SESSION['usuario'])) {
     </div>
     <?php
 } else {
+    #Si el usuario no ha iniciado sesion mostrara el index de otros
     include_once(__DIR__ . "/index_otros.html");
 }
 ?>

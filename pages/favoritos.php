@@ -15,7 +15,6 @@ session_start();
     <link rel="stylesheet" href="../styles/header.css">
     <link rel="stylesheet" href="../styles/footer.css">
     <link rel="stylesheet" href="../styles/favoritos.css">
-    <link rel="stylesheet" href="../styles/add_comida.css">
 
 </head>
 

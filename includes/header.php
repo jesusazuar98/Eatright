@@ -7,7 +7,8 @@
             <li><a href="../pages/muestra_alimentos.php">Alimentos</a></li>
             <?php
             require_once(__DIR__ . '/../classes/user.php');
-
+            #Comprueba si el usuario ha iniciado sesion y en ese caso muestra la opcion de favoritos y cerrar sesion
+            #En caso de que no haya iniciada ninguna sesion mostrara los enlaces de inicio y de registro
             if (isset($_SESSION['usuario'])) {
 
                 $user = unserialize($_SESSION['usuario']);
