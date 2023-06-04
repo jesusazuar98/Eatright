@@ -59,6 +59,7 @@ if (isset($_POST['log'])) {
 <head>
     <link href="https://fonts.googleapis.com/css?family=Abel&display=swap" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="..\styles\login.css" />
+    <link rel="stylesheet" type="text/css" href="..\styles\footer.css" />
     <title>Login Eatright</title>
 </head>
 
@@ -73,7 +74,9 @@ if (isset($_POST['log'])) {
             <input class="inicia_sesion_button" type="submit" id="log" name="log" value="Iniciar sesion">
         </form>
     </div>
-    <button class="back" onclick="location.href='../index.php'" type="button">Pagina Principal</button>
+    <?php
+    include_once("../includes/footer.php");
+    ?>
+    <!--<button class="back" onclick="location.href='../index.php'" type="button">Pagina Principal</button>-->
 </body>
-
 </html>
