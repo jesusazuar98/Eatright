@@ -77,7 +77,7 @@ class Alimentos
         mysqli_close($connect);
 
         #Se mete los indices de la tabla con los datos de los alimentos
-        $code = "<table>\n<tr>\n<td>Nombre</td>\n<td>Marca</td>\n<td>Porcion</td>\n<td>Kcal</td>\n<td>Grasa</td>\n<td>Grasas saturadas</td>\n<td>Carbohidratos</td>\n<td>Azúcar</td>\n<td>Proteina</td>\n<td>Sal</td>\n</tr>";
+        $code = "<table>\n<tr class='indice'>\n<td class='borde1'>Nombre</td>\n<td>Marca</td>\n<td>Porcion</td>\n<td>Kcal</td>\n<td>Grasa</td>\n<td>Grasas saturadas</td>\n<td>Carbohidratos</td>\n<td>Azúcar</td>\n<td>Proteina</td>\n<td class='borde2'>Sal</td>\n</tr>";
 
         #Se recorre cada resultado y se extraen los datos del alimento y se añaden al codigo en forma de tabla segun la posicion de su indice
         while ($data = mysqli_fetch_array($result)) {

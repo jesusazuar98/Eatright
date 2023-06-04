@@ -64,7 +64,6 @@ if (isset($_POST['log'])) {
 </head>
 
 <body>
-
     <div class="fondo" id="formulario">
         <form action="login.php" method="POST">
             <div class="logo"></div>

@@ -1,5 +1,5 @@
 body {
-    background-color: aquamarine;
+    background: radial-gradient(white, aquamarine);    
 }
 #alimentos {
     display: flex;
@@ -19,11 +19,12 @@ label {
 input[type="submit"],
 input[type="reset"] {
   padding: 8px 16px;
-  background-color: #4caf50;
-  color: white;
+  background-color:  rgba(17,233,78,0.6200000047683716);;
   border: none;
   cursor: pointer;
   border-radius: 10px;
+  font-family: Abel;
+  font-weight: Bold;
 }
 
 input[type="submit"]:hover,
@@ -52,6 +53,16 @@ td {
 th {
     background-color: #f2f2f2;
     font-weight: bold;
+}
+.indice{
+    background-color: rgb(255, 255, 165);
+    border-radius: 10px 10px 0 0;
+}
+.borde1{
+    border-top-left-radius: 15px;
+}
+.borde2{
+    border-top-right-radius: 15px;
 }
 .paginacion {
     background-color: white;
