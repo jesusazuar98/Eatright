@@ -2,20 +2,25 @@
 include_once "../classes/alimentos.php";
 session_start();
 
+# Comprueba si no hay una sesion de usuario y ne ese caso manda al index
 if (!isset($_SESSION['usuario'])) {
-    echo json_encode("Debe de iniciar sesion con un usuario", JSON_UNESCAPED_UNICODE);
+    echo "<script>alert(Debe de iniciar sesion con un usuario); window.location.href='../index.php'</script>";
 
 }
 
+# Crea el objeto alimentos
 $alimentos = new Alimentos();
 
-
+# Llama al metodo data alimento para obtener los datos de un alimento
 $req = $alimentos->data_Alimento($_POST['id_alimento']);
 
+#Si la respuesta devuelve falso dara un mensaje de error
 if ($req == false) {
     echo json_encode("Ha ocurrido un error con la consulta.", JSON_UNESCAPED_UNICODE);
 
 } else {
+
+    #Sino cogera los datos de los nutrientes de los alimentos y los pondra para hacer una conversion con  la porcion del usuario
 
     $data = json_encode(array_slice($req, 3, 8));
 

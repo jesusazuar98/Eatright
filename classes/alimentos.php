@@ -217,7 +217,7 @@ class Alimentos
     #Funcion para obtener las comidas del usuario segun la fecha
     function get_comidas($u_id, $fecha)
     {
-        #Se crea la conexion y la consulta a la base de datos
+        #Se crea la conexion y la consulta a la base de datos que hace el calculo segun la porcion ingerida por el usuario para cada nutriente
         $connect = conectarDB();
 
         $sql = $connect->prepare("SELECT id_comen,cli_id,alimen_id,nombre_alimen,fecha,cantidad,moment_comida,(cantidad*kcal)/porcion AS calc_kcal,(cantidad*grasas)/porcion AS calc_grasas,(cantidad*g_saturadas)/porcion AS calc_saturadas,(cantidad*carbohidratos)/porcion AS calc_carbos,(cantidad*azucar)/porcion AS calc_azucar,(cantidad*proteina)/porcion AS calc_proteina,(cantidad*sal)/porcion AS calc_sal FROM comen INNER JOIN alimentos ON alimen_id=alimentos.id_alimento WHERE cli_id=? AND fecha=?");
@@ -282,7 +282,7 @@ class Alimentos
         $total_proteina = 0;
         $total_sal = 0;
 
-
+        #Recorre cada comida del alimento y añade al total para calcular el total de nutrientes de la comida
         foreach ($comida as $alimento) {
 
             $total_kcal += $alimento['calc_kcal'];
@@ -293,7 +293,7 @@ class Alimentos
             $total_proteina += $alimento['calc_proteina'];
             $total_sal += $alimento['calc_sal'];
 
-
+            #Muestra datos sobre nuestra comida y la opcion de borrar y cambiar el alimento
             $code .= "<div class='content-comida'><p class='alimen'>" . $alimento['nombre_alimen'] . " (" . $alimento['cantidad'] . " gr o ml)</p>";
             $code .= "<div class='options'>";
             $code .= "<div class='option'><form action='./pages/options_comen.php' method='POST'><input type='hidden' name='id_comida' value=" . $alimento['id_comen'] . "><input type='image' src='./images/eliminar.png' name='borrar'/></form></div>";
@@ -301,6 +301,7 @@ class Alimentos
 
             $code .= "</div>";
 
+            #Muestra los datos de los valores
             $code .= "<div class='valores-comida'>
             <p>" . round($alimento['calc_kcal'], 2) . "</p>
             <p>" . round($alimento['calc_carbos'], 2) . "</p>
@@ -314,6 +315,7 @@ class Alimentos
         </div></div>";
         }
 
+        #Al final muestra el calculo total de cada nutriente en la comida
         $code .= "<div class='content-comida'><p><a href='#container2' onclick='addComida()' class='add_alimen'>Añadir alimento</a> | Total:</p>";
         $code .= "<div class='valores-comida'>
             <p>" . round($total_kcal, 2) . "</p>
@@ -327,10 +329,12 @@ class Alimentos
 
         </div></div>";
 
+        #Devuelve el codigo
         return $code;
     }
 
 
+    #Metodo que devuelve el total diario de cada nutriente y las calorias que ha consumido el usuario
     function total_diario($u_id, $fecha, $data)
     {
 
@@ -365,6 +369,9 @@ class Alimentos
         return $resumen;
 
     }
+
+
+    #Metodo que elimina una comida del usuario
     private function deleteComida($id_comida)
     {
         $conn = conectarDB();
@@ -383,6 +390,9 @@ class Alimentos
         return "<script>alert('El alimento se ha eliminado correctamente de tu comida.'); window.location.href='../index.php'</script>";
 
     }
+
+
+    #Metodo que comprueba si el usuario y la comida coinciden, en caso de que no muestra un error y en caso de que si procede a eliminar la comida
     function checkComida($u_id, $id_comida)
     {
         $conn = conectarDB();
@@ -413,6 +423,8 @@ class Alimentos
         return $r;
     }
 
+
+    #Metodo con el que se obtiene los datos de un alimento, en caso de que ocurra un error devuelve falso y sino devuelve un array
     function data_Alimento($id_alimento)
     {
 
@@ -437,6 +449,9 @@ class Alimentos
 
     }
 
+
+    #Metodo para cambiar la comida, con el parametro porcion y el id de la comida.
+
     function change_comida($id_comida, $porcion)
     {
 
@@ -458,7 +473,7 @@ class Alimentos
     }
 
 
-
+    #Metodo que muesta la lista de los alimentos que no estan en los favoritos de un usuario
     function list_notfavorites($name, $marca, $idcli)
     {
 
@@ -499,6 +514,8 @@ class Alimentos
 
     }
 
+
+    #Metodo que muestra la lista de favoritos de un usuario
     function list_favorites($id_u)
     {
 
@@ -536,6 +553,8 @@ class Alimentos
         return $code;
     }
 
+
+    #Metodo que añade un alimeto a la lista de favoritos de un usuario
     function add_favorite($id_u, $id_alimento)
     {
 
@@ -581,6 +600,8 @@ class Alimentos
 
     }
 
+
+    #Metodo que borra un favorito de la lista de favoritos de un usuario
     function borrar_favorito($id_u, $id_alimen)
     {
         $conn = conectarDB();
@@ -599,6 +620,7 @@ class Alimentos
     }
 
 
+    #Metodo que muestra a traves de la busqueda por marca y nombre alimentos que esten en la lista de favoritos de un usuario
     function buscar_favoritos($name, $marca, $id_u, $add = false)
     {
 
@@ -617,6 +639,8 @@ class Alimentos
         $code = "";
         while ($row = $result->fetch_array()) {
 
+            #El parametro add esta por defecto en false porque significa que no es para añadir el alimento a una comida
+            #En caso de que sea verdadero devolvera un array con los datos para que pueda ser añadido a la comida
 
             if (!$add) {
                 $code .= "<li><span>" . $row[1] . " (" . $row[2] . ")</span> <a href='#' onclick='deleteFavorites(" . $row[0] . ")'><img src='../images/estrella_luz.png'/></a></li>";
@@ -643,6 +667,8 @@ class Alimentos
 
     }
 
+
+    #Metodo que muestra el top 10 favoritos de los usuarios
     function top_ten_favorites()
     {
 
