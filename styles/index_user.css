@@ -2,8 +2,16 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  float: right;
+  background: radial-gradient(white, aquamarine);  
 }
-
+.linea1{
+  float: left;
+}
+.linea1 a img{
+  height: 200px;
+  width: 1400px;
+}
 .fecha {
   display: flex;
   width: 10%;
