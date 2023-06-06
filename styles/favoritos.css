@@ -12,8 +12,17 @@
   display: flex;
   flex-direction: column;
   margin: 1em 0 1em 1em;
+  background: linear-gradient(greenyellow, white);
 }
-
+h3 {
+  text-align: center;
+}
+.contenido1 p {
+  text-align: center;
+}
+.con1{
+  margin: 0 auto;
+}
 #c1{
   width: 25em;
   height: 76vh;

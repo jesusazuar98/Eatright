@@ -4,9 +4,14 @@ table {
   }
   
   td {
-    vertical-align: top;
+    vertical-align:middle;
   }
-  
+  .td1{
+    background: linear-gradient(pink, white);
+  }
+  .td2{
+    background: linear-gradient(greenyellow, white);
+  }
   h3 {
     margin-top: 0;
   }
@@ -15,7 +20,12 @@ table {
     max-width: 100%;
     height: auto;
   }
-  
+  .img1 {
+    border: 60px groove greenyellow;
+  }
+  .img2 {
+    border: 60px outset red;
+  }
   .button {
     text-align: center;
     margin-top: 20px;
