@@ -16,6 +16,7 @@
                 $data = $user->getUser();
 
                 ?>
+                <li><a href="../pages/valoraciones.php">Valoraciones</a></li>
                 <li><a href="../pages/favoritos.php">Favoritos</a></li>
                 <li><a href="../pages/logout.php">Cerrar sesión</a></li>
 

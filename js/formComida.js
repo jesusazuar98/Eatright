@@ -185,6 +185,163 @@ const buscarFavoritos = () => {
     .catch((err) => console.log(err));
 };
 
+//Funcion que muestra los alimentos que el usuario no ha valorado
+const noValorados = (con) => {
+  let nAlimento = document.getElementById("n_alimento").value;
+  let marca = document.getElementById("a_marca").value;
+  let url = "../utils/list_no_valorados.php";
+  let content = document.getElementById(con);
+
+  let formData = new FormData();
+  formData.append("n_alimen", nAlimento);
+  formData.append("marca", marca);
+
+  fetch(url, { method: "POST", body: formData })
+    .then((r) => r.json())
+    .then((data) => {
+      content.innerHTML = data;
+    })
+    .catch((err) => console.log(err));
+};
+
+//Formulario para añadir una valoracion
+const addValoracion = (id_alimento, name) => {
+  let content = document.getElementById("v-content");
+
+  code =
+    "<h3>" +
+    name +
+    "</h3><p>Valoracion: <input id='new-valor' onchange='compruebaVal(this)' type='number' value=0 min='0' max='10'/></p><p><button onclick='addVal(" +
+    id_alimento +
+    ")'>Añadir valoracion</button></p><a onclick=\"valorados('v-content')\" href='#my-vals'>Volver</a>";
+
+  content.innerHTML = code;
+};
+
+//Añade una valoracion
+const addVal = (id_alimento) => {
+  let newVal = document.getElementById("new-valor").value;
+  let url = "../utils/add_valoracion.php";
+
+  if (!(newVal >= 0 && newVal <= 10)) {
+    newVal.value = 0;
+    alert("El minimo de valoracion es 0 y el maximo 10.");
+  } else {
+    let formData = new FormData();
+    formData.append("id_alimen", id_alimento);
+    formData.append("puntuacion", newVal);
+
+    fetch(url, { method: "POST", body: formData })
+      .then((r) => r.json())
+      .then((data) => {
+        if (data != 0) {
+          alert("La puntuacion se ha añadido correctamente.");
+        } else {
+          alert("Ha ocurrido un error al añadir la puntuacion.");
+        }
+
+        valorados("v-content");
+        noValorados("con1");
+      })
+      .catch((err) => console.log(err));
+  }
+};
+
+//Formulario para editar una valoracion
+const changeValoracion = (id_alimento, name, val = 0) => {
+  let content = document.getElementById("v-content");
+
+  code =
+    "<h3>" +
+    name +
+    "</h3><p>Valoracion: <input id='new-valor' onchange='compruebaVal(this)' type='number' value=" +
+    val +
+    " min='0' max='10'/></p><p><button onclick='changeVal(" +
+    id_alimento +
+    ")'>Editar valoracion</button></p><a onclick=\"valorados('v-content')\" href='#my-vals'>Volver</a>";
+
+  content.innerHTML = code;
+};
+
+//Añade una valoracion
+const changeVal = (id_alimento) => {
+  let newVal = document.getElementById("new-valor").value;
+  let url = "../utils/change_valoracion.php";
+
+  if (!(newVal >= 0 && newVal <= 10)) {
+    newVal.value = 0;
+    alert("El minimo de valoracion es 0 y el maximo 10.");
+  } else {
+    let formData = new FormData();
+    formData.append("id_alimen", id_alimento);
+    formData.append("puntuacion", newVal);
+
+    fetch(url, { method: "POST", body: formData })
+      .then((r) => r.json())
+      .then((data) => {
+        if (data != 0) {
+          alert("La puntuacion se ha cambiado correctamente.");
+        } else {
+          alert("Ha ocurrido un error al cambiar la puntuacion.");
+        }
+
+        valorados("v-content");
+        noValorados("con1");
+      })
+      .catch((err) => console.log(err));
+  }
+};
+
+//Muestra los alimentos valorados por el usuario
+const valorados = (con) => {
+  let nombre_val = document.getElementById("v_alimento").value;
+  let marca_val = document.getElementById("v_marca").value;
+  let content = document.getElementById(con);
+  let url = "../utils/list_valorados.php";
+  let formData = new FormData();
+
+  formData.append("n_alimen", nombre_val);
+  formData.append("marca", marca_val);
+  fetch(url, { method: "POST", body: formData })
+    .then((r) => r.json())
+    .then((data) => {
+      content.innerHTML = data;
+    })
+    .catch((err) => console.log(err));
+};
+
+//Funcion que comprueba si el valor esta entre 0 y 10
+const compruebaVal = (e) => {
+  let val = e.value;
+
+  if (!(val >= 0 && val <= 10)) {
+    e.value = 0;
+    alert("El minimo de valoracion es 0 y el maximo 10.");
+  }
+};
+
+//Elimina una valoracion
+const eliminarValoracion = (id_alimento) => {
+  let url = "../utils/eliminar_valoracion.php";
+  let formData = new FormData();
+  formData.append("id_alimen", id_alimento);
+
+  fetch(url, { method: "POST", body: formData })
+    .then((r) => r.json())
+    .then((data) => {
+      if (data != 0) {
+        alert("La valoracion  se ha eliminado correctamente.");
+      } else {
+        alert("Ha ocurrido un error al intentar borrar la valoracion.");
+      }
+
+      valorados("v-content");
+      noValorados("con1");
+    })
+    .catch((err) => console.log(err));
+};
+
+//Muestra un grafico segun los datos que se le pasen
 const graficaPie = (alimentos, datos, canva) => {
   let can = document.getElementById(canva);
 

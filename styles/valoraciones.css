@@ -1,67 +1,50 @@
-.body {
-  height: 100vh;
-}
-
 .container {
   display: flex;
   height: 100vh;
 }
 
 .contenido1 {
-  flex: 1;
   display: flex;
   flex-direction: column;
   margin: 1em 0 1em 1em;
+  flex: 1;
 }
 
-#c1{
+.con1 {
   width: 25em;
   height: 76vh;
   overflow: auto;
   border: 1px solid;
-  
 }
 
-#c1 ul{
-
-  list-style: none;
+.con1 ul {
+  list-style-type: none;
   padding: 0 0 0 1em;
-  
 }
 
-#c1 ul li{
-
+.con1 ul li {
   border-bottom: 1px solid;
   margin-right: 1em;
   margin-bottom: 1em;
-
 }
 
-#c1 ul li a{
-
+.con1 a {
+  font-weight: bold;
   text-decoration: none;
   color: black;
-  font-weight: bold;
 }
 
-#c1 ul li p{
-
+.con1 p {
   margin: 5px;
-}
-
-.favorite-content {
-  display: flex;
-  justify-content: space-between;
 }
 
 .contenido2 {
   display: flex;
   flex: 2;
   margin: 1em 0;
-  
 }
 
-.my-favorites {
+.my-vals {
   flex: 1;
   margin: 0.5em 0.5em 0.5em;
   height: 90%;
@@ -69,44 +52,72 @@
   padding: 0 1em 0 1em;
 }
 
-.f-content {
+.v-content {
   overflow: auto;
   max-height: 75%;
 }
 
-.f-content ul {
+.v-content ul {
   padding: 0;
 }
 
-.f-content li {
+.v-content li {
   display: flex;
-  justify-content: space-between;
   list-style: none;
   margin: 0.5em 0;
   border-bottom: 1px solid;
+  justify-content: space-between;
 }
 
+.options {
+  display: flex;
+  gap: 10px;
+}
 
-.favorites {
+.v-content span {
+  font-weight: bold;
+}
+
+.v-content form {
+  border-top: 1px solid black;
+}
+
+.v-content a {
+  font-weight: bold;
+  text-decoration: none;
+  color: #0000ee;
+}
+
+input[type="number"] {
+  width: 15%;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.valoraciones {
   flex: 2;
 }
 
-.topten_favorites table {
+.topten_valoraciones table {
   width: 100%;
 }
 
-.topten_favorites h3 {
+.topten_valoraciones h3 {
   text-align: center;
 }
 
-.topten_favorites td {
+.topten_valoraciones td {
   text-align: center;
 }
 
-.topten_favorites thead {
+.topten_valoraciones thead {
   background-color: #11e94e99;
 }
 
-canvas{
+canvas {
   max-height: 50vh;
 }

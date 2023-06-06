@@ -36,7 +36,7 @@ if ($result == 0) {
 
         $text = $result[$i]['marca'] . ", " . $result[$i]['porcion'] . " (gr o ml), " . $result[$i]['kcal'] . "kcal";
 
-        $code .= "<li><a href='#'>" . $result[$i]['nombre'] . "</a><div class='favorite-content'><p>" . $text . "</p><span onclick='addFavorites($r)'><a href='#'><img src='../images/estrella.png' alt='estrella'/></a></span></div></li>";
+        $code .= "<li><a href='#'>" . $result[$i]['nombre'] . "</a><div class='favorite-content'><p>" . $text . "</p><span onclick='addFavorites($r)'><a href='#my-favorites'><img src='../images/estrella.png' alt='estrella'/></a></span></div></li>";
     }
 
     $code .= "</ul>";

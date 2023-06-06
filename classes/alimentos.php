@@ -703,6 +703,191 @@ class Alimentos
     }
 
 
+    function alimentos_novals($id_user, $alimen, $marca)
+    {
+
+        $conn = conectarDB();
+
+        $sql = "SELECT * FROM alimentos WHERE id_alimento NOT IN(SELECT id_alimenval FROM valoralimen WHERE id_clival=?) AND nombre_alimen LIKE CONCAT('%', ?, '%') AND marca=? LIMIT 50";
+
+        $stmt = $conn->prepare($sql);
+
+        $stmt->bind_param('iss', $id_user, $alimen, $marca);
+
+        if (!$stmt->execute()) {
+            $stmt->close();
+            $conn->close();
+            return 0;
+        }
+
+        $result = $stmt->get_result();
+
+        if ($result->num_rows <= 0) {
+            $stmt->close();
+            $conn->close();
+            return 0;
+        }
+
+        $data = array();
+
+        while ($row = $result->fetch_array()) {
+
+            $data[] = $row;
+        }
+
+        $stmt->close();
+        $conn->close();
+        return $data;
+    }
+
+
+    function alimentos_valorados($id_user, $n_alimentos = '', $marca = '')
+    {
+
+        $conn = conectarDB();
+
+        $sql = "SELECT * FROM valoralimen INNER JOIN alimentos ON valoralimen.id_alimenval=alimentos.id_alimento WHERE id_clival=? AND nombre_alimen LIKE CONCAT('%', ?, '%') AND marca LIKE CONCAT('%', ?, '%')";
+
+        $stmt = $conn->prepare($sql);
+
+        $stmt->bind_param('iss', $id_user, $n_alimentos, $marca);
+
+        if (!$stmt->execute()) {
+
+            $stmt->close();
+            $conn->close();
+            return 0;
+        }
+
+        $result = $stmt->get_result();
+
+        if ($result->num_rows <= 0) {
+
+            $stmt->close();
+            $conn->close();
+            return 0;
+        }
+
+
+        $data = [];
+
+        while ($row = $result->fetch_array()) {
+
+            $data[] = $row;
+
+        }
+
+        return $data;
+    }
+
+
+    function insertar_valores($id_user, $id_alimento, $puntuacion)
+    {
+
+        $conn = conectarDB();
+        $sql = "INSERT INTO valoralimen  VALUES(?,?,?)";
+
+        $stmt = $conn->prepare($sql);
+
+        $stmt->bind_param('iii', $id_user, $id_alimento, $puntuacion);
+
+        if (!$stmt->execute()) {
+
+            $stmt->close();
+            $conn->close();
+            return 0;
+        }
+
+
+        $stmt->close();
+        $conn->close();
+        return 1;
+
+    }
+
+
+    function cambiar_valores($id_user, $id_alimento, $puntuacion)
+    {
+
+        $conn = conectarDB();
+        $sql = "UPDATE valoralimen SET puntuacion=? WHERE id_clival=? AND id_alimenval=?";
+
+        $stmt = $conn->prepare($sql);
+
+        $stmt->bind_param('iii', $puntuacion, $id_user, $id_alimento);
+
+        if (!$stmt->execute()) {
+
+            $stmt->close();
+            $conn->close();
+            return 0;
+        }
+
+
+        $stmt->close();
+        $conn->close();
+        return 1;
+
+    }
+
+
+    function eliminar_valor($id_user, $id_alimento)
+    {
+
+        $conn = conectarDB();
+        $sql = "DELETE FROM valoralimen WHERE id_clival=? AND id_alimenval=?";
+
+        $stmt = $conn->prepare($sql);
+
+        $stmt->bind_param('ii', $id_user, $id_alimento);
+
+        if (!$stmt->execute()) {
+
+            $stmt->close();
+            $conn->close();
+            return 0;
+        }
+
+
+        $stmt->close();
+        $conn->close();
+        return 1;
+
+    }
+
+    function top_ten_valoracion()
+    {
+
+        $conn = conectarDB();
+
+        $result = $conn->query("SELECT id_alimenval,CEIL(AVG(puntuacion)) AS media FROM valoralimen GROUP BY id_alimenval ORDER BY media DESC LIMIT 10");
+
+        $nombre_alimentos = [];
+        $medias = [];
+
+        $code = "";
+        $num = 1;
+        while ($row = $result->fetch_assoc()) {
+            $alimento = $this->data_Alimento($row['id_alimenval']);
+
+            $nombre_alimentos[] = $alimento[1];
+            $medias[] = $row['media'];
+
+            $code .= "<tr>";
+            $code .= "<td>" . $num . "</td>";
+            $code .= "<td>" . $alimento[1] . " (" . $alimento[2] . ")</td>";
+            $code .= "<td>" . $row['media'] . "</td>";
+
+            $code .= "</tr>";
+            $num += 1;
+        }
+
+
+
+
+        return [$code, $nombre_alimentos, $medias];
+    }
+
 }
 
 ?>
