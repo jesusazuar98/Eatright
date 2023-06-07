@@ -57,7 +57,6 @@ if (isset($_POST['log'])) {
 <html>
 
 <head>
-    <link href="https://fonts.googleapis.com/css?family=Abel&display=swap" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="..\styles\login.css" />
     <link rel="stylesheet" type="text/css" href="..\styles\footer.css" />
     <title>Login Eatright</title>

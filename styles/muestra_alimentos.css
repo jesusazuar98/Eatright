@@ -1,5 +1,6 @@
 body {
-    background: radial-gradient(white, aquamarine);    
+    background: radial-gradient(white, aquamarine);
+    font-weight: bold;    
 }
 #alimentos {
     display: flex;
@@ -23,7 +24,6 @@ input[type="reset"] {
   border: none;
   cursor: pointer;
   border-radius: 10px;
-  font-family: Abel;
   font-weight: Bold;
 }
 
@@ -50,9 +50,11 @@ td {
     border-bottom: 1px solid black;
 }
 
-th {
-    background-color: #f2f2f2;
-    font-weight: bold;
+.color1 {
+    background-image: linear-gradient(120deg, #d4fc79 0%, #96e6a1 100%);
+}
+.color2 {
+    background: linear-gradient(to right, #74ebd5, #c2cdff);
 }
 .indice{
     background-color: rgb(255, 255, 165);
@@ -65,9 +67,9 @@ th {
     border-top-right-radius: 15px;
 }
 .paginacion {
-    background-color: white;
+    background-color: rgb(136, 222, 251);
     text-align: center;
-    max-width: 800px;
+    max-width: 830px;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;

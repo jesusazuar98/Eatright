@@ -43,12 +43,18 @@ div form div label{
   font-weight: bold;
 }
 div form div input{
-  background: rgba(255,255,255,0.41999998688697815);
+  background: rgba(255, 255, 255, 0.42);
   border-radius: 10px;
   border: unset;
   text-align: center;
   padding: 10px;
   width: 90%;
+}
+div table {
+  margin: 0 auto;
+}
+.bg{
+  background: rgba(255, 255, 255, 0.42);
 }
 #envio{
   background: rgba(17,233,78,0.6200000047683716);

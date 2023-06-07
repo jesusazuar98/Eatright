@@ -82,7 +82,7 @@ class Alimentos
         #Se recorre cada resultado y se extraen los datos del alimento y se añaden al codigo en forma de tabla segun la posicion de su indice
         while ($data = mysqli_fetch_array($result)) {
 
-            $code .= "<tr><td>" . $data[1] . "</td><td>" . $data[2] . "</td><td>" . $data[3] . "</td><td>" . $data[4] . "</td><td>" . $data[5] . "</td><td>" . $data[6] . "</td><td>" . $data[7] . "</td><td>" . $data[8] . "</td><td>" . $data[9] . "</td><td>" . $data[10] . "</td></tr>";
+            $code .= "<tr><td class='color1'>" . $data[1] . "</td><td class='color2'>" . $data[2] . "</td><td class='color1'>" . $data[3] . "</td><td class='color2'>" . $data[4] . "</td><td class='color1'>" . $data[5] . "</td><td class='color2'>" . $data[6] . "</td><td class='color1'>" . $data[7] . "</td><td class='color2'>" . $data[8] . "</td><td class='color1'>" . $data[9] . "</td><td class='color2'>" . $data[10] . "</td></tr>";
 
         }
 
