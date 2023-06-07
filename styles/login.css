@@ -51,7 +51,6 @@ body {
   border-bottom-right-radius: 10px;
   overflow: hidden;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  font-family: Abel;
   font-weight: Regular;
   font-size: 24px;
   text-align: center;
@@ -69,7 +68,6 @@ body {
   border-bottom-right-radius: 10px;
   overflow: hidden;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  font-family: Abel;
   font-weight: Regular;
   font-size: 24px;
   text-align: center;
@@ -88,13 +86,11 @@ body {
   border-bottom-right-radius: 10px;
   overflow: hidden;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  font-family: Abel;
   font-weight: Regular;
   font-size: 24px;
 }
 .back {
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  font-family: Abel;
   font-weight: Regular;
   font-size: 18px;
   border-top-left-radius: 10px;
