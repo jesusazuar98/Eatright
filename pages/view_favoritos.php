@@ -23,8 +23,8 @@ $alimentos = new Alimentos();
                 <option value="carrefour">Carrefour</option>
             </select>
         </p>
-        <div class="con1" id="con1">
-        </div>
+        <div class="con1" id="con1"></div>
+        <a class="linea"><img src="../images/lineas.png" alt="lineas"></a>
     </div>
 
     <div class="contenido2" id="contenido2">
