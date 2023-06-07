@@ -4,31 +4,31 @@ html, body {
   padding: 0;
   display: flex;
   flex-direction: column;
-  font-family: Abel;
 
 }
 header {
   position: sticky;
   top: 0;
-  background-color: white;
   padding: 10px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
   margin: 0 0 1em 0;
+  background-image: url(../images/alimentos.jpg);
+  background-repeat: repeat-x;
+  
 }
 .logo {
   width: 70px;
   height: 60px;
-  background: url("../images/v5_12.png");
+  background: url("../images/icono.png");
   background-position: center center;
   background-size: cover;
   float: left;
 }
 .logo h1 {
   color: black;
-  font-family: Abel;
   font-weight: Bold;
   font-size: 16px;
   text-align: center;
@@ -57,8 +57,7 @@ header nav ul li a {
   color: black;
   text-decoration: none;
   padding: 5px;
-  background: rgba(17,233,78,0.6200000047683716);
-  font-family: Abel;
+  background: rgba(17,233,78);
   font-weight: Bold;
   font-size: 14px;
   border-radius: 10px;

@@ -43,7 +43,6 @@ if (isset($_POST['envio'])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrate</title>
-    <link href="https://fonts.googleapis.com/css?family=Abel&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="../styles/header.css">
     <link rel="stylesheet" href="../styles/footer.css">
     <link rel="stylesheet" href="../styles/sign-in.css">
@@ -76,21 +75,33 @@ if (isset($_POST['envio'])) {
             </div>
             <div>
                 <label for="sexo">Selecciona un sexo: </label><br>
-                <input type="radio" id="M" name="sexo" value="M" checked /><label for="M">Masculino</label>
-                <input type="radio" id="F" name="sexo" value="F" /><label for="F">Femenino</label>
+                <table>
+                    <tr class="bg">
+                        <td><input type="radio" id="M" name="sexo" value="M" checked /><label for="M">Masculino</label></td>
+                        <td><input type="radio" id="F" name="sexo" value="F" /><label for="F">Femenino</label></td>
+                    </tr>
+                </table>
             </div>
             <div>
                 <label for="nacimiento">Fecha de nacimiento:</label><br>
                 <input type="date" id="nacimiento" name="nacimiento" required />
             </div>
-            <div>
-                <label for="peso">Peso: </label><br>
-                <input type="number" id="peso" name="peso" step="0.01" value="0" required />
-            </div>
-            <div>
-                <label for="altura">Altura: </label><br>
-                <input type="number" id="altura" name="altura" step="0.01" value="0" required />
-            </div>
+            <table>
+                <tr>
+                    <td>
+                    <div>
+                        <label for="peso">Peso: </label><br>
+                        <input type="number" id="peso" name="peso" step="0.01" value="0" required />
+                    </div>    
+                    </td>
+                    <td>
+                    <div>
+                        <label for="altura">Altura: </label><br>
+                        <input type="number" id="altura" name="altura" step="0.01" value="0" required />
+                    </div> 
+                    </td>
+                </tr>
+            </table>
             <div>
                 <label for="n_completo">Nombre completo: </label><br>
                 <input type="text" id="n_completo" name="n_completo" placeholder="Introduce tu nombre" required />

@@ -27,9 +27,10 @@ if (isset($_SESSION['usuario'])) {
 
 
     ?>
-
     <div class="content">
-
+    <div class="linea1">
+        <a><img src="./images/lineas.png" alt="lineas"></a>
+    </div>
         <div class="fecha">
             <!--
                 Crea dos flechas, una para restar un dia y otra para añadir un dia, y en el calendario introduce la fecha que haya elegido el usuario o la actual    
@@ -66,8 +67,6 @@ if (isset($_SESSION['usuario'])) {
                         <p>Azucar</p>
                         <p>Proteina</p>
                         <p>Sal</p>
-
-
                     </div>
                 </div>
                 <?php
@@ -219,6 +218,9 @@ if (isset($_SESSION['usuario'])) {
         </div>
         <script src="./js/formComida.js"></script>
         <a id="back-top" href="#"><img src="./images/flecha-hacia-arriba-sobre-un-fondo-de-circulo-negro.png"></a>
+    <div class="linea1">
+        <a><img src="./images/lineas.png" alt="lineas"></a>
+    </div>    
     </div>
     <?php
 } else {
