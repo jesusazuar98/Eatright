@@ -3,6 +3,7 @@
 #Incluimos el fichero user.php
 
 require_once "../classes/user.php";
+require_once("../classes/administrador.php");
 
 #Comprobamos si el usuario le ha dado al boton de login
 if (isset($_POST['log'])) {
@@ -43,6 +44,12 @@ if (isset($_POST['log'])) {
         #Para poder usar despues sus propiedades y metodos
         $_SESSION['usuario'] = serialize($user);
 
+        #Si el usuario es administrador tambien le creara una sesion de administrador
+        if ($user->getUser()['state'] == 'admin') {
+            $admin = new Administrador($_POST['user'], $_POST['pass']);
+            $_SESSION['admin'] = serialize($admin);
+        }
+
         #Enviamos al usuario a la pagina del index
         header("Location: ../index.php");
         exit();
@@ -78,4 +85,5 @@ if (isset($_POST['log'])) {
     ?>
     <!--<button class="back" onclick="location.href='../index.php'" type="button">Pagina Principal</button>-->
 </body>
+
 </html>

@@ -163,6 +163,7 @@ const deleteFavorites = (id_alimento) => {
     .then((response) => response.json())
     .then((data) => {
       content.innerHTML = data;
+      listFavorites("con1");
     })
     .catch((err) => console.log(err));
 };

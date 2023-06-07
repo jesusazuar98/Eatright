@@ -2,7 +2,7 @@ table {
     width: 100%;
     border-collapse: collapse;
   }
-  
+
   td {
     vertical-align:middle;
   }
@@ -17,14 +17,14 @@ table {
   }
   
   img {
-    max-width: 100%;
+    max-width: 90%;
     height: auto;
   }
   .img1 {
-    border: 60px groove greenyellow;
+    border: 20px groove greenyellow;
   }
   .img2 {
-    border: 60px outset red;
+    border: 20px outset red;
   }
   .button {
     text-align: center;

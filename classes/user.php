@@ -36,7 +36,8 @@ class User
         #Devulve un array con las propiedades del usuario
         return [
             "id" => $this->id_user,
-            "username" => $this->username
+            "username" => $this->username,
+            "state" => $this->estado
         ];
     }
 
@@ -50,7 +51,7 @@ class User
         $conn = conectarDB();
 
         #Consulta sql que saca el id, pass y intentos del usuario
-        $sql = "SELECT id_cli,pass,intentos FROM clientes WHERE (n_user=? OR email=?)";
+        $sql = "SELECT id_cli,pass,intentos,estado FROM clientes WHERE (n_user=? OR email=?)";
 
         #Se prepara la consulta
         $resultado = mysqli_prepare($conn, $sql);
@@ -69,7 +70,7 @@ class User
         }
 
         #Si no devuelve falso guardara los resultados en las variables correspondientes
-        $comprobacion = mysqli_stmt_bind_result($resultado, $id_user, $pass, $intentos);
+        $comprobacion = mysqli_stmt_bind_result($resultado, $id_user, $pass, $intentos, $estado);
 
 
         #Si el numero de resultados es nulo significa que no hay ningun registro
@@ -91,8 +92,9 @@ class User
             return ["intentos" => $intentos - 1];
         }
 
-        #Introduce el id del usuario en la propiedad
+        #Introduce el id del usuario en la propiedad y el estado
         $this->id_user = $id_user;
+        $this->estado = $estado;
 
         #Intruce de nuevo 3 intentos
         $this->setAttempts($id_user, 3, true);
@@ -220,6 +222,9 @@ class User
 
 
     }
+
+
+
 
 }
 
