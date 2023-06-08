@@ -7,8 +7,7 @@ body {
   display: flex;
   justify-content: center;
   align-items:center;
-  height: 100vh;
-  margin: 2em 0;
+  height: 85vh;
 }
 
 form {
