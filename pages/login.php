@@ -77,12 +77,12 @@ if (isset($_POST['log'])) {
             <input class="login_button" type="text" id="user" name="user" placeholder="User name" required>
             <input class="password_button" type="password" id="pass" name="pass" placeholder="Password" required>
             <input class="inicia_sesion_button" type="submit" id="log" name="log" value="Iniciar sesion">
+            <button class="back" onclick="location.href='../index.php'" type="button">Pagina Principal</button>
         </form>
     </div>
     <?php
     include_once("../includes/footer.php");
     ?>
-    <!--<button class="back" onclick="location.href='../index.php'" type="button">Pagina Principal</button>-->
 </body>
 
 </html>

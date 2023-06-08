@@ -6,10 +6,18 @@
 .contenido1 {
   display: flex;
   flex-direction: column;
-  margin: 1em 0 1em 1em;
   flex: 1;
+  background: linear-gradient(to right, #f2994a, #f2c94c);
 }
-
+h3 {
+  text-align: center;
+}
+.contenido1 p {
+  text-align: center;
+}
+.con1{
+  margin: 0 auto;
+}
 .con1 {
   width: 25em;
   height: 76vh;
@@ -41,15 +49,13 @@
 .contenido2 {
   display: flex;
   flex: 2;
-  margin: 1em 0;
+
 }
 
 .my-vals {
   flex: 1;
-  margin: 0.5em 0.5em 0.5em;
-  height: 90%;
-  border: solid 1px;
   padding: 0 1em 0 1em;
+  background: linear-gradient(to right, #fffc00, #ffffff);
 }
 
 .v-content {
@@ -100,6 +106,7 @@ input[type="number"]::-webkit-outer-spin-button {
 
 .valoraciones {
   flex: 2;
+  background: linear-gradient(to right, #a8ff78, #78ffd6);
 }
 
 .topten_valoraciones table {

@@ -38,7 +38,6 @@ table {
     margin: 0 auto;
     font-size: 16px;
     line-height: 1.5;
-    background-color: #ffffff;
     border-radius: 10px 10px 0 0;
 }
 
@@ -49,7 +48,6 @@ td {
     vertical-align: middle;
     border-bottom: 1px solid black;
 }
-
 .color1 {
     background-image: linear-gradient(120deg, #d4fc79 0%, #96e6a1 100%);
 }
@@ -69,7 +67,7 @@ td {
 .paginacion {
     background-color: rgb(136, 222, 251);
     text-align: center;
-    max-width: 830px;
+    max-width: 800px;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;

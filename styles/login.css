@@ -1,42 +1,32 @@
 body {
   background: rgba(205,252,159,1);
-  font-size: 14px;
+  margin: 0px;
 }
 .fondo {
   width: 500px;
-  height: 800px;
+  height: 819px;
   background: url("../images/v4_3.png");
-  background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
   box-shadow: 20px 20px 25px rgba(0, 0, 0, 0.25);
-  overflow: hidden;
   margin: 0 auto;
 }
 .logo {
   width: 300px;
   height: 245px;
   background: url("../images/icono\ transparente.png");
-  background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
-  opacity: 1;
   position: relative;
   top: 30px;
   left: 100px;
-  overflow: hidden;
 }
 .titulo {
-  width: 226px;
-  color: rgba(11,11,11,1);
   position: relative;
   top: -30px;
-  left: 150px;
+  left: 130px;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  font-family: Abel;
-  font-weight: Regular;
   font-size: 50px;
-  opacity: 1;
 }
 .login_button {
   width: 354px;
@@ -45,13 +35,8 @@ body {
   position: relative;
   top: 70px;
   left: 80px;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-  overflow: hidden;
+  border-radius: 10px;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  font-weight: Regular;
   font-size: 24px;
   text-align: center;
 }
@@ -62,16 +47,10 @@ body {
   position: relative;
   top: 110px;
   left: 80px;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-  overflow: hidden;
+  border-radius: 10px;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  font-weight: Regular;
   font-size: 24px;
   text-align: center;
-  color: black;
 }
 .inicia_sesion_button {
   width: 195px;
@@ -80,22 +59,18 @@ body {
   position: relative;
   top: 150px;
   left: 150px;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-  overflow: hidden;
+  border-radius: 10px;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  font-weight: Regular;
   font-size: 24px;
 }
 .back {
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  font-weight: Regular;
-  font-size: 18px;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
+  font-size: 20px;
+  border-radius: 10px;
   background: rgba(17,233,78,0.6200000047683716);
+  position: relative;
+  top: 260px;
+  right: 50px;
+  width: 195px;
+  height: 61px;
 }
