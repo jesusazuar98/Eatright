@@ -1,6 +1,8 @@
 body {
+  margin: 0;
   background: rgba(205,252,159,1);
   font-size: 14px;
+  height: 100vh;
 }
 .fondo {
   width: 500px;

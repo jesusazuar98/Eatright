@@ -1,13 +1,21 @@
 <?php
-#Iniciamos sesion y incluimos la clase user
-session_start();
 include_once "../classes/user.php";
+include_once "../classes/administrador.php";
 
-#Si la session usuario existe nos devolvera al index
-if (isset($_SESSION['usuario'])) {
+session_start();
 
-    header("Location:../index.php");
+#Comprueba si el usuario es administrador
+if (!isset($_SESSION['admin'])) {
+
+    echo "<script>window.location.href='../index.php'</script>";
+
+
 }
+
+#Crea el objeto admin
+$admin = unserialize($_SESSION['admin']);
+
+
 
 #Si existe el envio introducira los parametros del usuario y la contraseña
 #Llamara al metodo registro que se le pasaran los parametros faltantes
@@ -15,25 +23,26 @@ if (isset($_SESSION['usuario'])) {
 #En caso de que sea 1 nos mandara al login y nos dira que el registro se ha completado
 if (isset($_POST['envio'])) {
 
-    $user = new User($_POST['n_user'], $_POST['password']);
 
-    $registrar = $user->registro($_POST['mail'], $_POST['r_password'], $_POST['sexo'], $_POST['nacimiento'], $_POST['peso'], $_POST['altura'], $_POST['n_completo']);
+    $registrar = $admin->registrar_usuario($_POST['n_user'], $_POST['mail'], $_POST['password'], $_POST['r_password'], $_POST['sexo'], $_POST['nacimiento'], $_POST['peso'], $_POST['altura'], $_POST['n_completo']);
 
     if ($registrar != 1) {
 
-        echo "<script>alert('" . $registrar . "')</script>";
+        echo $registrar;
     }
 
     if ($registrar == 1) {
 
-        echo "<script>alert('El registro se ha completado correctamente, puede iniciar sesion.')</script>";
-        echo "<script>window.location.href = './login.php'</script>";
+        echo "<script>alert('El registro del usuario se ha completado correctamente.')</script>";
+        echo "<script>window.location.href = 'usuarios.php'</script>";
         exit;
     }
 
 }
 
+
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -42,21 +51,22 @@ if (isset($_POST['envio'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registrate</title>
-    <link rel="stylesheet" href="../styles/header.css">
-    <link rel="stylesheet" href="../styles/footer.css">
-    <link rel="stylesheet" href="../styles/sign-in.css">
+    <title>Registrar-Usuario</title>
+    <link rel="stylesheet" href="menuAdmin.css">
+    <link rel="stylesheet" href="editarAlimento.css">
+
+    <link href="https://fonts.googleapis.com/css?family=Abel&display=swap" rel="stylesheet" />
 </head>
 
 <body>
 
     <?php
-
-    include_once("../includes/header.php");
+    include "menuAdmin.php";
     ?>
 
-    <div id="container">
-        <form action="sign-in.php" method="POST">
+
+    <div class="container">
+        <form action="registrarUsuario.php" method="POST">
             <div>
                 <label for="n_user">Nombre de usuario: </label><br>
                 <input type="text" name="n_user" placeholder="Nuevo nombre de usuario" required />
@@ -108,13 +118,9 @@ if (isset($_POST['envio'])) {
                 <input type="text" id="n_completo" name="n_completo" placeholder="Introduce tu nombre" required />
             </div>
             <input type="submit" name="envio" id="envio" value="Enviar" />
-
-
-        </form>
     </div>
-    <?php
-    include_once("../includes/footer.php");
-    ?>
+
+
 </body>
 
 </html>

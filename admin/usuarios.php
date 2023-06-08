@@ -16,6 +16,25 @@ if (!isset($_SESSION['admin'])) {
 $admin = unserialize($_SESSION['admin']);
 
 
+
+#Si el usuario le da a eliminar eliminara el usuario seleccionado
+if (isset($_POST['eliminar'])) {
+
+    $result = $admin->eliminar_usuario($_POST['id_cli']);
+
+    if ($result != 1) {
+
+
+        echo $result;
+    } else {
+
+
+        echo "<script>alert('El usuario se ha eliminado correctamente.')</script>";
+    }
+
+}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -25,7 +44,7 @@ $admin = unserialize($_SESSION['admin']);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Administrador-Alimentos</title>
+    <title>Administrador-Usuarios</title>
     <link rel="stylesheet" href="admin.css">
     <link rel="stylesheet" href="menuAdmin.css">
     <link href="https://fonts.googleapis.com/css?family=Abel&display=swap" rel="stylesheet" />
@@ -41,10 +60,12 @@ $admin = unserialize($_SESSION['admin']);
     <div class="container">
         <h3>Buscar usuarios</h3>
 
-        <form action="admin.php" method="POST">
-            <p>Nombre del usuario: <input type="text" name='n_alimento' />
-                <input type="submit" value='Buscar' />
-            </p>
+        <form action="usuarios.php" method="POST">
+            <p>Nombre del usuario: <input type="text" name='n_user' /></p>
+            <p>Email: <input type="text" name='email' /> <input type="submit" value='Buscar' /> <a
+                    href="registrarUsuario.php">Crear usuario</a></p>
+
+
         </form>
         <table>
             <thead>
@@ -52,56 +73,57 @@ $admin = unserialize($_SESSION['admin']);
                     <th>Id</th>
                     <th>Nombre</th>
                     <th>Email</th>
-                    <th>Porcion</th>
-                    <th>Kcal</th>
-                    <th>Grasas</th>
-                    <th>Grasas Saturadas</th>
-                    <th>Carbohidratos</th>
-                    <th>Azucar</th>
-                    <th>Proteina</th>
-                    <th>Sal</th>
-                    <th>Calidad</th>
-                    <th>Valoracion</th>
+                    <th>Sexo</th>
+                    <th>Fecha de nacimiento</th>
+                    <th>Peso</th>
+                    <th>Altura</th>
+                    <th>Nombre completo</th>
+                    <th>Estado</th>
+                    <th>Intentos</th>
                 </tr>
             </thead>
 
             <?php
 
-            $marca = isset($_POST['marca']) ? $_POST['marca'] : '';
-            $n_alimento = isset($_POST['n_alimento']) ? $_POST['n_alimento'] : '';
+            $n_user = isset($_POST['n_user']) ? $_POST['n_user'] : '';
+            $email = isset($_POST['email']) ? $_POST['email'] : '';
 
-            $data = $admin->alimentos($marca, $n_alimento);
-
+            $data = $admin->view_clientes($n_user, $email);
             if ($data != 0) {
                 $code = "";
                 for ($i = 0; $i < count($data); $i++) {
 
                     $code .= "<tr>";
-                    $row = "<td>" . $data[$i]['id_alimento'] . "</td>" . "<td>" . $data[$i]['nombre_alimen'] . "</td>" . "<td>" . $data[$i]['marca'] . "</td>" . "<td>" . $data[$i]['porcion'] . "</td>" . "<td>" . $data[$i]['kcal'] . "</td>" . "<td>" . $data[$i]['grasas'] . "</td>" . "<td>" . $data[$i]['g_saturadas'] . "</td>" . "<td>" . $data[$i]['carbohidratos'] . "</td>" . "<td>" . $data[$i]['azucar'] . "</td>" . "<td>" . $data[$i]['proteina'] . "</td>" . "<td>" . $data[$i]['sal'] . "</td>" . "<td>" . $data[$i]['calidad'] . "</td>" . "<td>" . $data[$i]['valoracion'] . "</td>";
-                    $row .= "<td><form action='editarAlimento.php' method='post'>
-                    <input type='hidden' name='id' value='" . $data[$i]['id_alimento'] . "'>
-                    <input type='hidden' name='nombre' value='" . $data[$i]['nombre_alimen'] . "'>
-                    <input type='hidden' name='marca' value='" . $data[$i]['marca'] . "'>
-                    <input type='hidden' name='porcion' value='" . $data[$i]['porcion'] . "'>
-                    <input type='hidden' name='kcal' value='" . $data[$i]['kcal'] . "'>
-                    <input type='hidden' name='grasas' value='" . $data[$i]['grasas'] . "'>
-                    <input type='hidden' name='g_saturadas' value='" . $data[$i]['g_saturadas'] . "'>
-                    <input type='hidden' name='carbohidratos' value='" . $data[$i]['carbohidratos'] . "'>
-                    <input type='hidden' name='azucar' value='" . $data[$i]['azucar'] . "'>
-                    <input type='hidden' name='proteina' value='" . $data[$i]['proteina'] . "'>
-                    <input type='hidden' name='sal' value='" . $data[$i]['sal'] . "'>
+                    $code .= "<td>" . $data[$i]['id_cli'] . "</td>" . "<td>" . $data[$i]['n_user'] . "</td>" . "<td>" . $data[$i]['email'] . "</td>" . "<td>" . $data[$i]['sexo'] . "</td>" . "<td>" . $data[$i]['f_cumple'] . "</td>" . "<td>" . $data[$i]['peso'] . "</td>" . "<td>" . $data[$i]['altura'] . "</td>" . "<td>" . $data[$i]['nombre_completo'] . "</td>" . "<td>" . $data[$i]['estado'] . "</td>" . "<td>" . $data[$i]['intentos'] . "</td>";
+
+                    $code .= "<td>
+                    <form action='editarUsuario.php' method='POST'>
+                    <input type='hidden' name='id' value='" . $data[$i]['id_cli'] . "'>
+                    <input type='hidden' name='n_user' value='" . $data[$i]['n_user'] . "'>
+                    <input type='hidden' name='email' value='" . $data[$i]['email'] . "'>
+                    <input type='hidden' name='sexo' value='" . $data[$i]['sexo'] . "'>
+                    <input type='hidden' name='f_nacimiento' value='" . $data[$i]['f_cumple'] . "'>
+                    <input type='hidden' name='peso' value='" . $data[$i]['peso'] . "'>
+                    <input type='hidden' name='altura' value='" . $data[$i]['altura'] . "'>
+                    <input type='hidden' name='n_completo' value='" . $data[$i]['nombre_completo'] . "'>
+                    <input type='hidden' name='estado' value='" . $data[$i]['estado'] . "'>
+                    <input type='hidden' name='intentos' value='" . $data[$i]['intentos'] . "'>
                     <button type='submit'>Editar</button>
-                </form></td>";
+                    </form></td>";
 
-                    $row .= "<td><form action='admin.php' method='post'> <input type='hidden' name='id' value='" . $data[$i]['id_alimento'] . "'> <button type='submit' name='eliminar'>Eliminar</button></form></td><td><a href='addAlimento.php'>Añadir Alimento</a></td>";
+                    $code .= "<td><form action='cambiarPass.php' method='post'>
+                        <input type='hidden' name='id' value='" . $data[$i]['id_cli'] . "'>
+                        <button type='submit'>Cambiar contraseña</button>
+                    </form></td>";
 
-                    $code .= $row;
+                    $code .= "<td><form action='usuarios.php' method='post'> <input type='hidden' name='id_cli' value='" . $data[$i]['id_cli'] . "'> <button type='submit' name='eliminar'>Eliminar</button></td>";
+
                     $code .= "</tr>";
                 }
 
                 echo $code;
             } else {
-                echo "<script>alert('No se ha encontrado ningun alimento.')</script>";
+                echo "<script>alert('No se ha encontrado ningun usuario.')</script>";
             }
             ?>
 

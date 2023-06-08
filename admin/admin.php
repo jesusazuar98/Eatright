@@ -67,8 +67,7 @@ if (isset($_POST['eliminar'])) {
                     <option value="carrefour">Carrefour</option>
 
                 </select>
-                <input type="submit" value='Buscar' />
-
+                <input type="submit" value='Buscar' /> <a href='addAlimento.php'>Añadir Alimento</a>
             </p>
         </form>
         <table>
@@ -118,7 +117,7 @@ if (isset($_POST['eliminar'])) {
                     <button type='submit'>Editar</button>
                 </form></td>";
 
-                    $row .= "<td><form action='admin.php' method='post'> <input type='hidden' name='id' value='" . $data[$i]['id_alimento'] . "'> <button type='submit' name='eliminar'>Eliminar</button></form></td><td><a href='addAlimento.php'>Añadir Alimento</a></td>";
+                    $row .= "<td><form action='admin.php' method='post'> <input type='hidden' name='id' value='" . $data[$i]['id_alimento'] . "'> <button type='submit' name='eliminar'>Eliminar</button></form></td>";
 
                     $code .= $row;
                     $code .= "</tr>";
