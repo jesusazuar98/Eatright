@@ -24,5 +24,7 @@ img {
   border: 20px outset red;
 }
 .button {
+  font-weight: bold;
   margin-top: 20px;
+  text-shadow: 2px 2px 5px white;
 } 
