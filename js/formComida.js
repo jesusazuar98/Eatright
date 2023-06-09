@@ -1,12 +1,9 @@
 //Funcion que calcula el total de kcal segun la porcion del usuario y la porcion del alimento
 const calculaKcal = (p_user, porcion) => {
   p_user = p_user.target.value;
-
   calc = (p_user * kcal) / porcion;
-
   document.getElementById("t_kcal").value = calc;
 };
-
 //Funcion que muestra los datos de el alimento para que pueda registrarse a la comida
 const muestraAlimentos = (vals) => {
   fecha = new Date().toISOString().split("T")[0];
@@ -18,21 +15,15 @@ const muestraAlimentos = (vals) => {
     " (" +
     vals["marca"] +
     ")</p><p>Porcion (gr o ml): <input onchange='calculaKcal(event,porcion,kcal)' value='0' type='number' step='.01' id='nporcion' name='uporcion'/></p>";
-
   code +=
     "<p>Numero total de calorias: <input readonly value='0' type='number' step='.01' id='t_kcal' name='total_kcal'/></p>";
-
   code +=
     "<p>Comida: <select name='comidas'><option value='desayuno' selected>Desayuno</option><option value='almuerzo'>Almuerzo</option><option value='comida'>Comida</option><option value='merienda'>Merienda</option><option value='cena'>Cena</option></select></p>";
-
   code += "<p>Fecha: <input type='date' value=" + fecha + " name='fecha'/></p>";
-
   code += "<input type='hidden' name='id_alimen' value='" + vals["id"] + "'/>";
-
   code += "<input type='submit' name='send_food' value='Insertar comida'/>";
   document.getElementById("c2").innerHTML = code;
 };
-
 //Funcion que hace una peticion para obtener la lista de los alimentos segun la busqueda que queramos hacer
 const listAlimentos = (container) => {
   let nAlimento = document.getElementById("n_alimento").value;
@@ -46,7 +37,6 @@ const listAlimentos = (container) => {
   formData.append("n_alimento", nAlimento);
   formData.append("a_marca", marca);
   formData.append("check_fav", checkFav);
-
   fetch(url, { method: "POST", body: formData })
     .then((response) => response.json())
     .then((data) => {
@@ -54,19 +44,15 @@ const listAlimentos = (container) => {
     })
     .catch((err) => console.log(err));
 };
-
 //Recibe un formulario para cambiar el tamaño de la porcion del alimento que va a comer, a traves de una peticion
 const changeAlimento = (id, e, idComida) => {
   e.preventDefault();
   let content = document.getElementById("container2");
-
   let url = "../utils/editar_comida.php";
   content.style.display = "flex";
-
   let formData = new FormData();
   formData.append("id_alimento", id);
   formData.append("id_comida", idComida);
-
   fetch(url, { method: "POST", body: formData })
     .then((response) => response.json())
     .then((data) => {
@@ -75,7 +61,6 @@ const changeAlimento = (id, e, idComida) => {
     })
     .catch((err) => console.log(err));
 };
-
 //Formulario para buscar los alimentos que el usuario quiera ingerir
 const addComida = () => {
   code =
@@ -93,23 +78,17 @@ const addComida = () => {
     '<option value="carrefour">Carrefour</option>' +
     "</select>" +
     "</form></div><div id='contain2'></div>";
-
   document.getElementById("container2").style.display = "flex";
-
   document.getElementById("container2").innerHTML = code;
 };
-
 //Funcion que calcula los valores segun la porcion introducida por el usuario
 const calculaValores = (vals) => {
   let p_u = document.getElementById("p_u").value;
   let p_a = vals[0];
-
   let valores = vals.slice(1);
-
   let newVals = valores.map((val) => {
     return (p_u * val) / p_a;
   });
-
   console.log(newVals);
   document.getElementById("v_kcal").value = newVals[0];
   document.getElementById("v_grasas").value = newVals[1];
@@ -119,7 +98,6 @@ const calculaValores = (vals) => {
   document.getElementById("v_prote").value = newVals[5];
   document.getElementById("v_sal").value = newVals[6];
 };
-
 //Muestra la lista de alimentos que puedo añadir a favoritos
 const listFavorites = (container) => {
   let nAlimento = document.getElementById("n_alimento").value;
@@ -136,7 +114,6 @@ const listFavorites = (container) => {
     })
     .catch((err) => console.log(err));
 };
-
 //Registra un alimento a favoritos y lo muestra
 const addFavorites = (id) => {
   let content = document.getElementById("f-content");
@@ -151,14 +128,12 @@ const addFavorites = (id) => {
     })
     .catch((err) => console.log(err));
 };
-
 //Elimina un alimento de mis favoritos
 const deleteFavorites = (id_alimento) => {
   let content = document.getElementById("f-content");
   let url = "../utils/eliminar_favorito.php";
   let formData = new FormData();
   formData.append("id_alimento", id_alimento);
-
   fetch(url, { method: "POST", body: formData })
     .then((response) => response.json())
     .then((data) => {
@@ -167,7 +142,6 @@ const deleteFavorites = (id_alimento) => {
     })
     .catch((err) => console.log(err));
 };
-
 //Muestra los alimentos que estan en mis favoritos con un parametro de busqueda por nombre o marca
 const buscarFavoritos = () => {
   let content = document.getElementById("f-content");
@@ -177,7 +151,6 @@ const buscarFavoritos = () => {
   let formData = new FormData();
   formData.append("name_ali", nAlimento);
   formData.append("marca", marca);
-
   fetch(url, { method: "POST", body: formData })
     .then((response) => response.json())
     .then((data) => {
@@ -185,18 +158,15 @@ const buscarFavoritos = () => {
     })
     .catch((err) => console.log(err));
 };
-
 //Funcion que muestra los alimentos que el usuario no ha valorado
 const noValorados = (con) => {
   let nAlimento = document.getElementById("n_alimento").value;
   let marca = document.getElementById("a_marca").value;
   let url = "../utils/list_no_valorados.php";
   let content = document.getElementById(con);
-
   let formData = new FormData();
   formData.append("n_alimen", nAlimento);
   formData.append("marca", marca);
-
   fetch(url, { method: "POST", body: formData })
     .then((r) => r.json())
     .then((data) => {
@@ -204,26 +174,21 @@ const noValorados = (con) => {
     })
     .catch((err) => console.log(err));
 };
-
 //Formulario para añadir una valoracion
 const addValoracion = (id_alimento, name) => {
   let content = document.getElementById("v-content");
-
   code =
     "<h3>" +
     name +
     "</h3><p>Valoracion: <input id='new-valor' onchange='compruebaVal(this)' type='number' value=0 min='0' max='10'/></p><p><button onclick='addVal(" +
     id_alimento +
     ")'>Añadir valoracion</button></p><a onclick=\"valorados('v-content')\" href='#my-vals'>Volver</a>";
-
   content.innerHTML = code;
 };
-
 //Añade una valoracion
 const addVal = (id_alimento) => {
   let newVal = document.getElementById("new-valor").value;
   let url = "../utils/add_valoracion.php";
-
   if (!(newVal >= 0 && newVal <= 10)) {
     newVal.value = 0;
     alert("El minimo de valoracion es 0 y el maximo 10.");
@@ -231,7 +196,6 @@ const addVal = (id_alimento) => {
     let formData = new FormData();
     formData.append("id_alimen", id_alimento);
     formData.append("puntuacion", newVal);
-
     fetch(url, { method: "POST", body: formData })
       .then((r) => r.json())
       .then((data) => {
@@ -240,18 +204,15 @@ const addVal = (id_alimento) => {
         } else {
           alert("Ha ocurrido un error al añadir la puntuacion.");
         }
-
         valorados("v-content");
         noValorados("con1");
       })
       .catch((err) => console.log(err));
   }
 };
-
 //Formulario para editar una valoracion
 const changeValoracion = (id_alimento, name, val = 0) => {
   let content = document.getElementById("v-content");
-
   code =
     "<h3>" +
     name +
@@ -260,15 +221,12 @@ const changeValoracion = (id_alimento, name, val = 0) => {
     " min='0' max='10'/></p><p><button onclick='changeVal(" +
     id_alimento +
     ")'>Editar valoracion</button></p><a onclick=\"valorados('v-content')\" href='#my-vals'>Volver</a>";
-
   content.innerHTML = code;
 };
-
 //Añade una valoracion
 const changeVal = (id_alimento) => {
   let newVal = document.getElementById("new-valor").value;
   let url = "../utils/change_valoracion.php";
-
   if (!(newVal >= 0 && newVal <= 10)) {
     newVal.value = 0;
     alert("El minimo de valoracion es 0 y el maximo 10.");
@@ -276,7 +234,6 @@ const changeVal = (id_alimento) => {
     let formData = new FormData();
     formData.append("id_alimen", id_alimento);
     formData.append("puntuacion", newVal);
-
     fetch(url, { method: "POST", body: formData })
       .then((r) => r.json())
       .then((data) => {
@@ -285,14 +242,12 @@ const changeVal = (id_alimento) => {
         } else {
           alert("Ha ocurrido un error al cambiar la puntuacion.");
         }
-
         valorados("v-content");
         noValorados("con1");
       })
       .catch((err) => console.log(err));
   }
 };
-
 //Muestra los alimentos valorados por el usuario
 const valorados = (con) => {
   let nombre_val = document.getElementById("v_alimento").value;
@@ -300,7 +255,6 @@ const valorados = (con) => {
   let content = document.getElementById(con);
   let url = "../utils/list_valorados.php";
   let formData = new FormData();
-
   formData.append("n_alimen", nombre_val);
   formData.append("marca", marca_val);
   fetch(url, { method: "POST", body: formData })
@@ -310,23 +264,19 @@ const valorados = (con) => {
     })
     .catch((err) => console.log(err));
 };
-
 //Funcion que comprueba si el valor esta entre 0 y 10
 const compruebaVal = (e) => {
   let val = e.value;
-
   if (!(val >= 0 && val <= 10)) {
     e.value = 0;
     alert("El minimo de valoracion es 0 y el maximo 10.");
   }
 };
-
 //Elimina una valoracion
 const eliminarValoracion = (id_alimento) => {
   let url = "../utils/eliminar_valoracion.php";
   let formData = new FormData();
   formData.append("id_alimen", id_alimento);
-
   fetch(url, { method: "POST", body: formData })
     .then((r) => r.json())
     .then((data) => {
@@ -335,17 +285,14 @@ const eliminarValoracion = (id_alimento) => {
       } else {
         alert("Ha ocurrido un error al intentar borrar la valoracion.");
       }
-
       valorados("v-content");
       noValorados("con1");
     })
     .catch((err) => console.log(err));
 };
-
 //Muestra un grafico segun los datos que se le pasen
 const graficaPie = (alimentos, datos, canva) => {
   let can = document.getElementById(canva);
-
   const colores = [
     "#FF6384",
     "#36A2EB",
@@ -358,7 +305,6 @@ const graficaPie = (alimentos, datos, canva) => {
     "#FF00FF",
     "#008000",
   ];
-
   let myChart = new Chart(can, {
     type: "pie",
     data: {

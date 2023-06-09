@@ -10,25 +10,17 @@
             #Comprueba si el usuario ha iniciado sesion y en ese caso muestra la opcion de favoritos y cerrar sesion
             #En caso de que no haya iniciada ninguna sesion mostrara los enlaces de inicio y de registro
             if (isset($_SESSION['usuario'])) {
-
                 $user = unserialize($_SESSION['usuario']);
-
                 $data = $user->getUser();
-
                 ?>
                 <li><a href="../pages/valoraciones.php">Valoraciones</a></li>
                 <li><a href="../pages/favoritos.php">Favoritos</a></li>
                 <li><a href="../pages/logout.php">Cerrar sesión</a></li>
-
                 <?php
             } else {
-
-
                 ?>
                 <li><a href="../pages/login.php">Iniciar sesión</a></li>
                 <li><a href="../pages/sign-in.php">Registrarse</a></li>
-
-
                 <?php
             }
             ?>
