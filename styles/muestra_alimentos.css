@@ -8,7 +8,6 @@ body {
     align-items: center;
     height: 10vh;
 }
-
 fieldset {
     text-align: center;
     padding: 20px;
@@ -26,7 +25,6 @@ input[type="reset"] {
   border-radius: 10px;
   font-weight: Bold;
 }
-
 input[type="submit"]:hover,
 input[type="reset"]:hover {
   background-color: #45a049;
@@ -40,7 +38,6 @@ table {
     line-height: 1.5;
     border-radius: 10px 10px 0 0;
 }
-
 th,
 td {
     padding: 12px;

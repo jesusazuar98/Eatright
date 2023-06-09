@@ -2,14 +2,12 @@ body {
   margin: 0;
   background: rgba(205,252,159,1);
 }
-
 #container {
   display: flex;
   justify-content: center;
   align-items:center;
   height: 85vh;
 }
-
 form {
   display: flex;
   justify-content: space-between;
@@ -21,14 +19,11 @@ form {
   height: 700px;
   background-color: rgb(195, 230, 196);
 }
-
 #peso::-webkit-inner-spin-button,
 #peso::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-
-
 #altura::-webkit-inner-spin-button,
 #altura::-webkit-outer-spin-button {
   -webkit-appearance: none;
