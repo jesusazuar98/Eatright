@@ -116,7 +116,7 @@ if (isset($_POST['eliminar'])) {
                         <button type='submit'>Cambiar contraseña</button>
                     </form></td>";
 
-                    $code .= "<td><form action='usuarios.php' method='post'> <input type='hidden' name='id_cli' value='" . $data[$i]['id_cli'] . "'> <button type='submit' name='eliminar'>Eliminar</button></td>";
+                    $code .= "<td><form action='usuarios.php' method='post'> <input type='hidden' name='id_cli' value='" . $data[$i]['id_cli'] . "'> <button type='submit' name='eliminar'>Eliminar</button></form></td>";
 
                     $code .= "</tr>";
                 }

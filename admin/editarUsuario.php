@@ -29,7 +29,7 @@ if (isset($_POST['edita_usuario'])) {
     } else {
 
 
-        echo "<script>alert('El usuario se ha modificado correctamente.')</script>";
+        echo "<script>alert('El usuario se ha modificado correctamente.'); window.location.href='usuarios.php'</script>";
     }
 
 }

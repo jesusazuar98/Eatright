@@ -244,7 +244,7 @@ class Administrador extends User
     }
 
     #Funcion que comprueba si un usuario ya tiene ese nombre de usuario o email
-    function comprueba_usuario($id_user = '', $n_user, $email)
+    function comprueba_usuario($n_user, $email)
     {
 
         $conn = conectarDB();
@@ -295,46 +295,39 @@ class Administrador extends User
 
     }
 
-    function datos_usuario($id_usuario)
+
+    #Comprobacion de si existe un email o un nombre de usuario existe sin tener en cuenta el id del usuario para poder editarlo
+    function comprobacion_edita_usuario($id_usuario, $n_user, $email)
     {
 
         $conn = conectarDB();
-        $sql = "SELECT n_user,email FROM clientes WHERE id_cli=?";
+        $sql = "SELECT n_user,email FROM `clientes` WHERE id_cli!=? AND (n_user=? OR email=?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param('i', $id_usuario);
+        $stmt->bind_param('iss', $id_usuario, $n_user, $email);
 
         if (!$stmt->execute()) {
 
-            return "<script>alert('Ha ocurrido un error al ver los datos del usuario.')</script>";
+            return "<script>alert('Ha ocurrido un error en la consulta de la comprobacion.')</script>";
         }
 
         $result = $stmt->get_result();
 
 
-        if ($result->num_rows <= 0) {
-            return "<script>alert('El usuario no existe.')</script>";
+        if ($result->num_rows > 0) {
+            return "<script>alert('Existe ya un usuario con ese nombre o email.')</script>";
         }
 
-        $data = [];
-
-
-        while ($row = $result->fetch_assoc()) {
-
-            $data[] = $row;
-        }
-
-        return $data;
+        $stmt->close();
+        $conn->close();
+        return 1;
     }
 
 
     function editar_usuario($id_u, $n_user, $email, $sexo, $f_nacimiento, $peso, $altura, $n_completo, $estado, $intentos)
     {
 
-        $comprobacion_data_usuario = $this->datos_usuario($id_u);
+        $comprobacion_usuario = $this->comprobacion_edita_usuario($id_u, $n_user, $email);
 
-
-
-        $comprobacion_usuario = $this->comprueba_usuario($n_user, $email);
 
         if ($comprobacion_usuario != 1) {
 
