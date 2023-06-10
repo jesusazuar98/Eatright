@@ -19,6 +19,7 @@ if (isset($_POST['changepass'])) {
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -27,6 +28,7 @@ if (isset($_POST['changepass'])) {
     <link rel="stylesheet" href="menuAdmin.css">
     <link rel="stylesheet" href="editarAlimento.css">
 </head>
+
 <body>
     <?php
     include "menuAdmin.php";
@@ -38,10 +40,11 @@ if (isset($_POST['changepass'])) {
         <p>ID del usuario: <input type='text' name='id' value='" . $_POST['id'] . "' readonly/></p>
         <p>Nueva contraseña: <input type='password' name='pass' required></p>
         <p>Repita la nueva contraseña:<input type='password' name='pass_rep' required></p>
-        <button type='submit' name='changepass'>Añadir Alimento</button>
+        <button type='submit' name='changepass'>Cambiar contraseña</button>
         </form>";
         echo $formulario;
         ?>
     </div>
 </body>
+
 </html>
