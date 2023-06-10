@@ -13,7 +13,7 @@ $id_u = $user->getUser()['id'];
 # Buscamos los favoritos del usuario 
 $code = $alimentos->buscar_favoritos($_POST['name_ali'], $_POST['marca'], $id_u);
 # En caso de que devuelva 0 nos mostrara un mensaje de que no se ha encontrado ningun favorito
-if ($code == 0) {
+if ($code === 0) {
     echo json_encode("No se ha encontrado ningun favorito.");
     # Sino mostrara el codigo
 } else {

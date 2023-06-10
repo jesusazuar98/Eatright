@@ -18,7 +18,7 @@ if ($_POST['check_fav'] == 'f') {
     $result = $alimentos->buscar_favoritos($_POST['n_alimento'], $_POST['a_marca'], $id_u, true);
 }
 # Si el resultado devuelve 0 mostrara un contenedor que dira que no se ha encontrado ningun alimento
-if ($result == 0) {
+if ($result === 0) {
     $code = "<div id='c1'>No se ha encontrado ningun alimento</div>";
 } else {
     # Sino creara un contenedor con una lista y se añadiran los elementos a la lista html segun si son favoritos o no

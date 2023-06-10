@@ -14,7 +14,7 @@ $user = unserialize($_SESSION['usuario']);
 # Marca y el id del usuario 
 $result = $alimentos->list_notfavorites($_POST['n_alimento'], $_POST['a_marca'], $user->getUser()['id']);
 # Si el resultado es igual a 0 devuelve un contenedor con un mensaje de que no se ha encontrado nada
-if ($result == 0) {
+if ($result === 0) {
     $code = "<div id='c1'>No se ha encontrado ningun alimento</div>";
 } else {
     # Sino se crea un contenedor que contiene la lista de los alimentos no añadidos a favoritos, que al hacerles click en la estrella se añadiran a favoritos

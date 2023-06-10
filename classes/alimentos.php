@@ -93,7 +93,7 @@ class Alimentos
     function buscar_alimentos($name, $marca)
     {
         $conn = conectarDB();
-        $sql = "SELECT * FROM alimentos WHERE nombre_alimen LIKE CONCAT('%', ?, '%') AND marca=?";
+        $sql = "SELECT * FROM alimentos WHERE nombre_alimen LIKE CONCAT('%', ?, '%') AND marca=? LIMIT 50";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("ss", $name, $marca);
         $stmt->execute();
