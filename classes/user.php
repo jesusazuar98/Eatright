@@ -71,7 +71,7 @@ class User
         #Introduce el id del usuario en la propiedad y el estado
         $this->id_user = $id_user;
         $this->estado = $estado;
-        #Intruce de nuevo 3 intentos
+        #Introduce de nuevo 3 intentos
         $this->setAttempts($id_user, 3, true);
         #Cierra la conexion mysql
         mysqli_close($conn);

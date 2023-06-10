@@ -12,7 +12,8 @@ if (isset($_SESSION['usuario'])) {
 #En caso de que sea 1 nos mandara al login y nos dira que el registro se ha completado
 if (isset($_POST['envio'])) {
     $user = new User($_POST['n_user'], $_POST['password']);
-    $registrar = $user->registro($_POST['mail'], $_POST['r_password'], $_POST['sexo'], $_POST['nacimiento'], $_POST['peso'], $_POST['altura'], $_POST['n_completo']);
+    $registrar = $user->registro($_POST['mail'], $_POST['r_password'], $_POST['sexo'], $_POST['nacimiento'], $_POST['peso'], 
+    $_POST['altura'], $_POST['n_completo']);
     if ($registrar != 1) {
         echo "<script>alert('" . $registrar . "')</script>";
     }

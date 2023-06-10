@@ -76,3 +76,8 @@ body {
   width: 195px;
   height: 61px;
 }
+.password_button::placeholder,
+.login_button::placeholder{
+  font-weight: bold;
+  text-shadow: 2px 2px 5px greenyellow;
+}
