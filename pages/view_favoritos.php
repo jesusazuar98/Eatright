@@ -1,16 +1,12 @@
 <?php
-
 if (!isset($_SESSION['usuario'])) {
     header("Location: ../index.php");
     exit;
 }
-
 $user = unserialize($_SESSION['usuario']);
 include_once "../classes/alimentos.php";
 $alimentos = new Alimentos();
-
 ?>
-
 <div class="container">
     <div class="contenido1">
         <h3>Añadir alimento a favoritos</h3>
@@ -26,7 +22,6 @@ $alimentos = new Alimentos();
         <div class="con1" id="con1"></div>
         <a class="linea"><img src="../images/lineas.png" alt="lineas"></a>
     </div>
-
     <div class="contenido2" id="contenido2">
         <div class="my-favorites" id="my-favorites">
             <h3>Mis favoritos:</h3>
@@ -68,10 +63,8 @@ $alimentos = new Alimentos();
             </div>
             <canvas id="topten-pie">
             </canvas>
-
             <?php
             echo '<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.0.2/chart.min.js" integrity="sha512-dnUg2JxjlVoXHVdSMWDYm2Y5xcIrJg1N+juOuRi0yLVkku/g26rwHwysJDAMwahaDfRpr1AxFz43ktuMPr/l1A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>';
-
             echo "<script>graficaPie(" . json_encode($code[1]) . "," . json_encode($code[2]) . ",'topten-pie')</script>";
             ?>
         </div>

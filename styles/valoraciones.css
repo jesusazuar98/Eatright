@@ -2,7 +2,6 @@
   display: flex;
   height: 100vh;
 }
-
 .contenido1 {
   display: flex;
   flex-direction: column;
@@ -24,49 +23,39 @@ h3 {
   overflow: auto;
   border: 1px solid;
 }
-
 .con1 ul {
   list-style-type: none;
   padding: 0 0 0 1em;
 }
-
 .con1 ul li {
   border-bottom: 1px solid;
   margin-right: 1em;
   margin-bottom: 1em;
 }
-
 .con1 a {
   font-weight: bold;
   text-decoration: none;
   color: black;
 }
-
 .con1 p {
   margin: 5px;
 }
-
 .contenido2 {
   display: flex;
   flex: 2;
-
 }
-
 .my-vals {
   flex: 1;
   padding: 0 1em 0 1em;
   background: linear-gradient(to right, #fffc00, #ffffff);
 }
-
 .v-content {
   overflow: auto;
   max-height: 75%;
 }
-
 .v-content ul {
   padding: 0;
 }
-
 .v-content li {
   display: flex;
   list-style: none;
@@ -74,57 +63,45 @@ h3 {
   border-bottom: 1px solid;
   justify-content: space-between;
 }
-
 .options {
   display: flex;
   gap: 10px;
 }
-
 .v-content span {
   font-weight: bold;
 }
-
 .v-content form {
   border-top: 1px solid black;
 }
-
 .v-content a {
   font-weight: bold;
   text-decoration: none;
   color: #0000ee;
 }
-
 input[type="number"] {
   width: 15%;
 }
-
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-
 .valoraciones {
   flex: 2;
   background: linear-gradient(to right, #a8ff78, #78ffd6);
 }
-
 .topten_valoraciones table {
   width: 100%;
 }
-
 .topten_valoraciones h3 {
   text-align: center;
 }
-
 .topten_valoraciones td {
   text-align: center;
 }
-
 .topten_valoraciones thead {
   background-color: #11e94e99;
 }
-
 canvas {
   max-height: 50vh;
 }

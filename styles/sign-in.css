@@ -2,14 +2,12 @@ body {
   margin: 0;
   background: rgba(205,252,159,1);
 }
-
 #container {
   display: flex;
   justify-content: center;
   align-items:center;
   
 }
-
 form {
   display: flex;
   justify-content: space-between;
@@ -18,17 +16,14 @@ form {
   border: unset;
   border-radius: 10px;
   width: 500px;
-  height: 750px;
+  height: 700px;
   background-color: rgb(195, 230, 196);
 }
-
 #peso::-webkit-inner-spin-button,
 #peso::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-
-
 #altura::-webkit-inner-spin-button,
 #altura::-webkit-outer-spin-button {
   -webkit-appearance: none;
