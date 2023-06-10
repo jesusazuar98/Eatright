@@ -51,10 +51,10 @@ class Alimentos
         $result = $connect->query($sql);
         mysqli_close($connect);
         #Se mete los indices de la tabla con los datos de los alimentos
-        $code = "<table>\n<tr class='indice'>\n<td class='borde1'>Nombre</td>\n<td>Marca</td>\n<td>Porcion</td>\n<td>Kcal</td>\n<td>Grasa</td>\n<td>Grasas saturadas</td>\n<td>Carbohidratos</td>\n<td>Azúcar</td>\n<td>Proteina</td>\n<td class='borde2'>Sal</td>\n</tr>";
+        $code = "<table>\n<tr class='indice'>\n<td class='borde1'>Nombre</td>\n<td>Marca</td>\n<td>Porcion</td>\n<td>Kcal</td>\n<td>Grasa</td>\n<td>Grasas saturadas</td>\n<td>Carbohidratos</td>\n<td>Azúcar</td>\n<td>Proteina</td>\n<td>Sal</td>\n<td class='borde2'>Calidad</td>\n</tr>";
         #Se recorre cada resultado y se extraen los datos del alimento y se añaden al codigo en forma de tabla segun la posicion de su indice
         while ($data = mysqli_fetch_array($result)) {
-            $code .= "<tr><td class='color1'>" . $data[1] . "</td><td class='color2'>" . $data[2] . "</td><td class='color1'>" . $data[3] . "</td><td class='color2'>" . $data[4] . "</td><td class='color1'>" . $data[5] . "</td><td class='color2'>" . $data[6] . "</td><td class='color1'>" . $data[7] . "</td><td class='color2'>" . $data[8] . "</td><td class='color1'>" . $data[9] . "</td><td class='color2'>" . $data[10] . "</td></tr>";
+            $code .= "<tr><td class='color1'>" . $data[1] . "</td><td class='color2'>" . $data[2] . "</td><td class='color1'>" . $data[3] . "</td><td class='color2'>" . $data[4] . "</td><td class='color1'>" . $data[5] . "</td><td class='color2'>" . $data[6] . "</td><td class='color1'>" . $data[7] . "</td><td class='color2'>" . $data[8] . "</td><td class='color1'>" . $data[9] . "</td><td class='color2'>" . $data[10] . "</td><td class='color1'>" . $data[11] . "</td></tr>";
         }
         #Se llama al metodo privado paginacion alimentos y se le pasa por parametro la pagina actual, el numero total de paginas y la marca si existe
         $codigo_paginacion = $this->paginacion_alimentos($pagina, $total_paginas, $marca);
@@ -464,6 +464,8 @@ class Alimentos
         }
         return [$code, $nombre_alimentos, $times_added];
     }
+
+    #Metodo que devuelve un array con los alimentos que el usuario no ha valorado
     function alimentos_novals($id_user, $alimen, $marca)
     {
         $conn = conectarDB();
@@ -489,6 +491,8 @@ class Alimentos
         $conn->close();
         return $data;
     }
+
+    #Metodo que devuelve los alimentos que el usuario ha valorado y tambien los devuelve segun los filtros
     function alimentos_valorados($id_user, $n_alimentos = '', $marca = '')
     {
         $conn = conectarDB();
@@ -512,6 +516,8 @@ class Alimentos
         }
         return $data;
     }
+
+    #Metodo para insertar la puntuacion del alimento por parte del usuario
     function insertar_valores($id_user, $id_alimento, $puntuacion)
     {
         $conn = conectarDB();
@@ -527,6 +533,8 @@ class Alimentos
         $conn->close();
         return 1;
     }
+
+    #Metodo para cambiar la puntuacion del alimento por parte del usuario
     function cambiar_valores($id_user, $id_alimento, $puntuacion)
     {
         $conn = conectarDB();
@@ -542,6 +550,8 @@ class Alimentos
         $conn->close();
         return 1;
     }
+
+    #Metodo para eliminar una valoracion
     function eliminar_valor($id_user, $id_alimento)
     {
         $conn = conectarDB();
@@ -557,22 +567,23 @@ class Alimentos
         $conn->close();
         return 1;
     }
+
+    #Metodo que muestra el top 10 de valoraciones en una tabla
     function top_ten_valoracion()
     {
         $conn = conectarDB();
-        $result = $conn->query("SELECT id_alimenval,CEIL(AVG(puntuacion)) AS media FROM valoralimen GROUP BY id_alimenval ORDER BY media DESC LIMIT 10");
+        $result = $conn->query("SELECT nombre_alimen, marca, valoracion FROM alimentos ORDER BY valoracion DESC, nombre_alimen ASC LIMIT 10;");
         $nombre_alimentos = [];
         $medias = [];
         $code = "";
         $num = 1;
         while ($row = $result->fetch_assoc()) {
-            $alimento = $this->data_Alimento($row['id_alimenval']);
-            $nombre_alimentos[] = $alimento[1];
-            $medias[] = $row['media'];
+            $nombre_alimentos[] = $row['nombre_alimen'];
+            $medias[] = $row['valoracion'];
             $code .= "<tr>";
             $code .= "<td>" . $num . "</td>";
-            $code .= "<td>" . $alimento[1] . " (" . $alimento[2] . ")</td>";
-            $code .= "<td>" . $row['media'] . "</td>";
+            $code .= "<td>" . $row['nombre_alimen'] . " (" . $row['marca'] . ")</td>";
+            $code .= "<td>" . $row['valoracion'] . "</td>";
             $code .= "</tr>";
             $num += 1;
         }

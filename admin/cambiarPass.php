@@ -8,6 +8,8 @@ if (!isset($_SESSION['admin'])) {
 }
 #Crea el objeto admin
 $admin = unserialize($_SESSION['admin']);
+
+
 if (isset($_POST['changepass'])) {
     $result = $admin->change_password($_POST['id'], $_POST['pass'], $_POST['pass_rep']);
     if ($result != 1) {

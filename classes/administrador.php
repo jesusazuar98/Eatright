@@ -218,6 +218,9 @@ class Administrador extends User
         $conn->close();
         return 1;
     }
+
+
+    #Metodo para editar los datos de un usuario
     function editar_usuario($id_u, $n_user, $email, $sexo, $f_nacimiento, $peso, $altura, $n_completo, $estado, $intentos)
     {
 
