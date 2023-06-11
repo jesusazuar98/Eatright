@@ -125,6 +125,7 @@ const addFavorites = (id) => {
     .then((data) => {
       content.innerHTML = data;
       listFavorites("con1");
+      topTenFavorites();
     })
     .catch((err) => console.log(err));
 };
@@ -139,6 +140,7 @@ const deleteFavorites = (id_alimento) => {
     .then((data) => {
       content.innerHTML = data;
       listFavorites("con1");
+      topTenFavorites();
     })
     .catch((err) => console.log(err));
 };
@@ -206,6 +208,7 @@ const addVal = (id_alimento) => {
         }
         valorados("v-content");
         noValorados("con1");
+        topTenValoraciones();
       })
       .catch((err) => console.log(err));
   }
@@ -223,7 +226,8 @@ const changeValoracion = (id_alimento, name, val = 0) => {
     ")'>Editar valoracion</button></p><a onclick=\"valorados('v-content')\" href='#my-vals'>Volver</a>";
   content.innerHTML = code;
 };
-//Añade una valoracion
+
+//Cambia una valoracion
 const changeVal = (id_alimento) => {
   let newVal = document.getElementById("new-valor").value;
   let url = "../utils/change_valoracion.php";
@@ -244,6 +248,7 @@ const changeVal = (id_alimento) => {
         }
         valorados("v-content");
         noValorados("con1");
+        topTenValoraciones();
       })
       .catch((err) => console.log(err));
   }
@@ -287,9 +292,43 @@ const eliminarValoracion = (id_alimento) => {
       }
       valorados("v-content");
       noValorados("con1");
+      topTenValoraciones();
     })
     .catch((err) => console.log(err));
 };
+
+//Top 10 favoritos que trae la informacion del top10 cada vez que se llama a la funcion
+const topTenFavorites = () => {
+  let container = document.getElementById("list-toptenfavorites");
+  let canva = document.getElementById("topten-pie");
+  let url = "../utils/top_ten_favorites.php";
+  fetch(url)
+    .then((r) => r.json())
+    .then((data) => {
+      container.innerHTML = data[0];
+      canva.remove();
+      document.getElementById("favorites").innerHTML +=
+        "<canvas id='topten-pie'></canvas>";
+      graficaPie(data[1], data[2], "topten-pie");
+    });
+};
+
+//Top 10 valoraciones que trae la informacion del top10 cada vez que se llama a la funcion
+const topTenValoraciones = () => {
+  let container = document.getElementById("list-toptenvaloraciones");
+  let canva = document.getElementById("topten-pie");
+  let url = "../utils/top_ten_valoraciones.php";
+  fetch(url)
+    .then((r) => r.json())
+    .then((data) => {
+      container.innerHTML = data[0];
+      canva.remove();
+      document.getElementById("valoraciones").innerHTML +=
+        "<canvas id='topten-pie'></canvas>";
+      graficaPie(data[1], data[2], "topten-pie");
+    });
+};
+
 //Muestra un grafico segun los datos que se le pasen
 const graficaPie = (alimentos, datos, canva) => {
   let can = document.getElementById(canva);

@@ -68,7 +68,7 @@ $id_u = $user->getUser()['id'];
                 ?>
             </div>
         </div>
-        <div class="valoraciones">
+        <div class="valoraciones" id="valoraciones">
             <div class="topten_valoraciones">
                 <h3>Top 10 Valoraciones</h3>
                 <table>
@@ -79,10 +79,12 @@ $id_u = $user->getUser()['id'];
                             <th>Puntuacion Media</th>
                         </tr>
                     </thead>
-                    <?php
-                    $code = $alimentos->top_ten_valoracion();
-                    echo $code[0];
-                    ?>
+                    <tbody id="list-toptenvaloraciones">
+                        <?php
+                        $code = $alimentos->top_ten_valoracion();
+                        echo $code[0];
+                        ?>
+                    </tbody>
                 </table>
             </div>
             <canvas id="topten-pie">

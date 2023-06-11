@@ -44,7 +44,7 @@ $alimentos = new Alimentos();
                 </ul>
             </div>
         </div>
-        <div class="favorites">
+        <div class="favorites" id="favorites">
             <div class="topten_favorites">
                 <h3>Top 10 Favoritos</h3>
                 <table>
@@ -55,10 +55,12 @@ $alimentos = new Alimentos();
                             <th>Veces añadido</th>
                         </tr>
                     </thead>
-                    <?php
-                    $code = $alimentos->top_ten_favorites();
-                    echo $code[0];
-                    ?>
+                    <tbody id='list-toptenfavorites'>
+                        <?php
+                        $code = $alimentos->top_ten_favorites();
+                        echo $code[0];
+                        ?>
+                    </tbody>
                 </table>
             </div>
             <canvas id="topten-pie">
