@@ -411,7 +411,8 @@ class Alimentos
     function buscar_favoritos($name, $marca, $id_u, $add = false)
     {
         $conn = conectarDB();
-        $sql = "SELECT * FROM alimentos WHERE nombre_alimen LIKE CONCAT('%', ?, '%') AND marca=? AND id_alimento IN (SELECT id_alimefav FROM favoritos WHERE id_clifav=?)";
+        $sql = "SELECT * FROM alimentos WHERE nombre_alimen LIKE CONCAT('%', ?, '%') AND marca=? AND id_alimento IN 
+        (SELECT id_alimefav FROM favoritos WHERE id_clifav=?)";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("ssi", $name, $marca, $id_u);
         $stmt->execute();
@@ -424,7 +425,8 @@ class Alimentos
             #El parametro add esta por defecto en false porque significa que no es para añadir el alimento a una comida
             #En caso de que sea verdadero devolvera un array con los datos para que pueda ser añadido a la comida
             if (!$add) {
-                $code .= "<li><span>" . $row[1] . " (" . $row[2] . ")</span> <a href='#' onclick='deleteFavorites(" . $row[0] . ")'><img src='../images/estrella_luz.png'/></a></li>";
+                $code .= "<li><span>" . $row[1] . " (" . $row[2] . ")</span> <a href='#' onclick='deleteFavorites(" . $row[0] . ")'>
+                <img src='../images/estrella_luz.png'/></a></li>";
             } else {
                 $alimento = array(
                     "id" => $row[0],
@@ -446,7 +448,8 @@ class Alimentos
     function top_ten_favorites()
     {
         $conn = conectarDB();
-        $result = $conn->query("SELECT id_alimefav, COUNT(id_clifav) AS number FROM favoritos GROUP BY id_alimefav ORDER BY number DESC LIMIT 10");
+        $result = $conn->query("SELECT id_alimefav, COUNT(id_clifav) AS number FROM favoritos GROUP BY id_alimefav 
+        ORDER BY number DESC LIMIT 10");
         $nombre_alimentos = [];
         $times_added = [];
         $code = "";
